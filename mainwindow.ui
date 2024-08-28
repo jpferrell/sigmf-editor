@@ -40,7 +40,7 @@
         <enum>QTabWidget::Rounded</enum>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>2</number>
        </property>
        <widget class="QWidget" name="globalTab">
         <attribute name="title">
@@ -590,7 +590,7 @@
            <x>19</x>
            <y>9</y>
            <width>341</width>
-           <height>491</height>
+           <height>507</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">

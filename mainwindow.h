@@ -78,7 +78,7 @@ private:
     QString m_commentAnnot;
     QString m_generatorAnnot;
     QString m_uuidAnnot;
-    std::vector<QJsonObject> m_annotationVect;
+    QJsonArray m_annotationJsonArray;
 
     void _InitializeComboBoxes();
     void _UpdateVariables();

@@ -40,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent)
     , m_commentAnnot("")
     , m_generatorAnnot("")
     , m_uuidAnnot("")
-    , m_annotationVect()
+    , m_annotationJsonArray()
 
 {
     ui->setupUi(this);
@@ -83,6 +83,26 @@ void MainWindow::ChangeHardwareOption(const QString &currentText)
 void MainWindow::AddAnnotation()
 {
     qDebug() << "Add annotation button pressed";
+    int sampStart = ui->sampStartAnnotLineEdit->text().toInt();
+    int sampCnt = ui->sampCntAnnotLineEdit->text().toInt();
+    double freqLowerEdge = ui->freqLowerEdgeDoubleSpinBox->value();
+    double freqUpperEdge = ui->freqUpperEdgeDoubleSpinBox->value();
+    QString label = ui->labelAnnotLineEdit->text();
+    QString comment = ui->commentAnnotPlainTextEdit->toPlainText();
+    QString generator = ui->generatorLineEdit->text();
+    QString uuid = ui->uuidLineEdit->text();
+    QJsonObject jsonObj = {
+        {"core:sample_start", sampStart},
+        {"core:sample_count", sampCnt},
+        {"core:freq_lower_edge", freqLowerEdge},
+        {"core:freq_upper_edge", freqUpperEdge},
+        {"core:label", label},
+        {"core:comment", comment},
+        {"core:generator", generator},
+        {"core:uuid", uuid}
+    };
+
+    m_annotationJsonArray.append(jsonObj);
 }
 
 void MainWindow::AddCapture()
@@ -168,13 +188,6 @@ void MainWindow::_UpdateVariables()
     m_recorder = ui->recorderLineEdit->text();
     m_trailingBytes = ui->trailingBytesLineEdit->text().toInt();
     m_version = ui->versionLineEdit->text();
-
-    for(auto it = m_captureJsonArray.begin(); it != m_captureJsonArray.end(); it++) {
-
-    }
-    for(auto it = m_annotationVect.begin(); it != m_annotationVect.end(); it++) {
-
-    }
 }
 
 QByteArray MainWindow::_CreateJson()
@@ -198,6 +211,9 @@ QByteArray MainWindow::_CreateJson()
     };
 
     QJsonObject overallObj;
+    if(m_annotationJsonArray.size()) {
+        overallObj.insert("annotations", m_annotationJsonArray);
+    }
     if(m_captureJsonArray.size()) {
         overallObj.insert("captures", m_captureJsonArray);
     }
