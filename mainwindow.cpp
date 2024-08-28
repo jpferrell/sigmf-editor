@@ -10,14 +10,48 @@ MainWindow::MainWindow(QWidget *parent)
     , m_realComplex("")
     , m_endianness("")
     , m_datatype("")
+    , m_sampleRate(0.0)
+    , m_author("")
+    , m_collection("")
+    , m_dataset("")
+    , m_metaDoi("")
+    , m_dataDoi("")
+    , m_description("")
+    , m_hardware("")
+    , m_license("")
+    , m_metadataOnly("false")
+    , m_numChannels(1)
+    , m_offset(0)
+    , m_recorder("")
+    , m_trailingBytes(0)
+    , m_version("")
+    , m_sampleStartCap(0)
+    , m_datetime("")
+    , m_centerFrequency(0.0)
+    , m_globalIndex(0)
+    , m_headerBytes(0)
+    , m_captureJsonArray()
+    , m_capturesStartIdxVect()
+    , m_sampleStartAnnot(0)
+    , m_sampleCount(0)
+    , m_freqLowerEdge(0.0)
+    , m_freqUpperEdge(0.0)
+    , m_labelAnnot("")
+    , m_commentAnnot("")
+    , m_generatorAnnot("")
+    , m_uuidAnnot("")
+    , m_annotationJsonArray()
+
 {
     ui->setupUi(this);
 
     _InitializeComboBoxes();
 
-    connect(ui->configButton, &QPushButton::pressed, this, &MainWindow::_Configure);
-    connect(ui->hardwareComboBox, &QComboBox::currentTextChanged, this, &MainWindow::_ChangeHardwareOption);
-
+    connect(ui->configButton, &QPushButton::pressed, this, &MainWindow::Configure);
+    connect(ui->hardwareComboBox, &QComboBox::currentTextChanged, this, &MainWindow::ChangeHardwareOption);
+    connect(ui->addAnnotationPushButton, &QPushButton::pressed, this, &MainWindow::AddAnnotation);
+    connect(ui->addCapturePushButton, &QPushButton::pressed, this, &MainWindow::AddCapture);
+    connect(ui->datetimeCheckBox, &QCheckBox::stateChanged, this, &MainWindow::ChangeDatetimeEnable);
     m_metafile.open(QIODevice::WriteOnly);
 }
 
@@ -32,7 +66,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::_Configure()
+void MainWindow::Configure()
 {
     qDebug() << "Configure button pressed";
     _UpdateVariables();
@@ -40,10 +74,65 @@ void MainWindow::_Configure()
     _WriteJsonFile(jsonByteArray);
 }
 
-void MainWindow::_ChangeHardwareOption(const QString &currentText)
+void MainWindow::ChangeHardwareOption(const QString &currentText)
 {
     bool lineEnable = QString::compare(currentText, "Other") ? false : true;
     ui->otherHardwareLineEdit->setEnabled(lineEnable);
+}
+
+void MainWindow::AddAnnotation()
+{
+    qDebug() << "Add annotation button pressed";
+    int sampStart = ui->sampStartAnnotLineEdit->text().toInt();
+    int sampCnt = ui->sampCntAnnotLineEdit->text().toInt();
+    double freqLowerEdge = ui->freqLowerEdgeDoubleSpinBox->value();
+    double freqUpperEdge = ui->freqUpperEdgeDoubleSpinBox->value();
+    QString label = ui->labelAnnotLineEdit->text();
+    QString comment = ui->commentAnnotPlainTextEdit->toPlainText();
+    QString generator = ui->generatorLineEdit->text();
+    QString uuid = ui->uuidLineEdit->text();
+    QJsonObject jsonObj = {
+        {"core:sample_start", sampStart},
+        {"core:sample_count", sampCnt},
+        {"core:freq_lower_edge", freqLowerEdge},
+        {"core:freq_upper_edge", freqUpperEdge},
+        {"core:label", label},
+        {"core:comment", comment},
+        {"core:generator", generator},
+        {"core:uuid", uuid}
+    };
+
+    m_annotationJsonArray.append(jsonObj);
+}
+
+void MainWindow::AddCapture()
+{
+    qDebug() << "Add capture button pressed";
+    int sampStart = ui->sampleStartLineEdit->text().toInt(); // Not working atm
+    double freq = ui->frequencyDoubleSpinBox->value();
+    int globalIdx = ui->globalIndexLineEdit->text().toInt();
+    int headerBytes = ui->headerBytesLineEdit->text().toInt();
+    QString datetime = "";
+    if (ui->dateTimeEdit->isEnabled()) {
+        datetime = ui->dateTimeEdit->dateTime().toString(Qt::ISODateWithMs);
+    }
+    qDebug() << "datetime: " << datetime;
+
+    QJsonObject jsonObj = {
+        {"core:sample_start", sampStart},
+        {"core:datetime", datetime},
+        {"core:frequency", freq},
+        {"core:global_index", globalIdx},
+        {"core:header_bytes", headerBytes}
+    };
+
+    //m_capturesVect.push_back(jsonObj);
+    m_captureJsonArray.append(jsonObj);
+}
+
+void MainWindow::ChangeDatetimeEnable()
+{
+    ui->dateTimeEdit->setEnabled(ui->datetimeCheckBox->isChecked());
 }
 
 void MainWindow::_InitializeComboBoxes()
@@ -121,8 +210,16 @@ QByteArray MainWindow::_CreateJson()
         {"core:version", m_version}
     };
 
-    QJsonDocument jsonFile(coreObj);
-    return jsonFile.toJson();
+    QJsonObject overallObj;
+    if(m_annotationJsonArray.size()) {
+        overallObj.insert("annotations", m_annotationJsonArray);
+    }
+    if(m_captureJsonArray.size()) {
+        overallObj.insert("captures", m_captureJsonArray);
+    }
+    overallObj.insert("global", coreObj);
+    QJsonDocument jsonFileCore(overallObj);
+    return jsonFileCore.toJson();
 }
 
 void MainWindow::_WriteJsonFile(QByteArray jsonByteArray)
