@@ -22,8 +22,11 @@ public:
 
 public slots:
 
-    void _Configure();
-    void _ChangeHardwareOption(const QString &);
+    void Configure();
+    void ChangeHardwareOption(const QString &);
+    void AddAnnotation();
+    void AddCapture();
+    void ChangeDatetimeEnable();
 
 signals:
 
@@ -62,16 +65,20 @@ private:
     double m_centerFrequency;
     int m_globalIndex;
     int m_headerBytes;
+    //std::vector<QJsonObject> m_capturesVect;
+    QJsonArray m_captureJsonArray;
+    std::vector<int> m_capturesStartIdxVect;
 
     // Annotations Array
     int m_sampleStartAnnot;
     int m_sampleCount;
-    int m_freqLowerEdge;
-    int m_freqUpperEdge;
+    double m_freqLowerEdge;
+    double m_freqUpperEdge;
     QString m_labelAnnot;
     QString m_commentAnnot;
     QString m_generatorAnnot;
     QString m_uuidAnnot;
+    std::vector<QJsonObject> m_annotationVect;
 
     void _InitializeComboBoxes();
     void _UpdateVariables();

@@ -40,7 +40,7 @@
         <enum>QTabWidget::Rounded</enum>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="globalTab">
         <attribute name="title">
@@ -455,27 +455,48 @@
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="datetimeLabel">
-            <property name="text">
-             <string>Datetime</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignBottom|Qt::AlignHCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QDateTimeEdit" name="dateTimeEdit">
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-            <property name="currentSection">
-             <enum>QDateTimeEdit::YearSection</enum>
-            </property>
-            <property name="timeSpec">
-             <enum>Qt::UTC</enum>
-            </property>
-           </widget>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_11">
+              <item>
+               <widget class="QLabel" name="datetimeLabel">
+                <property name="text">
+                 <string>Datetime</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QDateTimeEdit" name="dateTimeEdit">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+                <property name="currentSection">
+                 <enum>QDateTimeEdit::MonthSection</enum>
+                </property>
+                <property name="displayFormat">
+                 <string>M/d/yyyy h:mm:ss.zzz AP</string>
+                </property>
+                <property name="timeSpec">
+                 <enum>Qt::UTC</enum>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="datetimeCheckBox">
+              <property name="text">
+               <string>Enable Datetime</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
           <item>
            <widget class="QLabel" name="frequencyLabel">
@@ -546,6 +567,13 @@
             </property>
             <property name="placeholderText">
              <string>0</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="addCapturePushButton">
+            <property name="text">
+             <string>Add Capture</string>
             </property>
            </widget>
           </item>
@@ -725,6 +753,13 @@
             </property>
             <property name="alignment">
              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="addAnnotationPushButton">
+            <property name="text">
+             <string>Add Annotation</string>
             </property>
            </widget>
           </item>
