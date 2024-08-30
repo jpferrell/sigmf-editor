@@ -4,8 +4,12 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
-    , m_metafile("testfile.sigmf-meta")
-    , m_datafile("testfile.sigmf-data")
+    , m_metafile()
+    , m_datafile()
+    , m_dataFilepath(".")
+    , m_metaFilepath(".")
+    , m_dataFilestem("out")
+    , m_metaFilestem("out")
     , m_dataFormat("")
     , m_realComplex("")
     , m_endianness("")
@@ -40,7 +44,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->addAnnotationPushButton, &QPushButton::pressed, this, &MainWindow::AddAnnotation);
     connect(ui->addCapturePushButton, &QPushButton::pressed, this, &MainWindow::AddCapture);
     connect(ui->datetimeCheckBox, &QCheckBox::stateChanged, this, &MainWindow::ChangeDatetimeEnable);
-    m_metafile.open(QIODevice::WriteOnly);
+    connect(ui->action_Open, &QAction::triggered, this, &MainWindow::OpenDataFile);
+    connect(ui->action_Exit, &QAction::triggered, this, &MainWindow::ExitApplication);
 }
 
 MainWindow::~MainWindow()
@@ -123,6 +128,28 @@ void MainWindow::ChangeDatetimeEnable()
     ui->dateTimeEdit->setEnabled(ui->datetimeCheckBox->isChecked());
 }
 
+void MainWindow::OpenDataFile()
+{
+    qDebug() << "In OpenDataFile";
+    QString filename = QFileDialog::getOpenFileName(this, tr("Open SigMF data file"), ".", tr("SigMF Files (*.sigmf-data);;All files (*.*)"));
+    qDebug() << "filename: " << filename;
+    std::filesystem::path filePath(filename.toStdString());
+    m_dataFilepath = QString::fromStdString(filePath.parent_path().string());
+    m_dataFilestem = QString::fromStdString(filePath.stem().string());
+    qDebug() << "datafilepath: " << m_dataFilepath;
+    qDebug() << "datafilestem: " << m_dataFilestem;
+
+    ui->inFilepathLineEdit->setText(m_dataFilepath);
+    ui->outFilepathLineEdit->setText(m_dataFilepath);
+    ui->inFilestubLineEdit->setText(m_dataFilestem);
+    ui->outFilestubLineEdit->setText(m_dataFilestem);
+}
+
+void MainWindow::ExitApplication()
+{
+    QApplication::quit();
+}
+
 void MainWindow::_InitializeComboBoxes()
 {
     ui->dataFormatComboBox->addItem("f32");
@@ -176,6 +203,9 @@ void MainWindow::_UpdateVariables()
     m_recorder = ui->recorderLineEdit->text();
     m_trailingBytes = ui->trailingBytesLineEdit->text().toInt();
     m_version = ui->versionLineEdit->text();
+
+    m_metaFilepath = ui->outFilepathLineEdit->text();
+    m_metaFilestem = ui->outFilestubLineEdit->text();
 }
 
 QByteArray MainWindow::_CreateJson()
@@ -212,5 +242,10 @@ QByteArray MainWindow::_CreateJson()
 
 void MainWindow::_WriteJsonFile(QByteArray jsonByteArray)
 {
+    //m_metafile.open(QIODevice::WriteOnly);
+    m_metafile.setFileName(m_metaFilepath+tr("/")+m_metaFilestem+METAFILEEXT);
+    m_metafile.open(QIODevice::WriteOnly);
     m_metafile.write(jsonByteArray);
+    m_metafile.flush();
+    m_metafile.close();
 }

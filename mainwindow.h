@@ -7,6 +7,9 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QFile>
+#include <QFileDialog>
+
+#include <filesystem>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -20,6 +23,9 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    const QString DATAFILEEXT = ".sigmf-data";
+    const QString METAFILEEXT = ".sigmf-meta";
+
 public slots:
 
     void Configure();
@@ -27,6 +33,8 @@ public slots:
     void AddAnnotation();
     void AddCapture();
     void ChangeDatetimeEnable();
+    void OpenDataFile();
+    void ExitApplication();
 
 signals:
 
@@ -36,6 +44,11 @@ private:
 
     QFile m_metafile;
     QFile m_datafile;
+
+    QString m_dataFilepath;
+    QString m_metaFilepath;
+    QString m_dataFilestem;
+    QString m_metaFilestem;
 
     // Global Object
     QString m_dataFormat;
