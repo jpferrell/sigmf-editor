@@ -7,6 +7,9 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QFile>
+#include <QFileDialog>
+
+#include <filesystem>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -20,6 +23,9 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    const QString DATAFILEEXT = ".sigmf-data";
+    const QString METAFILEEXT = ".sigmf-meta";
+
 public slots:
 
     void Configure();
@@ -27,6 +33,8 @@ public slots:
     void AddAnnotation();
     void AddCapture();
     void ChangeDatetimeEnable();
+    void OpenDataFile();
+    void ExitApplication();
 
 signals:
 
@@ -36,6 +44,11 @@ private:
 
     QFile m_metafile;
     QFile m_datafile;
+
+    QString m_dataFilepath;
+    QString m_metaFilepath;
+    QString m_dataFilestem;
+    QString m_metaFilestem;
 
     // Global Object
     QString m_dataFormat;
@@ -60,25 +73,12 @@ private:
     QString m_version;
 
     // Captures Array
-    int m_sampleStartCap;
-    QString m_datetime;
-    double m_centerFrequency;
-    int m_globalIndex;
-    int m_headerBytes;
-    //std::vector<QJsonObject> m_capturesVect;
     QJsonArray m_captureJsonArray;
     std::vector<int> m_capturesStartIdxVect;
 
     // Annotations Array
-    int m_sampleStartAnnot;
-    int m_sampleCount;
-    double m_freqLowerEdge;
-    double m_freqUpperEdge;
-    QString m_labelAnnot;
-    QString m_commentAnnot;
-    QString m_generatorAnnot;
-    QString m_uuidAnnot;
     QJsonArray m_annotationJsonArray;
+    std::vector<int> m_annotationStartIdxVect;
 
     void _InitializeComboBoxes();
     void _UpdateVariables();
