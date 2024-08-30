@@ -60,25 +60,12 @@ private:
     QString m_version;
 
     // Captures Array
-    int m_sampleStartCap;
-    QString m_datetime;
-    double m_centerFrequency;
-    int m_globalIndex;
-    int m_headerBytes;
-    //std::vector<QJsonObject> m_capturesVect;
     QJsonArray m_captureJsonArray;
     std::vector<int> m_capturesStartIdxVect;
 
     // Annotations Array
-    int m_sampleStartAnnot;
-    int m_sampleCount;
-    double m_freqLowerEdge;
-    double m_freqUpperEdge;
-    QString m_labelAnnot;
-    QString m_commentAnnot;
-    QString m_generatorAnnot;
-    QString m_uuidAnnot;
     QJsonArray m_annotationJsonArray;
+    std::vector<int> m_annotationStartIdxVect;
 
     void _InitializeComboBoxes();
     void _UpdateVariables();
