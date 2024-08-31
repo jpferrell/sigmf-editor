@@ -94,6 +94,13 @@ void MainWindow::AddAnnotation()
         {"core:generator", generator},
         {"core:uuid", uuid}
     };
+    if(ui->adsbEnabledCheckBox->isChecked()) {
+        QJsonValue downlink =  QString::compare(ui->downlinkFormatComboBox->currentText(), "Mode S Short (11)") ? 17 : 11;
+        jsonObj.insert("adsb:downlink_format", downlink);
+        jsonObj.insert("adsb:message_type", ui->adsbMsgTypeComboBox->value());
+        jsonObj.insert("adsb:ICA_address", ui->icaAddrDoubleSpinBox->value());
+        jsonObj.insert("adsb:binary", ui->adsbBinaryPlainTextEdit->toPlainText());
+    }
 
     m_annotationJsonArray.append(jsonObj);
 }
@@ -175,6 +182,9 @@ void MainWindow::_InitializeComboBoxes()
     ui->hardwareComboBox->addItem("X300");
     ui->hardwareComboBox->addItem("X310");
     ui->hardwareComboBox->addItem("Other");
+
+    ui->downlinkFormatComboBox->addItem("Mode S Short (11)");
+    ui->downlinkFormatComboBox->addItem("Mode S Extended (17)");
 }
 
 void MainWindow::_UpdateVariables()

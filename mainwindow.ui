@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>600</height>
+    <height>612</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -33,7 +33,7 @@
          <enum>QTabWidget::Rounded</enum>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>3</number>
         </property>
         <widget class="QWidget" name="globalTab">
          <attribute name="title">
@@ -749,7 +749,7 @@
           <item>
            <widget class="QTabWidget" name="extensionsTabWidget">
             <property name="currentIndex">
-             <number>6</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="adsbTab">
              <attribute name="title">
@@ -757,13 +757,69 @@
              </attribute>
              <layout class="QHBoxLayout" name="horizontalLayout_10">
               <item>
-               <layout class="QVBoxLayout" name="verticalLayout_4">
+               <layout class="QVBoxLayout" name="adsbTabVerticalLayout">
                 <item>
                  <widget class="QCheckBox" name="adsbEnabledCheckBox">
                   <property name="text">
                    <string>Enabled</string>
                   </property>
                  </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="downlinkFormatLabel">
+                  <property name="text">
+                   <string>Downlink Format</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QComboBox" name="downlinkFormatComboBox"/>
+                </item>
+                <item>
+                 <widget class="QLabel" name="adsbMsgTypeLabel">
+                  <property name="text">
+                   <string>Message Type</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QSpinBox" name="adsbMsgTypeComboBox">
+                  <property name="maximum">
+                   <number>31</number>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="icaAddrLabel">
+                  <property name="text">
+                   <string>ICA Address</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QDoubleSpinBox" name="icaAddrDoubleSpinBox"/>
+                </item>
+                <item>
+                 <widget class="QLabel" name="adsbBinaryLabel">
+                  <property name="text">
+                   <string>Binary</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPlainTextEdit" name="adsbBinaryPlainTextEdit"/>
                 </item>
                </layout>
               </item>
