@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>855</height>
+    <height>888</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -748,7 +748,7 @@
           <item>
            <widget class="QTabWidget" name="extensionsTabWidget">
             <property name="currentIndex">
-             <number>5</number>
+             <number>3</number>
             </property>
             <widget class="QWidget" name="adsbTab">
              <attribute name="title">
@@ -1380,6 +1380,371 @@
                    <string>Enabled</string>
                   </property>
                  </widget>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_19">
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_19">
+                    <item>
+                     <widget class="QLabel" name="sigDetailLabel">
+                      <property name="font">
+                       <font>
+                        <pointsize>14</pointsize>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Detail</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="sigDetailTypeLabel">
+                      <property name="text">
+                       <string>Type</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QComboBox" name="sigDetailTypeComboBox">
+                      <property name="maxVisibleItems">
+                       <number>3</number>
+                      </property>
+                      <property name="maxCount">
+                       <number>3</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="sigDetailModTypeLabel">
+                      <property name="text">
+                       <string>Modulation Type</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QComboBox" name="sigDetailModTypeComboBox">
+                      <property name="maxCount">
+                       <number>14</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="sigDetailCarVarLabel">
+                      <property name="text">
+                       <string>Carrier Variant</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QComboBox" name="sigDetailCarVarComboBox">
+                      <property name="maxVisibleItems">
+                       <number>6</number>
+                      </property>
+                      <property name="maxCount">
+                       <number>6</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="sigDetailSymVarLabel">
+                      <property name="text">
+                       <string>Symbol Variant</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QComboBox" name="sigDetailSymVarComboBox">
+                      <property name="maxVisibleItems">
+                       <number>3</number>
+                      </property>
+                      <property name="maxCount">
+                       <number>3</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="sigDetailOrderLabel">
+                      <property name="text">
+                       <string>Order</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QSpinBox" name="sigDetailOrderSpinBox">
+                      <property name="minimum">
+                       <number>1</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="sigDetailDuplexLabel">
+                      <property name="text">
+                       <string>Duplexing</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QComboBox" name="sigDetailDuplexComboBox">
+                      <property name="maxVisibleItems">
+                       <number>3</number>
+                      </property>
+                      <property name="maxCount">
+                       <number>3</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="sigDetailMutiplexLabel">
+                      <property name="text">
+                       <string>Multiplexing</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QComboBox" name="sigDetailMultiplexComboBox">
+                      <property name="maxVisibleItems">
+                       <number>7</number>
+                      </property>
+                      <property name="maxCount">
+                       <number>7</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="sigDetailMultAccLabel">
+                      <property name="text">
+                       <string>Multiple Access</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QComboBox" name="sigDetaillMultAccComboBox">
+                      <property name="maxVisibleItems">
+                       <number>7</number>
+                      </property>
+                      <property name="maxCount">
+                       <number>7</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="sigDetaliSpreadLabel">
+                      <property name="text">
+                       <string>Spreading</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QComboBox" name="sigDetailSpreadComboBox">
+                      <property name="maxVisibleItems">
+                       <number>5</number>
+                      </property>
+                      <property name="maxCount">
+                       <number>5</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="sigDetailBwLabel">
+                      <property name="text">
+                       <string>Bandwidth</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="sigDetailBwSpinBox">
+                      <property name="minimum">
+                       <double>-100000000000000000000.000000000000000</double>
+                      </property>
+                      <property name="maximum">
+                       <double>10000000000000000000000.000000000000000</double>
+                      </property>
+                      <property name="singleStep">
+                       <double>10000.000000000000000</double>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="sigDetailChanLabel">
+                      <property name="text">
+                       <string>Channel</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QSpinBox" name="sigDetailChanSpinBox">
+                      <property name="maximum">
+                       <number>10000</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="sigDetailClassVarLabel">
+                      <property name="text">
+                       <string>Class Variant</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="sigDetailClassVarLineEdit">
+                      <property name="maxLength">
+                       <number>50</number>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_20">
+                    <item>
+                     <widget class="QLabel" name="sigEmitterLabel">
+                      <property name="font">
+                       <font>
+                        <pointsize>14</pointsize>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Emitter</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="sigEmitterSeidLabel">
+                      <property name="text">
+                       <string>Unique ID of Emitter</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="sigEmitterSeidLineEdit">
+                      <property name="maxLength">
+                       <number>50</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="sigEmitterManuLabel">
+                      <property name="text">
+                       <string>Manufacturer</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="sigEmitterManuLineEdit">
+                      <property name="maxLength">
+                       <number>50</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="sigEmitterTxPwrLabel">
+                      <property name="text">
+                       <string>Transmitted Power (dBm)</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="sigEmitterTxPwrDoubleSpinBox">
+                      <property name="minimum">
+                       <double>-200.000000000000000</double>
+                      </property>
+                      <property name="maximum">
+                       <double>200.000000000000000</double>
+                      </property>
+                      <property name="singleStep">
+                       <double>0.100000000000000</double>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="sigEmitterEirpPwrLabel">
+                      <property name="text">
+                       <string>Effective Isotropic Radiated Power (dBm)</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="sigEmitterEirpPwrDoubleSpinBox">
+                      <property name="minimum">
+                       <double>-200.000000000000000</double>
+                      </property>
+                      <property name="maximum">
+                       <double>200.000000000000000</double>
+                      </property>
+                      <property name="singleStep">
+                       <double>0.100000000000000</double>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="sigEmitterGeoLabel">
+                      <property name="text">
+                       <string>Geolocation</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
                 </item>
                </layout>
               </item>
