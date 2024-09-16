@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>612</height>
+    <height>855</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -20,8 +20,7 @@
    <string>SigMF Editor</string>
   </property>
   <property name="windowIcon">
-   <iconset theme="application-x-executable">
-    <normaloff>.</normaloff>.</iconset>
+   <iconset theme="application-x-executable"/>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout_5">
@@ -749,7 +748,7 @@
           <item>
            <widget class="QTabWidget" name="extensionsTabWidget">
             <property name="currentIndex">
-             <number>6</number>
+             <number>5</number>
             </property>
             <widget class="QWidget" name="adsbTab">
              <attribute name="title">
@@ -839,6 +838,324 @@
                   </property>
                  </widget>
                 </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_16">
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_13">
+                    <item>
+                     <widget class="QLabel" name="antennaModelLabel">
+                      <property name="text">
+                       <string>Model</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QTextEdit" name="antennaModeltextEdit"/>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="antennaTypeLabel">
+                      <property name="text">
+                       <string>Type</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QTextEdit" name="textEdit"/>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="antennaLowFreqLabel">
+                      <property name="text">
+                       <string>Low Frequency (Hz)</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="antennaLowFreqDoubleSpinBox">
+                      <property name="minimum">
+                       <double>-100000000000000000.000000000000000</double>
+                      </property>
+                      <property name="maximum">
+                       <double>100000000000000000.000000000000000</double>
+                      </property>
+                      <property name="singleStep">
+                       <double>1000.000000000000000</double>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="antennaHighFreqLabel">
+                      <property name="text">
+                       <string>High Frequency (Hz)</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="antennaHighFreqDoubleSpinBox">
+                      <property name="minimum">
+                       <double>-10000000000000000000000.000000000000000</double>
+                      </property>
+                      <property name="maximum">
+                       <double>10000000000000000000000.000000000000000</double>
+                      </property>
+                      <property name="singleStep">
+                       <double>1000.000000000000000</double>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="antennaGainLabel">
+                      <property name="text">
+                       <string>Gain (dBi)</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="antennaGainDoubleSpinBox">
+                      <property name="minimum">
+                       <double>-200.000000000000000</double>
+                      </property>
+                      <property name="maximum">
+                       <double>200.000000000000000</double>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="horzGainPatternLabel">
+                      <property name="text">
+                       <string>Horizontal Gain Pattern (dBi)</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QSpinBox" name="antennaHorzGainPatternDoubleSpinBox">
+                      <property name="maximum">
+                       <number>359</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="antennaVertGainLabel">
+                      <property name="text">
+                       <string>Vertical Gain Pattern (dBi)</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QSpinBox" name="antennaVertGainPatternSpinBox">
+                      <property name="minimum">
+                       <number>-90</number>
+                      </property>
+                      <property name="maximum">
+                       <number>90</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="antennaHorzBeamWidthLabel">
+                      <property name="text">
+                       <string>Horizontal Beam Width (degrees)</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="antennaHorzBeamWidthDoubleSpinBox">
+                      <property name="maximum">
+                       <double>359.990000000000009</double>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="antennaVertBeamWidthLabel">
+                      <property name="text">
+                       <string>Vertical Beam Width (degrees)</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="antennaVertBeamWidthDoubleSpinBox">
+                      <property name="minimum">
+                       <double>0.000000000000000</double>
+                      </property>
+                      <property name="maximum">
+                       <double>359.990000000000009</double>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="antennaCrossPolDiscLabel">
+                      <property name="text">
+                       <string>Cross Polar Discrimination</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QSpinBox" name="antennaCrossPolDiscSpinBox"/>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="antennaVswrLabel">
+                      <property name="text">
+                       <string>Voltage Standing Wave Ratio (V)</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="antennaVwsrDoubleSpinBox">
+                      <property name="maximum">
+                       <double>10000000000.000000000000000</double>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_14">
+                    <item>
+                     <widget class="QLabel" name="antennaCableLossLabel">
+                      <property name="text">
+                       <string>Cable Loss (dB)</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="antennaCableLossDoubleSpinBox">
+                      <property name="maximum">
+                       <double>300.000000000000000</double>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QCheckBox" name="antennaMobileLabel">
+                      <property name="text">
+                       <string>Mobile?</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QCheckBox" name="antennaSteerableCheckBox">
+                      <property name="text">
+                       <string>Steerable?</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="antennaHaglLabel">
+                      <property name="text">
+                       <string>Phase Center Height Above Ground Level (m)</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="antennaHaglDoubleSpinBox">
+                      <property name="maximum">
+                       <double>100000.000000000000000</double>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="antennaAnnotationLabel">
+                      <property name="font">
+                       <font>
+                        <pointsize>14</pointsize>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Annotation Variables</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="antennaPolarizationLabel">
+                      <property name="text">
+                       <string>Polarization</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QTextEdit" name="antennaPolarizationTextEdit"/>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="antennaAzimuthLabel">
+                      <property name="text">
+                       <string>Azimuth Angle (degrees)</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="antennaAzimuthDoubleSpinBox">
+                      <property name="minimum">
+                       <double>-180.000000000000000</double>
+                      </property>
+                      <property name="maximum">
+                       <double>180.000000000000000</double>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="antennaElevationLabel">
+                      <property name="text">
+                       <string>Elevation Angle (degrees)</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="antennaElevationDoubleSpinBox"/>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </item>
                </layout>
               </item>
              </layout>
@@ -856,6 +1173,195 @@
                    <string>Enabled</string>
                   </property>
                  </widget>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_17">
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_15">
+                    <item>
+                     <widget class="QLabel" name="detailsCapturesLabel">
+                      <property name="font">
+                       <font>
+                        <pointsize>14</pointsize>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Captures Variables</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignHCenter|Qt::AlignTop</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="detailsAcqScaleLabel">
+                      <property name="text">
+                       <string>Scale Factor</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="detailAcqScaledoubleSpinBox"/>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="detailsAttnLabel">
+                      <property name="text">
+                       <string>Attenuation (dB)</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="detailsAttnDoubleComboBox">
+                      <property name="maximum">
+                       <double>300.000000000000000</double>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="detailsAcqBwLabel">
+                      <property name="text">
+                       <string>Acquisition Bandwidth (Hz)</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="detailsAcqBwDoubleSpinBox">
+                      <property name="maximum">
+                       <double>10000000000000000000.000000000000000</double>
+                      </property>
+                      <property name="singleStep">
+                       <double>10000.000000000000000</double>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="detailsStartCapLabel">
+                      <property name="text">
+                       <string>Start Capture (UTC)</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDateTimeEdit" name="detailsStartCapDateTimeEdit"/>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="detailsStopCapLabel">
+                      <property name="text">
+                       <string>Stop Capture (UTC)</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDateTimeEdit" name="detailsStopCapDateTimeEdit"/>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="detailsSrcFileLabel">
+                      <property name="text">
+                       <string>Source File</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="detailsSrcFileLineEdit"/>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="detailsGainLabel">
+                      <property name="text">
+                       <string>Gain (dB)</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="detailsGainDoubleSpinBox">
+                      <property name="maximum">
+                       <double>300.000000000000000</double>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_16">
+                    <item>
+                     <widget class="QLabel" name="detailsAnnotationLabel">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <pointsize>14</pointsize>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Annotation Variables</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignHCenter|Qt::AlignTop</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="detailsSnrDbLabel">
+                      <property name="text">
+                       <string>SNR (dB)</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="detailsSnrDbDoubleSpinBox">
+                      <property name="minimum">
+                       <double>-100.000000000000000</double>
+                      </property>
+                      <property name="maximum">
+                       <double>300.000000000000000</double>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="detailsSigRefNumLabel">
+                      <property name="text">
+                       <string>Signal Reference Number</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="detailsSigRefNumLineEdit"/>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
                 </item>
                </layout>
               </item>
@@ -910,6 +1416,334 @@
                    <string>Enabled</string>
                   </property>
                  </widget>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_18">
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_17">
+                    <item>
+                     <widget class="QLabel" name="traceGlobalLabel">
+                      <property name="font">
+                       <font>
+                        <pointsize>14</pointsize>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Global Variables</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="traceLastModLabel">
+                      <property name="font">
+                       <font>
+                        <pointsize>12</pointsize>
+                        <italic>true</italic>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Last Modified</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="traceLastModAuthLabel">
+                      <property name="text">
+                       <string>Author</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="traceLastModAuthLineEdit"/>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="traceLastModDatetimeLabel">
+                      <property name="text">
+                       <string>Datetime</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDateTimeEdit" name="traceLastModDateTimeEdit"/>
+                    </item>
+                    <item>
+                     <widget class="Line" name="line_2">
+                      <property name="frameShadow">
+                       <enum>QFrame::Plain</enum>
+                      </property>
+                      <property name="lineWidth">
+                       <number>100</number>
+                      </property>
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="traceLastRevLabel">
+                      <property name="font">
+                       <font>
+                        <pointsize>12</pointsize>
+                        <italic>true</italic>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Last Reviewed</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="traceLastRevAuthLabel">
+                      <property name="text">
+                       <string>Author</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="traceLastRevAuthLineEdit"/>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="traceLastRevDateTimeLabel">
+                      <property name="text">
+                       <string>Datetime</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDateTimeEdit" name="traceLastRevDateTimeEidt"/>
+                    </item>
+                    <item>
+                     <widget class="Line" name="line">
+                      <property name="frameShadow">
+                       <enum>QFrame::Plain</enum>
+                      </property>
+                      <property name="lineWidth">
+                       <number>100</number>
+                      </property>
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="traceRevLabel">
+                      <property name="text">
+                       <string>Revision</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QSpinBox" name="traceRevSpinBox">
+                      <property name="maximum">
+                       <number>999</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="Line" name="line_3">
+                      <property name="frameShadow">
+                       <enum>QFrame::Plain</enum>
+                      </property>
+                      <property name="lineWidth">
+                       <number>100</number>
+                      </property>
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="traceOriginLabel">
+                      <property name="font">
+                       <font>
+                        <pointsize>12</pointsize>
+                        <italic>true</italic>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Origin</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="traceOriginAccountLabel">
+                      <property name="text">
+                       <string>Account</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="traceOriginAccountLineEdit"/>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="traceOriginContLabel">
+                      <property name="text">
+                       <string>Container</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="lineEdit_2"/>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="traceOriginFilepathLabel">
+                      <property name="text">
+                       <string>Filepath</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="traceOriginFilepathLineEdit"/>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_18">
+                    <item>
+                     <widget class="QLabel" name="traceAnnotationLabel">
+                      <property name="font">
+                       <font>
+                        <pointsize>14</pointsize>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Annotation Variables</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="traceAnnotLastModLabel">
+                      <property name="font">
+                       <font>
+                        <pointsize>12</pointsize>
+                        <italic>true</italic>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Last Modified</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="traceAnnotAuthLabel">
+                      <property name="text">
+                       <string>Author</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="traceAnnotAuthLineEdit"/>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="traceAnnotDatetimeLabel">
+                      <property name="text">
+                       <string>Datetime</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDateTimeEdit" name="traceAnnotLastModDateTimeEdit"/>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="traceAnnotLastRevLabel">
+                      <property name="font">
+                       <font>
+                        <pointsize>12</pointsize>
+                        <italic>true</italic>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Last Reviewed</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="traceAnnotLastRevAuthLabel">
+                      <property name="text">
+                       <string>Author</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="traceAnnotLastRevAuthLineEdit"/>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="traceAnnotDateTimeLabel">
+                      <property name="text">
+                       <string>Datetime</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDateTimeEdit" name="traceAnnotLastRevDateTimeEdit"/>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
                 </item>
                </layout>
               </item>
@@ -1265,8 +2099,7 @@
              <string>CONFIGURE</string>
             </property>
             <property name="icon">
-             <iconset theme="application-x-executable">
-              <normaloff>.</normaloff>.</iconset>
+             <iconset theme="application-x-executable"/>
             </property>
            </widget>
           </item>
