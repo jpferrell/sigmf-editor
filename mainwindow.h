@@ -8,6 +8,7 @@
 #include <QJsonDocument>
 #include <QFile>
 #include <QFileDialog>
+#include <QCheckBox>
 
 #include <filesystem>
 
@@ -35,6 +36,7 @@ public slots:
     void ChangeDatetimeEnable();
     void OpenDataFile();
     void ExitApplication();
+    void MatchCheckBox(int, QCheckBox &);
 
 signals:
 

@@ -39,13 +39,18 @@ MainWindow::MainWindow(QWidget *parent)
 
     _InitializeComboBoxes();
 
-    connect(ui->configButton, &QPushButton::pressed, this, &MainWindow::Configure);
+    connect(ui->writeButton, &QPushButton::pressed, this, &MainWindow::Configure);
     connect(ui->hardwareComboBox, &QComboBox::currentTextChanged, this, &MainWindow::ChangeHardwareOption);
     connect(ui->addAnnotationPushButton, &QPushButton::pressed, this, &MainWindow::AddAnnotation);
     connect(ui->addCapturePushButton, &QPushButton::pressed, this, &MainWindow::AddCapture);
     connect(ui->datetimeCheckBox, &QCheckBox::stateChanged, this, &MainWindow::ChangeDatetimeEnable);
     connect(ui->action_Open, &QAction::triggered, this, &MainWindow::OpenDataFile);
     connect(ui->action_Exit, &QAction::triggered, this, &MainWindow::ExitApplication);
+    // Have the both of connected checkboxes change state when one of them changes state from user
+    connect(ui->globalTracebilityEnabledCheckbox, &QCheckBox::stateChanged, this, [=] () {this->MatchCheckBox(ui->globalTracebilityEnabledCheckbox->checkState(), *ui->annotationTraceabilityEnabledCheckbox);});
+    connect(ui->annotationTraceabilityEnabledCheckbox, &QCheckBox::stateChanged, this, [=] () {this->MatchCheckBox(ui->annotationTraceabilityEnabledCheckbox->checkState(), *ui->globalTracebilityEnabledCheckbox);});
+    connect(ui->captureDetailsEnabledCheckBox, &QCheckBox::stateChanged, this, [=] () {this->MatchCheckBox(ui->captureDetailsEnabledCheckBox->checkState(), *ui->annotationCapDetsEnabledCheckbox);});
+    connect(ui->annotationCapDetsEnabledCheckbox, &QCheckBox::stateChanged, this, [=] () {this->MatchCheckBox(ui->annotationCapDetsEnabledCheckbox->checkState(), *ui->captureDetailsEnabledCheckBox);});
 }
 
 MainWindow::~MainWindow()
@@ -155,6 +160,11 @@ void MainWindow::OpenDataFile()
 void MainWindow::ExitApplication()
 {
     QApplication::quit();
+}
+
+void MainWindow::MatchCheckBox(int state, QCheckBox &sender)
+{
+    sender.setCheckState(static_cast<Qt::CheckState>(state));
 }
 
 void MainWindow::_InitializeComboBoxes()

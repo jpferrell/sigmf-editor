@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>888</height>
+    <height>962</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -32,7 +32,7 @@
          <enum>QTabWidget::Rounded</enum>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="globalTab">
          <attribute name="title">
@@ -42,7 +42,7 @@
           <item>
            <widget class="QTabWidget" name="globalTabWidget">
             <property name="currentIndex">
-             <number>3</number>
+             <number>1</number>
             </property>
             <widget class="QWidget" name="globalCoreTab">
              <attribute name="title">
@@ -504,7 +504,7 @@
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_32">
                <item>
-                <widget class="QCheckBox" name="globalTracebilitEnabledCheckbox">
+                <widget class="QCheckBox" name="globalTracebilityEnabledCheckbox">
                  <property name="text">
                   <string>Enable Traceability</string>
                  </property>
@@ -1048,7 +1048,7 @@
           <item>
            <widget class="QTabWidget" name="capturesSubTab">
             <property name="currentIndex">
-             <number>1</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="capturesCoreTab">
              <attribute name="title">
@@ -1388,7 +1388,7 @@
                 <item>
                  <widget class="QTabWidget" name="capturesSpatialSubTabs">
                   <property name="currentIndex">
-                   <number>2</number>
+                   <number>3</number>
                   </property>
                   <widget class="QWidget" name="capturesSpatialBasicTab">
                    <attribute name="title">
@@ -1836,7 +1836,7 @@
                      <item>
                       <widget class="QTabWidget" name="calibrationSubTabs">
                        <property name="currentIndex">
-                        <number>1</number>
+                        <number>2</number>
                        </property>
                        <widget class="QWidget" name="calibrationRequiredTab">
                         <attribute name="title">
@@ -3350,15 +3350,15 @@
         <item>
          <layout class="QHBoxLayout" name="configHorizontalLayout">
           <item>
-           <widget class="QPushButton" name="configButton">
+           <widget class="QPushButton" name="writeButton">
             <property name="enabled">
              <bool>true</bool>
             </property>
             <property name="text">
-             <string>CONFIGURE</string>
+             <string>WRITE</string>
             </property>
             <property name="icon">
-             <iconset theme="application-x-executable"/>
+             <iconset theme="media-floppy"/>
             </property>
            </widget>
           </item>
