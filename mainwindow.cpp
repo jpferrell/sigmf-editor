@@ -29,10 +29,13 @@ MainWindow::MainWindow(QWidget *parent)
     , m_recorder("")
     , m_trailingBytes(0)
     , m_version("")
+    , m_globalReqElements()
     , m_captureJsonArray()
     , m_capturesStartIdxVect()
+    , m_capturesReqElements()
     , m_annotationJsonArray()
     , m_annotationStartIdxVect()
+    , m_annotReqElements()
 
 {
     ui->setupUi(this);
@@ -51,6 +54,14 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->annotationTraceabilityEnabledCheckbox, &QCheckBox::stateChanged, this, [=] () {this->MatchCheckBox(ui->annotationTraceabilityEnabledCheckbox->checkState(), *ui->globalTracebilityEnabledCheckbox);});
     connect(ui->captureDetailsEnabledCheckBox, &QCheckBox::stateChanged, this, [=] () {this->MatchCheckBox(ui->captureDetailsEnabledCheckBox->checkState(), *ui->annotationCapDetsEnabledCheckbox);});
     connect(ui->annotationCapDetsEnabledCheckbox, &QCheckBox::stateChanged, this, [=] () {this->MatchCheckBox(ui->annotationCapDetsEnabledCheckbox->checkState(), *ui->captureDetailsEnabledCheckBox);});
+
+    m_globalReqElements.push_back("datatype"); m_globalReqElements.push_back("version");
+    m_capturesReqElements.push_back("sample_start");
+    m_annotReqElements.push_back("sample_start");
+
+    if(qobject_cast<QCheckBox*>(ui->globalSpatialEnabledCheckBox)) {
+        qDebug() << "Is checkbox";
+    }
 }
 
 MainWindow::~MainWindow()
@@ -195,6 +206,62 @@ void MainWindow::_InitializeComboBoxes()
 
     ui->downlinkFormatComboBox->addItem("Mode S Short (11)");
     ui->downlinkFormatComboBox->addItem("Mode S Extended (17)");
+
+    ui->sigDetailMultiplexComboBox->addItem("");
+    ui->sigDetailMultiplexComboBox->addItem("TDM");
+    ui->sigDetailMultiplexComboBox->addItem("FDM");
+    ui->sigDetailMultiplexComboBox->addItem("CDM");
+    ui->sigDetailMultiplexComboBox->addItem("OFDM");
+    ui->sigDetailMultiplexComboBox->addItem("SDM");
+    ui->sigDetailMultiplexComboBox->addItem("PDM");
+
+    ui->sigDetailDuplexComboBox->addItem("");
+    ui->sigDetailDuplexComboBox->addItem("TDD");
+    ui->sigDetailDuplexComboBox->addItem("FDD");
+
+    ui->sigDetailSymVarComboBox->addItem("");
+    ui->sigDetailSymVarComboBox->addItem("Differential");
+    ui->sigDetailSymVarComboBox->addItem("Offset");
+
+    ui->sigDetailCarVarComboBox->addItem("");
+    ui->sigDetailCarVarComboBox->addItem("With Carrier");
+    ui->sigDetailCarVarComboBox->addItem("Suppressed Carrier");
+    ui->sigDetailCarVarComboBox->addItem("Reduced Carrier");
+    ui->sigDetailCarVarComboBox->addItem("Single Carrier");
+    ui->sigDetailCarVarComboBox->addItem("Multi Carrier");
+
+    ui->sigDetailModTypeComboBox->addItem("");
+    ui->sigDetailModTypeComboBox->addItem("AM");
+    ui->sigDetailModTypeComboBox->addItem("FM");
+    ui->sigDetailModTypeComboBox->addItem("PM");
+    ui->sigDetailModTypeComboBox->addItem("SSB");
+    ui->sigDetailModTypeComboBox->addItem("DSB");
+    ui->sigDetailModTypeComboBox->addItem("VSB");
+    ui->sigDetailModTypeComboBox->addItem("ASK");
+    ui->sigDetailModTypeComboBox->addItem("FSK");
+    ui->sigDetailModTypeComboBox->addItem("PSK");
+    ui->sigDetailModTypeComboBox->addItem("QAM");
+    ui->sigDetailModTypeComboBox->addItem("OOK");
+    ui->sigDetailModTypeComboBox->addItem("CPM");
+    ui->sigDetailModTypeComboBox->addItem("MSK");
+
+    ui->sigDetailSpreadComboBox->addItem("");
+    ui->sigDetailSpreadComboBox->addItem("FHSS");
+    ui->sigDetailSpreadComboBox->addItem("THSS");
+    ui->sigDetailSpreadComboBox->addItem("DSSS");
+    ui->sigDetailSpreadComboBox->addItem("CSS");
+
+    ui->sigDetailTypeComboBox->addItem("");
+    ui->sigDetailTypeComboBox->addItem("Analog");
+    ui->sigDetailTypeComboBox->addItem("Digital");
+
+    ui->sigDetaillMultAccComboBox->addItem("");
+    ui->sigDetaillMultAccComboBox->addItem("FDMA");
+    ui->sigDetaillMultAccComboBox->addItem("OFDMA");
+    ui->sigDetaillMultAccComboBox->addItem("TDMA");
+    ui->sigDetaillMultAccComboBox->addItem("CDMA");
+    ui->sigDetaillMultAccComboBox->addItem("SDMA");
+    ui->sigDetaillMultAccComboBox->addItem("PDMA");
 }
 
 void MainWindow::_UpdateVariables()
@@ -247,6 +314,9 @@ QByteArray MainWindow::_CreateJson()
         {"core:trailing_bytes", m_trailingBytes},
         {"core:version", m_version}
     };
+    if(ui->globalTracebilityEnabledCheckbox->isEnabled()) {
+
+    }
 
     QJsonObject overallObj;
     if(m_annotationJsonArray.size()) {
@@ -268,4 +338,24 @@ void MainWindow::_WriteJsonFile(QByteArray jsonByteArray)
     m_metafile.write(jsonByteArray);
     m_metafile.flush();
     m_metafile.close();
+}
+
+bool MainWindow::_CheckValidValue(QObject *obj)
+{
+    if(qobject_cast<QCheckBox*>(obj)) {
+        qDebug() << "Is checkbox";
+    } else if (qobject_cast<QSpinBox*>(obj)) {
+        qDebug() << "Is SpinBox";
+    } else if (qobject_cast<QDoubleSpinBox*>(obj)) {
+        qDebug() << "Is DoubleSpinBox";
+    } else if (qobject_cast<QComboBox*>(obj)) {
+        qDebug() << "Is ComboBox";
+    } else if (qobject_cast<QLineEdit*>(obj)) {
+        qDebug() << "Is LineEdit";
+    } else if (qobject_cast<QTextEdit*>(obj)) {
+        qDebug() << "Is TextEdit";
+    } else if (qobject_cast<QPlainTextEdit*>(obj)) {
+        qDebug() << "Is PlainTextEdit";
+    }
+    return true;
 }

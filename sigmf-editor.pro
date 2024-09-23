@@ -10,10 +10,13 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    qsigmfcore.cpp
 
 HEADERS += \
-    mainwindow.h
+    mainwindow.h \
+    qsigmfcore.h \
+    qsigmftypes.h
 
 FORMS += \
     mainwindow.ui

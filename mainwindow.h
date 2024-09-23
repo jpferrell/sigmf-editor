@@ -74,17 +74,23 @@ private:
     int m_trailingBytes;
     QString m_version;
 
+    std::vector<QString> m_globalReqElements;
+
     // Captures Array
     QJsonArray m_captureJsonArray;
     std::vector<int> m_capturesStartIdxVect;
+    std::vector<QString> m_capturesReqElements;
 
     // Annotations Array
     QJsonArray m_annotationJsonArray;
     std::vector<int> m_annotationStartIdxVect;
+    std::vector<QString> m_annotReqElements;
 
     void _InitializeComboBoxes();
     void _UpdateVariables();
     QByteArray _CreateJson();
     void _WriteJsonFile(QByteArray);
+    bool _CheckValidValue(QObject *);
+
 };
 #endif // MAINWINDOW_H
