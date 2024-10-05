@@ -20,7 +20,8 @@
    <string>SigMF Editor</string>
   </property>
   <property name="windowIcon">
-   <iconset theme="application-x-executable"/>
+   <iconset theme="application-x-executable">
+    <normaloff>.</normaloff>.</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout_5">
@@ -332,15 +333,9 @@
                    </widget>
                   </item>
                   <item>
-                   <widget class="QLineEdit" name="offsetLineEdit">
-                    <property name="inputMask">
-                     <string>99999999999999999999</string>
-                    </property>
-                    <property name="alignment">
-                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                    </property>
-                    <property name="placeholderText">
-                     <string>0</string>
+                   <widget class="QSpinBox" name="offsetSpinBox">
+                    <property name="maximum">
+                     <number>1000000000</number>
                     </property>
                    </widget>
                   </item>
@@ -372,15 +367,9 @@
                    </widget>
                   </item>
                   <item>
-                   <widget class="QLineEdit" name="trailingBytesLineEdit">
-                    <property name="inputMask">
-                     <string>999999999999999999999</string>
-                    </property>
-                    <property name="alignment">
-                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                    </property>
-                    <property name="placeholderText">
-                     <string>0</string>
+                   <widget class="QSpinBox" name="trailingBytesSpinBox">
+                    <property name="maximum">
+                     <number>1000000000</number>
                     </property>
                    </widget>
                   </item>
@@ -3358,7 +3347,8 @@
              <string>WRITE</string>
             </property>
             <property name="icon">
-             <iconset theme="media-floppy"/>
+             <iconset theme="media-floppy">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </widget>
           </item>

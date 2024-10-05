@@ -10,25 +10,7 @@ MainWindow::MainWindow(QWidget *parent)
     , m_metaFilepath(".")
     , m_dataFilestem("out")
     , m_metaFilestem("out")
-    , m_dataFormat("")
-    , m_realComplex("")
-    , m_endianness("")
-    , m_datatype("")
-    , m_sampleRate(0.0)
-    , m_author("")
-    , m_collection("")
-    , m_dataset("")
-    , m_metaDoi("")
-    , m_dataDoi("")
-    , m_description("")
-    , m_hardware("")
-    , m_license("")
-    , m_metadataOnly("false")
-    , m_numChannels(1)
-    , m_offset(0)
-    , m_recorder("")
-    , m_trailingBytes(0)
-    , m_version("")
+    , m_sigmfCore()
     , m_globalReqElements()
     , m_captureJsonArray()
     , m_capturesStartIdxVect()
@@ -49,11 +31,30 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->datetimeCheckBox, &QCheckBox::stateChanged, this, &MainWindow::ChangeDatetimeEnable);
     connect(ui->action_Open, &QAction::triggered, this, &MainWindow::OpenDataFile);
     connect(ui->action_Exit, &QAction::triggered, this, &MainWindow::ExitApplication);
-    // Have the both of connected checkboxes change state when one of them changes state from user
+    // Have both of the connected checkboxes change state when one of them changes state from user
     connect(ui->globalTracebilityEnabledCheckbox, &QCheckBox::stateChanged, this, [=] () {this->MatchCheckBox(ui->globalTracebilityEnabledCheckbox->checkState(), *ui->annotationTraceabilityEnabledCheckbox);});
     connect(ui->annotationTraceabilityEnabledCheckbox, &QCheckBox::stateChanged, this, [=] () {this->MatchCheckBox(ui->annotationTraceabilityEnabledCheckbox->checkState(), *ui->globalTracebilityEnabledCheckbox);});
     connect(ui->captureDetailsEnabledCheckBox, &QCheckBox::stateChanged, this, [=] () {this->MatchCheckBox(ui->captureDetailsEnabledCheckBox->checkState(), *ui->annotationCapDetsEnabledCheckbox);});
     connect(ui->annotationCapDetsEnabledCheckbox, &QCheckBox::stateChanged, this, [=] () {this->MatchCheckBox(ui->annotationCapDetsEnabledCheckbox->checkState(), *ui->captureDetailsEnabledCheckBox);});
+
+    // SigMF Core connections
+    connect(ui->realComplexComboBox, &QComboBox::currentTextChanged, &m_sigmfCore, &QSigMfCore::SetComplex);
+    connect(ui->dataFormatComboBox, &QComboBox::currentTextChanged, &m_sigmfCore, &QSigMfCore::SetDataFormat);
+    connect(ui->endianComboBox, &QComboBox::currentTextChanged, &m_sigmfCore, &QSigMfCore::SetEndianness);
+    connect(ui->authorLineEdit, &QLineEdit::textChanged, &m_sigmfCore, &QSigMfCore::SetAuthor);
+    connect(ui->sampleRateDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfCore, &QSigMfCore::SetSampleRate);
+    connect(ui->metaDoiLineEdit, &QLineEdit::textChanged, &m_sigmfCore, &QSigMfCore::SetMetaDoi);
+    connect(ui->dataDoiLineEdit, &QLineEdit::textChanged, &m_sigmfCore, &QSigMfCore::SetDataDoi);
+    //connect(ui->descriptionPlainTextEdit, &QPlainTextEdit::textChanged, &m_sigmfCore, &QSigMfCore::SetDescription);
+    connect(ui->licenseLineEdit, &QLineEdit::textChanged, &m_sigmfCore, &QSigMfCore::SetLicense);
+    connect(ui->hardwareComboBox, &QComboBox::currentTextChanged, &m_sigmfCore, &QSigMfCore::SetHardware);
+    connect(ui->otherHardwareLineEdit, &QLineEdit::textChanged, &m_sigmfCore, &QSigMfCore::SetHardware);
+    connect(ui->metaOnlyCheckBox, &QCheckBox::stateChanged, &m_sigmfCore, &QSigMfCore::SetMetadataOnly);
+    connect(ui->numChannelsSpinBox, &QSpinBox::valueChanged, &m_sigmfCore, &QSigMfCore::SetNumberChannels);
+    connect(ui->offsetSpinBox, &QSpinBox::valueChanged, &m_sigmfCore, &QSigMfCore::SetOffset);
+    connect(ui->recorderLineEdit, &QLineEdit::textChanged, &m_sigmfCore, &QSigMfCore::SetRecorder);
+    connect(ui->trailingBytesSpinBox, &QSpinBox::valueChanged, &m_sigmfCore, &QSigMfCore::SetTrailingBytes);
+    connect(ui->versionLineEdit, &QLineEdit::textChanged, &m_sigmfCore, &QSigMfCore::SetVersion);
 
     m_globalReqElements.push_back("datatype"); m_globalReqElements.push_back("version");
     m_capturesReqElements.push_back("sample_start");
@@ -180,6 +181,7 @@ void MainWindow::MatchCheckBox(int state, QCheckBox &sender)
 
 void MainWindow::_InitializeComboBoxes()
 {
+    ui->dataFormatComboBox->addItem("");
     ui->dataFormatComboBox->addItem("f32");
     ui->dataFormatComboBox->addItem("f64");
     ui->dataFormatComboBox->addItem("i32");
@@ -189,12 +191,15 @@ void MainWindow::_InitializeComboBoxes()
     ui->dataFormatComboBox->addItem("i8");
     ui->dataFormatComboBox->addItem("u8");
 
+    ui->endianComboBox->addItem("");
     ui->endianComboBox->addItem("Little Endian");
     ui->endianComboBox->addItem("Big Endian");
 
+    ui->realComplexComboBox->addItem("");
     ui->realComplexComboBox->addItem("Real");
     ui->realComplexComboBox->addItem("Complex");
 
+    ui->hardwareComboBox->addItem("");
     ui->hardwareComboBox->addItem("HackRF");
     ui->hardwareComboBox->addItem("RTL-SDR");
     ui->hardwareComboBox->addItem("LimeSDR");
@@ -204,6 +209,7 @@ void MainWindow::_InitializeComboBoxes()
     ui->hardwareComboBox->addItem("X310");
     ui->hardwareComboBox->addItem("Other");
 
+    ui->downlinkFormatComboBox->addItem("");
     ui->downlinkFormatComboBox->addItem("Mode S Short (11)");
     ui->downlinkFormatComboBox->addItem("Mode S Extended (17)");
 
@@ -266,54 +272,13 @@ void MainWindow::_InitializeComboBoxes()
 
 void MainWindow::_UpdateVariables()
 {
-    m_dataFormat = ui->dataFormatComboBox->currentText();
-    m_realComplex = QString::compare(ui->realComplexComboBox->currentText(), "Real") ? "c" : "r";
-    m_endianness = QString::compare(ui->endianComboBox->currentText(), "Little Endian") ? "_be" : "_le";
-    m_datatype = m_realComplex + m_dataFormat + m_endianness;
-
-    m_sampleRate = ui->sampleRateDoubleSpinBox->value();
-    m_author = ui->authorLineEdit->text();
-    m_collection = ui->collectionLineEdit->text();
-    m_dataset = ui->datasetLineEdit->text();
-    m_metaDoi = ui->metaDoiLineEdit->text();
-    m_dataDoi = ui->dataDoiLineEdit->text();
-    m_description = ui->descriptionPlainTextEdit->toPlainText();
-    if (ui->otherHardwareLineEdit->isEnabled()) {
-        m_hardware = ui->otherHardwareLineEdit->text();
-    } else {
-        m_hardware = ui->hardwareComboBox->currentText();
-    }
-    m_license = ui->licenseLineEdit->text();
-    m_metadataOnly = ui->metaOnlyCheckBox->isChecked() ? "true" : "false";
-    m_numChannels = ui->numChannelsSpinBox->value();
-    m_offset = ui->offsetLineEdit->text().toInt();
-    m_recorder = ui->recorderLineEdit->text();
-    m_trailingBytes = ui->trailingBytesLineEdit->text().toInt();
-    m_version = ui->versionLineEdit->text();
-
     m_metaFilepath = ui->outFilepathLineEdit->text();
     m_metaFilestem = ui->outFilestubLineEdit->text();
 }
 
 QByteArray MainWindow::_CreateJson()
 {
-    QJsonObject coreObj {
-        {"core:author", m_author},
-        {"core:collection", m_collection},
-        {"core:data_doi", m_dataDoi},
-        {"core:dataset", m_dataset},
-        {"core:datatype", m_datatype},
-        {"core:description", m_description},
-        {"core:hardware", m_hardware},
-        {"core:license", m_license},
-        {"core:meta_doi", m_metaDoi},
-        {"core:num_channels", m_numChannels},
-        {"core:offset", m_offset},
-        {"core:recorder", m_recorder},
-        {"core:sample_rate", m_sampleRate},
-        {"core:trailing_bytes", m_trailingBytes},
-        {"core:version", m_version}
-    };
+    QJsonObject coreObj = m_sigmfCore.GenerateJson();
     if(ui->globalTracebilityEnabledCheckbox->isEnabled()) {
 
     }

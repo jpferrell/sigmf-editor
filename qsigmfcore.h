@@ -28,16 +28,22 @@ public slots:
     void SetDataDoi(QString);
     void SetDescription(QString);
     void SetLicense(QString);
+    void SetHardware(QString);
     void SetMetadataOnly(bool);
     void SetNumberChannels(int);
     void SetOffset(int);
     void SetRecorder(QString);
     void SetTrailingBytes(int);
     void SetVersion(QString);
+    void SetDataset(QString);
+    void SetSha512(QString);
     void SetGeoType(QString);
     void SetLat(double);
     void SetLon(double);
     void SetElevation(double);
+    void SetComplex(const QString&);
+    void SetDataFormat(QString);
+    void SetEndianness(QString);
 
 signals:
 
@@ -47,48 +53,37 @@ private:
 
     class GlobalCore {
     public:
-        void SetSampleRate(double sr){m_sampRate = sr;}
-        void SetAuthor(QString a){m_author = a;}
-        void SetMetaDoi(QString m){m_metaDoi = m;}
-        void SetDataDoi(QString d){m_dataDoi = d;}
-        void SetDescription(QString d){m_desc = d;}
-        void SetLicense(QString l){m_license = l;}
-        void SetMetadataOnly(bool m){m_metaOnly = m ? "true" : "false";}
-        void SetNumberChannels(int n){m_numChans = n;}
-        void SetOffset(int o){m_offset = o;}
-        void SetRecorder(QString r){m_recorder = r;}
-        void SetTrailingBytes(int b){m_trailBytes = b;}
-        void SetVersion(QString v){m_version = v;}
+
+        GlobalCore(){m_complexReal=""; m_dataFormat=""; m_endianness="";}
+
         void SetGeoType(QString g){m_geoType = g;}
         void SetLat(double l){m_geo.SetLat(l);}
         void SetLon(double l){m_geo.SetLon(l);}
         void SetElevation(double e){m_geo.SetElv(e);}
+        void SetComplex(bool isCplx){m_complexReal = isCplx ? "c": "r";}
+        void SetDataFormat(QString df){m_dataFormat = df;}
+        void SetEndianness(QString e){m_endianness = e;}
 
+        QString GetComplexReal(){return m_complexReal;}
+        QString GetDataFormat(){return m_dataFormat;}
+        QString GetEndianness(){return m_endianness;}
 
     protected:
 
     private:
-        double m_sampRate;
-        QString m_author;
-        QString m_metaDoi;
-        QString m_dataDoi;
-        QString m_desc;
-        QString m_license;
-        QString m_metaOnly;
-        int m_numChans;
-        int m_offset;
-        QString m_recorder;
-        int m_trailBytes;
-        QString m_version;
         QString m_geoType;
         Geo m_geo;
+
+        QString m_complexReal;
+        QString m_dataFormat;
+        QString m_endianness;
 
 
     };
 
-    GlobalCore globalVars;
+    GlobalCore m_globalVars;
     std::vector<varVals_t> m_jsonVect{
-        {"core:sample_rate", "", true},
+        {"core:sample_rate", "", false},
         {"core:author", "", false},
         {"core:description", "", false},
         {"core:license", "", false},
@@ -96,9 +91,20 @@ private:
         {"core:number_channels", "", false},
         {"core:offset", "", false},
         {"core:datatype", "", true},
-        {"core:hw", "", false}
+        {"core:hw", "", false},
+        {"core:version", "", true},
+        {"core:collection", "", false},
+        {"core:dataset", "", false},
+        {"core:data_doi", "", false},
+        {"core:meta_doi", "", false},
+        {"core:recorder", "", false},
+        {"core:sha512", "", false},
+        {"core:trailing_bytes", "", false},
+        {"core:geolocation", "", false},
+        {"core:extensions", "", false}
     };
     bool _CheckRequiredData();
+    void _UpdateDataType();
 
 
 

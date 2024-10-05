@@ -12,6 +12,8 @@
 
 #include <filesystem>
 
+#include "qsigmfcore.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -53,26 +55,7 @@ private:
     QString m_metaFilestem;
 
     // Global Object
-    QString m_dataFormat;
-    QString m_realComplex;
-    QString m_endianness;
-    QString m_datatype;
-
-    double m_sampleRate;
-    QString m_author;
-    QString m_collection;
-    QString m_dataset;
-    QString m_metaDoi;
-    QString m_dataDoi;
-    QString m_description;
-    QString m_hardware;
-    QString m_license;
-    QString m_metadataOnly;
-    int m_numChannels;
-    int m_offset;
-    QString m_recorder;
-    int m_trailingBytes;
-    QString m_version;
+    QSigMfCore m_sigmfCore;
 
     std::vector<QString> m_globalReqElements;
 
