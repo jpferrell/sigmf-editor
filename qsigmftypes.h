@@ -1,6 +1,8 @@
 #ifndef QSIGMFTYPES_H
 #define QSIGMFTYPES_H
 
+#include <QString>
+
 class Geo {
 public:
     void SetLat(double lat){m_lat = lat;}
@@ -28,5 +30,11 @@ typedef struct bearing {
     double rangeErr;
     double rangeRateErr;
 } bearing_t;
+
+typedef struct sigmfJson {
+    QString jsonKey;
+    QString jsonVal;
+    bool isRequired;
+} sigmfJson_t;
 
 #endif // QSIGMFTYPES_H

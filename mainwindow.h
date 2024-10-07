@@ -13,6 +13,9 @@
 #include <filesystem>
 
 #include "qsigmfcore.h"
+#include "qsigmfglobal.h"
+#include "qsigmfcapture.h"
+#include "qsigmfannotation.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -55,19 +58,18 @@ private:
     QString m_metaFilestem;
 
     // Global Object
-    QSigMfCore m_sigmfCore;
-
-    std::vector<QString> m_globalReqElements;
+    //QSigMfCore m_sigmfCore;
+    QSigMFGlobal m_sigmfGlobal;
 
     // Captures Array
+    QSigMFCapture m_sigmfCapture;
     QJsonArray m_captureJsonArray;
     std::vector<int> m_capturesStartIdxVect;
-    std::vector<QString> m_capturesReqElements;
 
     // Annotations Array
+    QSigMFAnnotation m_sigmfAnnotation;
     QJsonArray m_annotationJsonArray;
     std::vector<int> m_annotationStartIdxVect;
-    std::vector<QString> m_annotReqElements;
 
     void _InitializeComboBoxes();
     void _UpdateVariables();

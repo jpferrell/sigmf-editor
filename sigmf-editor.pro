@@ -11,11 +11,17 @@ CONFIG += c++17
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
-    qsigmfcore.cpp
+    qsigmfannotation.cpp \
+    qsigmfcapture.cpp \
+    qsigmfcore.cpp \
+    qsigmfglobal.cpp
 
 HEADERS += \
     mainwindow.h \
+    qsigmfannotation.h \
+    qsigmfcapture.h \
     qsigmfcore.h \
+    qsigmfglobal.h \
     qsigmftypes.h
 
 FORMS += \

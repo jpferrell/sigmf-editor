@@ -12,15 +12,14 @@ class QSigMfCore : public QObject
 public:
     explicit QSigMfCore(QObject *parent = nullptr);
 
-    QJsonObject GenerateJson();
+    //QJsonObject GenerateGlobalJson();
+    //QJsonObject GenerateCaptureJson();
 
-    typedef struct varVals {
-        QString jsonKey;
-        QString jsonVal;
-        bool isRequired;
-    } varVals_t;
-
-public slots:
+    std::vector<sigmfJson_t> GetGlobalValues();
+    std::vector<sigmfJson_t> GetCaptureValues();
+    std::vector< std::vector<sigmfJson_t> > GetCaptureArray();
+    std::vector<sigmfJson_t> GetAnnotationValues();
+    std::vector< std::vector<sigmfJson_t> > GetAnnotationArray();
 
     void SetSampleRate(double);
     void SetAuthor(QString);
@@ -44,6 +43,29 @@ public slots:
     void SetComplex(const QString&);
     void SetDataFormat(QString);
     void SetEndianness(QString);
+
+    // capture
+    void SetSampleStart(int);
+    void SetDatetime(QDateTime);
+    void SetFrequency(double);
+    void SetGlobalIndex(int);
+    void SetHeaderBytes(int);
+    void SetDatetimeEnabled(bool);
+
+    // Annotations
+    void SetAnnotSampleStart(int);
+    void SetSampleCount(int);
+    void SetFrequencyLower(double);
+    void SetFrequencyHigher(double);
+    void SetLabel(QString);
+    void SetComment(QString);
+    void SetGenerator(QString);
+    void SetUuid(QString);
+
+public slots:
+
+    void AddCapture();
+    void AddAnnotation();
 
 signals:
 
@@ -82,7 +104,7 @@ private:
     };
 
     GlobalCore m_globalVars;
-    std::vector<varVals_t> m_jsonVect{
+    std::vector<sigmfJson_t> m_globalJsonVect {
         {"core:sample_rate", "", false},
         {"core:author", "", false},
         {"core:description", "", false},
@@ -103,7 +125,29 @@ private:
         {"core:geolocation", "", false},
         {"core:extensions", "", false}
     };
-    bool _CheckRequiredData();
+
+    std::vector<sigmfJson_t> m_coreCapJsonVect {
+        {"core:sample_start", "", true},
+        {"core:datetime", "", false},
+        {"core:frequency", "", false},
+        {"core:global_index", "", false},
+        {"core:header_bytes", "", false}
+    };
+    std::vector< std::vector<sigmfJson_t> > m_coreCapJsonArr;
+
+    std::vector<sigmfJson_t> m_coreAnnotJsonVect {
+        {"core:sample_start", "", true},
+        {"core:sample_count", "", false},
+        {"core:freq_lower_edge", "", false},
+        {"core:freq_upper_edge", "", false},
+        {"core:label", "", false},
+        {"core:comment", "", false},
+        {"core:generator", "", false},
+        {"core:uuid", "", false}
+    };
+    std::vector< std::vector<sigmfJson_t> > m_coreAnnotJsonArr;
+
+    bool _CheckRequiredData(std::vector<sigmfJson_t>);
     void _UpdateDataType();
 
 

@@ -10,14 +10,11 @@ MainWindow::MainWindow(QWidget *parent)
     , m_metaFilepath(".")
     , m_dataFilestem("out")
     , m_metaFilestem("out")
-    , m_sigmfCore()
-    , m_globalReqElements()
     , m_captureJsonArray()
     , m_capturesStartIdxVect()
-    , m_capturesReqElements()
+    , m_sigmfAnnotation()
     , m_annotationJsonArray()
     , m_annotationStartIdxVect()
-    , m_annotReqElements()
 
 {
     ui->setupUi(this);
@@ -27,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->writeButton, &QPushButton::pressed, this, &MainWindow::Configure);
     connect(ui->hardwareComboBox, &QComboBox::currentTextChanged, this, &MainWindow::ChangeHardwareOption);
     connect(ui->addAnnotationPushButton, &QPushButton::pressed, this, &MainWindow::AddAnnotation);
-    connect(ui->addCapturePushButton, &QPushButton::pressed, this, &MainWindow::AddCapture);
+    //connect(ui->addCapturePushButton, &QPushButton::pressed, this, &MainWindow::AddCapture);
     connect(ui->datetimeCheckBox, &QCheckBox::stateChanged, this, &MainWindow::ChangeDatetimeEnable);
     connect(ui->action_Open, &QAction::triggered, this, &MainWindow::OpenDataFile);
     connect(ui->action_Exit, &QAction::triggered, this, &MainWindow::ExitApplication);
@@ -37,28 +34,36 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->captureDetailsEnabledCheckBox, &QCheckBox::stateChanged, this, [=] () {this->MatchCheckBox(ui->captureDetailsEnabledCheckBox->checkState(), *ui->annotationCapDetsEnabledCheckbox);});
     connect(ui->annotationCapDetsEnabledCheckbox, &QCheckBox::stateChanged, this, [=] () {this->MatchCheckBox(ui->annotationCapDetsEnabledCheckbox->checkState(), *ui->captureDetailsEnabledCheckBox);});
 
-    // SigMF Core connections
-    connect(ui->realComplexComboBox, &QComboBox::currentTextChanged, &m_sigmfCore, &QSigMfCore::SetComplex);
-    connect(ui->dataFormatComboBox, &QComboBox::currentTextChanged, &m_sigmfCore, &QSigMfCore::SetDataFormat);
-    connect(ui->endianComboBox, &QComboBox::currentTextChanged, &m_sigmfCore, &QSigMfCore::SetEndianness);
-    connect(ui->authorLineEdit, &QLineEdit::textChanged, &m_sigmfCore, &QSigMfCore::SetAuthor);
-    connect(ui->sampleRateDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfCore, &QSigMfCore::SetSampleRate);
-    connect(ui->metaDoiLineEdit, &QLineEdit::textChanged, &m_sigmfCore, &QSigMfCore::SetMetaDoi);
-    connect(ui->dataDoiLineEdit, &QLineEdit::textChanged, &m_sigmfCore, &QSigMfCore::SetDataDoi);
-    //connect(ui->descriptionPlainTextEdit, &QPlainTextEdit::textChanged, &m_sigmfCore, &QSigMfCore::SetDescription);
-    connect(ui->licenseLineEdit, &QLineEdit::textChanged, &m_sigmfCore, &QSigMfCore::SetLicense);
-    connect(ui->hardwareComboBox, &QComboBox::currentTextChanged, &m_sigmfCore, &QSigMfCore::SetHardware);
-    connect(ui->otherHardwareLineEdit, &QLineEdit::textChanged, &m_sigmfCore, &QSigMfCore::SetHardware);
-    connect(ui->metaOnlyCheckBox, &QCheckBox::stateChanged, &m_sigmfCore, &QSigMfCore::SetMetadataOnly);
-    connect(ui->numChannelsSpinBox, &QSpinBox::valueChanged, &m_sigmfCore, &QSigMfCore::SetNumberChannels);
-    connect(ui->offsetSpinBox, &QSpinBox::valueChanged, &m_sigmfCore, &QSigMfCore::SetOffset);
-    connect(ui->recorderLineEdit, &QLineEdit::textChanged, &m_sigmfCore, &QSigMfCore::SetRecorder);
-    connect(ui->trailingBytesSpinBox, &QSpinBox::valueChanged, &m_sigmfCore, &QSigMfCore::SetTrailingBytes);
-    connect(ui->versionLineEdit, &QLineEdit::textChanged, &m_sigmfCore, &QSigMfCore::SetVersion);
+    // SigMF Core Global connections
+    connect(ui->realComplexComboBox, &QComboBox::currentTextChanged, &m_sigmfGlobal, &QSigMFGlobal::SetComplex);
+    connect(ui->dataFormatComboBox, &QComboBox::currentTextChanged, &m_sigmfGlobal, &QSigMFGlobal::SetDataFormat);
+    connect(ui->endianComboBox, &QComboBox::currentTextChanged, &m_sigmfGlobal, &QSigMFGlobal::SetEndianness);
+    connect(ui->authorLineEdit, &QLineEdit::textChanged, &m_sigmfGlobal, &QSigMFGlobal::SetAuthor);
+    connect(ui->sampleRateDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfGlobal, &QSigMFGlobal::SetSampleRate);
+    connect(ui->metaDoiLineEdit, &QLineEdit::textChanged, &m_sigmfGlobal, &QSigMFGlobal::SetMetaDoi);
+    connect(ui->dataDoiLineEdit, &QLineEdit::textChanged, &m_sigmfGlobal, &QSigMFGlobal::SetDataDoi);
+    //connect(ui->descriptionPlainTextEdit, &QPlainTextEdit::textChanged, &m_sigmfGlobal, &QSigMFGlobal::SetDescription);
+    connect(ui->licenseLineEdit, &QLineEdit::textChanged, &m_sigmfGlobal, &QSigMFGlobal::SetLicense);
+    connect(ui->hardwareComboBox, &QComboBox::currentTextChanged, &m_sigmfGlobal, &QSigMFGlobal::SetHardware);
+    connect(ui->otherHardwareLineEdit, &QLineEdit::textChanged, &m_sigmfGlobal, &QSigMFGlobal::SetHardware);
+    connect(ui->metaOnlyCheckBox, &QCheckBox::stateChanged, &m_sigmfGlobal, &QSigMFGlobal::SetMetadataOnly);
+    connect(ui->numChannelsSpinBox, &QSpinBox::valueChanged, &m_sigmfGlobal, &QSigMFGlobal::SetNumberChannels);
+    connect(ui->offsetSpinBox, &QSpinBox::valueChanged, &m_sigmfGlobal, &QSigMFGlobal::SetOffset);
+    connect(ui->recorderLineEdit, &QLineEdit::textChanged, &m_sigmfGlobal, &QSigMFGlobal::SetRecorder);
+    connect(ui->trailingBytesSpinBox, &QSpinBox::valueChanged, &m_sigmfGlobal, &QSigMFGlobal::SetTrailingBytes);
+    connect(ui->versionLineEdit, &QLineEdit::textChanged, &m_sigmfGlobal, &QSigMFGlobal::SetVersion);
 
-    m_globalReqElements.push_back("datatype"); m_globalReqElements.push_back("version");
-    m_capturesReqElements.push_back("sample_start");
-    m_annotReqElements.push_back("sample_start");
+    // SigMF Core Capture Connections
+    connect(ui->sampStartSpinBox, &QSpinBox::valueChanged, &m_sigmfCapture, &QSigMFCapture::SetSampleStart);
+    connect(ui->dateTimeEdit, &QDateTimeEdit::dateTimeChanged, &m_sigmfCapture, &QSigMFCapture::SetDatetime);
+    connect(ui->datetimeCheckBox, &QCheckBox::stateChanged, &m_sigmfCapture, &QSigMFCapture::SetDatetimeEnabled);
+    connect(ui->frequencyDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfCapture, &QSigMFCapture::SetFrequency);
+    connect(ui->globalIdxSpinBox, &QSpinBox::valueChanged, &m_sigmfCapture, &QSigMFCapture::SetGlobalIndex);
+    connect(ui->headerBytesSpinBox, &QSpinBox::valueChanged, &m_sigmfCapture, &QSigMFCapture::SetHeaderBytes);
+    connect(ui->addCapturePushButton, &QPushButton::clicked, &m_sigmfCapture, &QSigMFCapture::AddCapture);
+
+    // SigMF Core Annotation Connections
+    connect(ui->sampStartAnnotSpinBox, &QSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetSampleStart);
 
     if(qobject_cast<QCheckBox*>(ui->globalSpatialEnabledCheckBox)) {
         qDebug() << "Is checkbox";
@@ -93,8 +98,8 @@ void MainWindow::ChangeHardwareOption(const QString &currentText)
 void MainWindow::AddAnnotation()
 {
     qDebug() << "Add annotation button pressed";
-    int sampStart = ui->sampStartAnnotLineEdit->text().toInt();
-    int sampCnt = ui->sampCntAnnotLineEdit->text().toInt();
+    int sampStart = ui->sampStartAnnotSpinBox->text().toInt();
+    int sampCnt = ui->sampCntAnnotSpinBox->text().toInt();
     double freqLowerEdge = ui->freqLowerEdgeDoubleSpinBox->value();
     double freqUpperEdge = ui->freqUpperEdgeDoubleSpinBox->value();
     QString label = ui->labelAnnotLineEdit->text();
@@ -124,11 +129,12 @@ void MainWindow::AddAnnotation()
 
 void MainWindow::AddCapture()
 {
+    /*
     qDebug() << "Add capture button pressed";
-    int sampStart = ui->sampleStartLineEdit->text().toInt(); // Not working atm
+    int sampStart = ui->sampStartSpinBox->text().toInt(); // Not working atm
     double freq = ui->frequencyDoubleSpinBox->value();
-    int globalIdx = ui->globalIndexLineEdit->text().toInt();
-    int headerBytes = ui->headerBytesLineEdit->text().toInt();
+    int globalIdx = ui->globalIdxSpinBox->text().toInt();
+    int headerBytes = ui->headerBytesSpinBox->text().toInt();
     QString datetime = "";
     if (ui->dateTimeEdit->isEnabled()) {
         datetime = ui->dateTimeEdit->dateTime().toString(Qt::ISODateWithMs);
@@ -145,6 +151,7 @@ void MainWindow::AddCapture()
 
     //m_capturesVect.push_back(jsonObj);
     m_captureJsonArray.append(jsonObj);
+    */
 }
 
 void MainWindow::ChangeDatetimeEnable()
@@ -278,19 +285,23 @@ void MainWindow::_UpdateVariables()
 
 QByteArray MainWindow::_CreateJson()
 {
-    QJsonObject coreObj = m_sigmfCore.GenerateJson();
-    if(ui->globalTracebilityEnabledCheckbox->isEnabled()) {
-
-    }
+    //QJsonObject globalObj = m_sigmfCore.GenerateGlobalJson();
+    QJsonObject globalObj = m_sigmfGlobal.GenerateGlobalJson();
+    //QJsonObject captureObj = m_sigmfCapture.GenerateCaptureJson();
+    QJsonArray captureJsonArr = m_sigmfCapture.GenerateCaptureJsonArray();
 
     QJsonObject overallObj;
+    /*
     if(m_annotationJsonArray.size()) {
         overallObj.insert("annotations", m_annotationJsonArray);
     }
     if(m_captureJsonArray.size()) {
         overallObj.insert("captures", m_captureJsonArray);
     }
-    overallObj.insert("global", coreObj);
+    */
+    overallObj.insert("global", globalObj);
+    //overallObj.insert("captures", captureObj);
+    overallObj.insert("captures", captureJsonArr);
     QJsonDocument jsonFileCore(overallObj);
     return jsonFileCore.toJson();
 }

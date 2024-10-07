@@ -73,10 +73,10 @@
                      <string/>
                     </property>
                     <property name="maxVisibleItems">
-                     <number>2</number>
+                     <number>3</number>
                     </property>
                     <property name="maxCount">
-                     <number>2</number>
+                     <number>3</number>
                     </property>
                    </widget>
                   </item>
@@ -91,7 +91,14 @@
                    </widget>
                   </item>
                   <item>
-                   <widget class="QComboBox" name="dataFormatComboBox"/>
+                   <widget class="QComboBox" name="dataFormatComboBox">
+                    <property name="maxVisibleItems">
+                     <number>11</number>
+                    </property>
+                    <property name="maxCount">
+                     <number>11</number>
+                    </property>
+                   </widget>
                   </item>
                   <item>
                    <widget class="QLabel" name="endianLabel">
@@ -106,10 +113,10 @@
                   <item>
                    <widget class="QComboBox" name="endianComboBox">
                     <property name="maxVisibleItems">
-                     <number>2</number>
+                     <number>3</number>
                     </property>
                     <property name="maxCount">
-                     <number>2</number>
+                     <number>3</number>
                     </property>
                    </widget>
                   </item>
@@ -1083,15 +1090,9 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLineEdit" name="globalIndexLineEdit">
-                  <property name="inputMask">
-                   <string>99999999999999999999</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                  <property name="placeholderText">
-                   <string>0</string>
+                 <widget class="QSpinBox" name="globalIdxSpinBox">
+                  <property name="maximum">
+                   <number>1000000000</number>
                   </property>
                  </widget>
                 </item>
@@ -1106,15 +1107,9 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLineEdit" name="headerBytesLineEdit">
-                  <property name="inputMask">
-                   <string>99999999999999999999</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                  <property name="placeholderText">
-                   <string>0</string>
+                 <widget class="QSpinBox" name="headerBytesSpinBox">
+                  <property name="maximum">
+                   <number>1000000000</number>
                   </property>
                  </widget>
                 </item>
@@ -1129,15 +1124,9 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLineEdit" name="sampleStartLineEdit">
-                  <property name="inputMask">
-                   <string>99999999999999999999</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                  <property name="placeholderText">
-                   <string>0</string>
+                 <widget class="QSpinBox" name="sampStartSpinBox">
+                  <property name="maximum">
+                   <number>1000000000</number>
                   </property>
                  </widget>
                 </item>
@@ -2079,7 +2068,7 @@
           <item>
            <widget class="QTabWidget" name="annotationSubtabs">
             <property name="currentIndex">
-             <number>4</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="annotationCoreTab">
              <attribute name="title">
@@ -2099,14 +2088,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLineEdit" name="sampStartAnnotLineEdit">
-                  <property name="inputMask">
-                   <string>99999999999999999999</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
+                 <widget class="QSpinBox" name="sampStartAnnotSpinBox"/>
                 </item>
                 <item>
                  <widget class="QLabel" name="sampCntAnnotLabel">
@@ -2119,14 +2101,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLineEdit" name="sampCntAnnotLineEdit">
-                  <property name="inputMask">
-                   <string>99999999999999999999</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
+                 <widget class="QSpinBox" name="sampCntAnnotSpinBox"/>
                 </item>
                 <item>
                  <widget class="QLabel" name="freqLowerEdgeLabel">
