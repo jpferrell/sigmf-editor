@@ -8,8 +8,14 @@
 #include <QJsonDocument>
 #include <QFile>
 #include <QFileDialog>
+#include <QCheckBox>
 
 #include <filesystem>
+
+#include "qsigmfcore.h"
+#include "qsigmfglobal.h"
+#include "qsigmfcapture.h"
+#include "qsigmfannotation.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -35,6 +41,7 @@ public slots:
     void ChangeDatetimeEnable();
     void OpenDataFile();
     void ExitApplication();
+    void MatchCheckBox(int, QCheckBox &);
 
 signals:
 
@@ -51,32 +58,16 @@ private:
     QString m_metaFilestem;
 
     // Global Object
-    QString m_dataFormat;
-    QString m_realComplex;
-    QString m_endianness;
-    QString m_datatype;
-
-    double m_sampleRate;
-    QString m_author;
-    QString m_collection;
-    QString m_dataset;
-    QString m_metaDoi;
-    QString m_dataDoi;
-    QString m_description;
-    QString m_hardware;
-    QString m_license;
-    QString m_metadataOnly;
-    int m_numChannels;
-    int m_offset;
-    QString m_recorder;
-    int m_trailingBytes;
-    QString m_version;
+    //QSigMfCore m_sigmfCore;
+    QSigMFGlobal m_sigmfGlobal;
 
     // Captures Array
+    QSigMFCapture m_sigmfCapture;
     QJsonArray m_captureJsonArray;
     std::vector<int> m_capturesStartIdxVect;
 
     // Annotations Array
+    QSigMFAnnotation m_sigmfAnnotation;
     QJsonArray m_annotationJsonArray;
     std::vector<int> m_annotationStartIdxVect;
 
@@ -84,5 +75,7 @@ private:
     void _UpdateVariables();
     QByteArray _CreateJson();
     void _WriteJsonFile(QByteArray);
+    bool _CheckValidValue(QObject *);
+
 };
 #endif // MAINWINDOW_H
