@@ -64,6 +64,14 @@ MainWindow::MainWindow(QWidget *parent)
 
     // SigMF Core Annotation Connections
     connect(ui->sampStartAnnotSpinBox, &QSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetSampleStart);
+    connect(ui->sampCntAnnotSpinBox, &QSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetSampleCount);
+    connect(ui->freqLowerEdgeDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetFrequencyLower);
+    connect(ui->freqUpperEdgeDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetFrequencyHigher);
+    connect(ui->labelAnnotLineEdit, &QLineEdit::textChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetLabel);
+    //connect(ui->commentAnnotPlainTextEdit, &QPlainTextEdit::textChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetComment);
+    connect(ui->generatorLineEdit, &QLineEdit::textChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetGenerator);
+    connect(ui->uuidLineEdit, &QLineEdit::textChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetUuid);
+    connect(ui->addAnnotationPushButton, &QPushButton::clicked, &m_sigmfAnnotation, &QSigMFAnnotation::AddAnnotation);
 
     if(qobject_cast<QCheckBox*>(ui->globalSpatialEnabledCheckBox)) {
         qDebug() << "Is checkbox";
@@ -289,6 +297,7 @@ QByteArray MainWindow::_CreateJson()
     QJsonObject globalObj = m_sigmfGlobal.GenerateGlobalJson();
     //QJsonObject captureObj = m_sigmfCapture.GenerateCaptureJson();
     QJsonArray captureJsonArr = m_sigmfCapture.GenerateCaptureJsonArray();
+    QJsonArray annotationJsonArr = m_sigmfAnnotation.GenerateAnnotationJsonArray();
 
     QJsonObject overallObj;
     /*
@@ -302,6 +311,7 @@ QByteArray MainWindow::_CreateJson()
     overallObj.insert("global", globalObj);
     //overallObj.insert("captures", captureObj);
     overallObj.insert("captures", captureJsonArr);
+    overallObj.insert("annotations", annotationJsonArr);
     QJsonDocument jsonFileCore(overallObj);
     return jsonFileCore.toJson();
 }
