@@ -6,6 +6,7 @@
 
 #include "qsigmfcore.h"
 #include "qsigmftypes.h"
+#include "qcapturedetails.h"
 
 class QSigMFAnnotation : public QObject
 {
@@ -25,13 +26,20 @@ public slots:
     void SetComment(QString);
     void SetGenerator(QString);
     void SetUuid(QString);
+
+    void SetCapDetEnabled(bool);
+    void SetCapDetSnr(double);
+    void SetCapDetSigRefNum(QString);
+
     void AddAnnotation();
+
 
 protected:
 
 private:
 
     QSigMfCore m_sigmfCore;
+    QCaptureDetails m_capDets;
     std::vector< std::vector<sigmfJson_t> > m_annotVect;
 
 };

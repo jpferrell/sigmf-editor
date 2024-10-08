@@ -73,6 +73,22 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->uuidLineEdit, &QLineEdit::textChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetUuid);
     connect(ui->addAnnotationPushButton, &QPushButton::clicked, &m_sigmfAnnotation, &QSigMFAnnotation::AddAnnotation);
 
+    // SigMF Signal Details Capture Connections
+    connect(ui->captureDetailsEnabledCheckBox, &QCheckBox::stateChanged, &m_sigmfCapture, &QSigMFCapture::SetDetsEnabled);
+    connect(ui->detailAcqScaledoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfCapture, &QSigMFCapture::SetAcqScaleFactor);
+    connect(ui->detailsStopCapDateTimeEdit, &QDateTimeEdit::dateTimeChanged, &m_sigmfCapture, &QSigMFCapture::SetStopCapture);
+    connect(ui->detailsStartCapDateTimeEdit, &QDateTimeEdit::dateTimeChanged, &m_sigmfCapture, &QSigMFCapture::SetStartCapture);
+    connect(ui->detailsAttnDoubleComboBox, &QDoubleSpinBox::valueChanged, &m_sigmfCapture, &QSigMFCapture::SetAttenuation);
+    connect(ui->detailsSrcFileLineEdit, &QLineEdit::textChanged, &m_sigmfCapture, &QSigMFCapture::SetSourceFile);
+    connect(ui->detailsAcqBwDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfCapture, &QSigMFCapture::SetAcqBandwidth);
+    connect(ui->detailsGainDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfCapture, &QSigMFCapture::SetGain);
+
+    // SigMF Signal Details Annotation Connections
+    connect(ui->detailsSigRefNumLineEdit, &QLineEdit::textChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetCapDetSigRefNum);
+    connect(ui->detailsSnrDbDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetCapDetSnr);
+    connect(ui->captureDetailsEnabledCheckBox, &QCheckBox::stateChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetCapDetEnabled);
+
+
     if(qobject_cast<QCheckBox*>(ui->globalSpatialEnabledCheckBox)) {
         qDebug() << "Is checkbox";
     }
@@ -105,6 +121,7 @@ void MainWindow::ChangeHardwareOption(const QString &currentText)
 
 void MainWindow::AddAnnotation()
 {
+    /*
     qDebug() << "Add annotation button pressed";
     int sampStart = ui->sampStartAnnotSpinBox->text().toInt();
     int sampCnt = ui->sampCntAnnotSpinBox->text().toInt();
@@ -133,6 +150,7 @@ void MainWindow::AddAnnotation()
     }
 
     m_annotationJsonArray.append(jsonObj);
+    */
 }
 
 void MainWindow::AddCapture()

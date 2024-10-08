@@ -18,6 +18,7 @@ QJsonArray QSigMFAnnotation::GenerateAnnotationJsonArray()
         QJsonObject obj;
         for (auto inIt = outIt->begin(); inIt != outIt->end(); inIt++) {
             obj.insert(inIt->jsonKey, inIt->jsonVal);
+            qDebug() << "inserted: " << inIt->jsonKey;
         }
         retArr.append(obj);
     }
@@ -65,7 +66,40 @@ void QSigMFAnnotation::SetUuid(QString str)
     m_sigmfCore.SetUuid(str);
 }
 
+void QSigMFAnnotation::SetCapDetEnabled(bool isEnabled)
+{
+    m_capDets.SetEnabled(isEnabled);
+}
+
+void QSigMFAnnotation::SetCapDetSnr(double num)
+{
+    m_capDets.SetSnr(num);
+}
+
+void QSigMFAnnotation::SetCapDetSigRefNum(QString str)
+{
+    m_capDets.SetSigRefNum(str);
+}
+
 void QSigMFAnnotation::AddAnnotation()
 {
+    // Had to do this to get it all within the same array
+    std::vector<sigmfJson_t> tmp;
+    std::vector<sigmfJson_t> sigVect = m_sigmfCore.GetAnnotationValues();
+    for (auto it = sigVect.begin(); it != sigVect.end(); it++) {
+        tmp.emplace_back(*it);
+    }
+    if (m_capDets.GetIsEnabled()) {
+        std::vector<sigmfJson_t> detVect = m_capDets.GetAnnotationValues();
+        for (auto it = detVect.begin(); it != detVect.end(); it++) {
+            tmp.emplace_back(*it);
+        }
+    }
+    m_annotVect.insert(m_annotVect.end(), tmp);
+    /*
     m_annotVect.insert(m_annotVect.end(), m_sigmfCore.GetAnnotationValues());
+    if (m_capDets.GetIsEnabled()) {
+        m_annotVect.insert(m_annotVect.end(), m_capDets.GetAnnotationValues());
+    }
+    */
 }

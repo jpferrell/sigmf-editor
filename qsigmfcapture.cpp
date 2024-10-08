@@ -4,20 +4,6 @@ QSigMFCapture::QSigMFCapture():
     m_sigmfCore()
   , m_captureVect()
 {
-
-}
-
-QJsonObject QSigMFCapture::GenerateCaptureJson()
-{
-    QJsonObject retObj;
-
-    std::vector<sigmfJson_t> capVect = m_sigmfCore.GetCaptureValues();
-    for (auto it = capVect.begin(); it != capVect.end(); it++) {
-        retObj.insert(it->jsonKey, it->jsonVal);
-        qDebug() << "inserted " << it->jsonKey;
-    }
-
-    return retObj;
 }
 
 QJsonArray QSigMFCapture::GenerateCaptureJsonArray()
@@ -68,8 +54,59 @@ void QSigMFCapture::SetDatetimeEnabled(bool isEnabled)
     m_sigmfCore.SetDatetimeEnabled(isEnabled);
 }
 
+void QSigMFCapture::SetAcqScaleFactor(double num)
+{
+    m_capDets.SetAcqScaleFactor(num);
+}
+
+void QSigMFCapture::SetAttenuation(double num)
+{
+    m_capDets.SetAttenuation(num);
+}
+
+void QSigMFCapture::SetAcqBandwidth(double num)
+{
+    m_capDets.SetAcqBandwidth(num);
+}
+
+void QSigMFCapture::SetStartCapture(QDateTime dt)
+{
+    m_capDets.SetStartCapture(dt);
+}
+
+void QSigMFCapture::SetStopCapture(QDateTime dt)
+{
+    m_capDets.SetStopCapture(dt);
+}
+
+void QSigMFCapture::SetSourceFile(QString str)
+{
+    m_capDets.SetSourceFile(str);
+}
+
+void QSigMFCapture::SetGain(double num)
+{
+    m_capDets.SetGain(num);
+}
+
+void QSigMFCapture::SetDetsEnabled(bool isEnabled)
+{
+    m_capDets.SetEnabled(isEnabled);
+}
+
 void QSigMFCapture::AddCapture()
 {
-    qDebug() << "QSigMFCapture::AddCapture";
-    m_captureVect.insert(m_captureVect.end(), m_sigmfCore.GetCaptureValues());
+    // Had to do this to get it all within the same array
+    std::vector<sigmfJson_t> tmp;
+    std::vector<sigmfJson_t> sigVect = m_sigmfCore.GetCaptureValues();
+    for (auto it = sigVect.begin(); it != sigVect.end(); it++) {
+        tmp.emplace_back(*it);
+    }
+    if (m_capDets.GetIsEnabled()) {
+        std::vector<sigmfJson_t> detVect = m_capDets.GetCaptureValues();
+        for (auto it = detVect.begin(); it != detVect.end(); it++) {
+            tmp.emplace_back(*it);
+        }
+    }
+    m_captureVect.insert(m_captureVect.end(), tmp);
 }

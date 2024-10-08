@@ -13,7 +13,7 @@ Specification can be found at the [SigMF Website](https://sigmf.org)
 - [ ] Extensions
   - [ ] ADSB
   - [ ] Antenna
-  - [ ] Capture Details
+  - [x] Capture Details
   - [ ] Signal
   - [ ] Spatial
   - [ ] Traceability
