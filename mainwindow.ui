@@ -2068,7 +2068,7 @@
           <item>
            <widget class="QTabWidget" name="annotationSubtabs">
             <property name="currentIndex">
-             <number>6</number>
+             <number>4</number>
             </property>
             <widget class="QWidget" name="annotationCoreTab">
              <attribute name="title">

@@ -31,6 +31,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->annotationTraceabilityEnabledCheckbox, &QCheckBox::stateChanged, this, [=] () {this->MatchCheckBox(ui->annotationTraceabilityEnabledCheckbox->checkState(), *ui->globalTracebilityEnabledCheckbox);});
     connect(ui->captureDetailsEnabledCheckBox, &QCheckBox::stateChanged, this, [=] () {this->MatchCheckBox(ui->captureDetailsEnabledCheckBox->checkState(), *ui->annotationCapDetsEnabledCheckbox);});
     connect(ui->annotationCapDetsEnabledCheckbox, &QCheckBox::stateChanged, this, [=] () {this->MatchCheckBox(ui->annotationCapDetsEnabledCheckbox->checkState(), *ui->captureDetailsEnabledCheckBox);});
+    connect(ui->antennaEnableCheckBox, &QCheckBox::stateChanged, this, [=] () {this->MatchCheckBox(ui->antennaEnableCheckBox->checkState(), *ui->annotationAntennaEnabledCheckBox);});
+    connect(ui->annotationAntennaEnabledCheckBox, &QCheckBox::stateChanged, this, [=] () {this->MatchCheckBox(ui->annotationAntennaEnabledCheckBox->checkState(), *ui->antennaEnableCheckBox);});
 
     // SigMF Core Global connections
     connect(ui->realComplexComboBox, &QComboBox::currentTextChanged, &m_sigmfGlobal, &QSigMFGlobal::SetComplex);
@@ -111,6 +113,12 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->wifiStartPktSpinBox, &QSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetWifiStartPkt);
     connect(ui->wifiStopPktSpinBox, &QSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetWifiEndPkt);
     connect(ui->wifiNumSampsSpinBox, &QSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetWifiNumSampsPkt);
+
+    // Antenna Annotation Connections
+    connect(ui->antennaEnableCheckBox, &QCheckBox::stateChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetAntennaEnabled);
+    connect(ui->antennaPolarizationLineEdit, &QLineEdit::textChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetAntennaPolarization);
+    connect(ui->antennaAzimuthDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetAntennaAzAng);
+    connect(ui->antennaElevationDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetAntennaElvAng);
 
     if(qobject_cast<QCheckBox*>(ui->globalSpatialEnabledCheckBox)) {
         qDebug() << "Is checkbox";

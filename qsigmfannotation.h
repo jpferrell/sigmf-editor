@@ -9,6 +9,7 @@
 #include "qcapturedetails.h"
 #include "qadsb.h"
 #include "qwifi.h"
+#include "qantenna.h"
 
 class QSigMFAnnotation : public QObject
 {
@@ -57,6 +58,11 @@ public slots:
     void SetWifiEndPkt(double s);
     void SetWifiNumSampsPkt(double s);
 
+    void SetAntennaEnabled(bool en);
+    void SetAntennaAzAng(double a);
+    void SetAntennaElvAng(double a);
+    void SetAntennaPolarization(QString str);
+
     void AddAnnotation();
 
 
@@ -68,6 +74,7 @@ private:
     QCaptureDetails m_capDets;
     QAdsb m_adsb;
     QWifi m_wifi;
+    QAntenna m_ant;
     std::vector< std::vector<sigmfJson_t> > m_annotVect;
 
 };

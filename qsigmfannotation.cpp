@@ -191,6 +191,27 @@ void QSigMFAnnotation::SetWifiNumSampsPkt(double s)
     m_wifi.SetNumSampsPkt(s);
 }
 
+void QSigMFAnnotation::SetAntennaEnabled(bool en)
+{
+    qDebug() << "antenna: " << en;
+    m_ant.SetEnable(en);
+}
+
+void QSigMFAnnotation::SetAntennaAzAng(double a)
+{
+    m_ant.SetAzimuthAng(a);
+}
+
+void QSigMFAnnotation::SetAntennaElvAng(double a)
+{
+    m_ant.SetElvAng(a);
+}
+
+void QSigMFAnnotation::SetAntennaPolarization(QString str)
+{
+    m_ant.SetPolarization(str);
+}
+
 void QSigMFAnnotation::AddAnnotation()
 {
     // Had to do this to get it all within the same array
@@ -211,10 +232,16 @@ void QSigMFAnnotation::AddAnnotation()
             tmp.emplace_back(*it);
         }
     }
-    qDebug() << "wifi enabled: " << m_wifi.GetIsEnabled();
     if (m_wifi.GetIsEnabled()) {
         std::vector<sigmfJson_t> wifiVect = m_wifi.GetAnnotationValues();
         for (auto it = wifiVect.begin(); it != wifiVect.end(); it++) {
+            tmp.emplace_back(*it);
+        }
+    }
+    qDebug() << "m_ant enabled: " << m_ant.GetEnabled();
+    if (m_ant.GetEnabled()) {
+        sigmfVector_t antVect = m_ant.GetAnnotationValues();
+        for (auto it = antVect.begin(); it != antVect.end(); it++) {
             tmp.emplace_back(*it);
         }
     }

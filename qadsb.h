@@ -37,7 +37,7 @@ private:
         {"adsb:downlink_format", "", true},
         {"adsb:message_type", "", true},
         {"adsb:ICA_address", "", true},
-        {"adsb:binary", "", false} // TODO: Change to true when figure out the PlainTextEdit
+        {"adsb:binary", "", true}
     };
     std::vector< std::vector<sigmfJson_t> > m_annotJsonArr;
 

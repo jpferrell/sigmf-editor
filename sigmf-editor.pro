@@ -12,7 +12,9 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     qadsb.cpp \
+    qantenna.cpp \
     qcapturedetails.cpp \
+    qextension.cpp \
     qsigmfannotation.cpp \
     qsigmfcapture.cpp \
     qsigmfcore.cpp \
@@ -22,7 +24,9 @@ SOURCES += \
 HEADERS += \
     mainwindow.h \
     qadsb.h \
+    qantenna.h \
     qcapturedetails.h \
+    qextension.h \
     qsigmfannotation.h \
     qsigmfcapture.h \
     qsigmfcore.h \
