@@ -6,30 +6,6 @@ QSigMfCore::QSigMfCore(QObject *parent)
 {
 }
 
-/*
-QJsonObject QSigMfCore::GenerateGlobalJson()
-{
-    QJsonObject retObj;
-    _UpdateDataType();
-    bool isValid = _CheckRequiredData();
-    qDebug() << "isValid: " << isValid;
-
-    if (isValid) {
-        for (auto it = m_globalJsonVect.begin(); it != m_globalJsonVect.end(); it++) {
-            if (it->isRequired) {
-                retObj.insert(it->jsonKey, it->jsonVal);
-            } else if (it->jsonVal.compare("")) {
-                // Not an empty value
-                retObj.insert(it->jsonKey, it->jsonVal);
-                qDebug() << "inserted " << it->jsonKey;
-            }
-        }
-    }
-
-    return retObj;
-}
-*/
-
 std::vector<sigmfJson_t> QSigMfCore::GetGlobalValues()
 {
     std::vector<sigmfJson_t> retVect;

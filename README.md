@@ -12,6 +12,7 @@ Specification can be found at the [SigMF Website](https://sigmf.org)
 - [ ] Recording, Collection, Archive handling
 - [ ] Extensions
   - [ ] ADSB
+    - [ ] Binary
   - [ ] Antenna
   - [x] Capture Details
   - [ ] Signal

@@ -23,7 +23,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->writeButton, &QPushButton::pressed, this, &MainWindow::Configure);
     connect(ui->hardwareComboBox, &QComboBox::currentTextChanged, this, &MainWindow::ChangeHardwareOption);
-    connect(ui->addAnnotationPushButton, &QPushButton::pressed, this, &MainWindow::AddAnnotation);
     //connect(ui->addCapturePushButton, &QPushButton::pressed, this, &MainWindow::AddCapture);
     connect(ui->datetimeCheckBox, &QCheckBox::stateChanged, this, &MainWindow::ChangeDatetimeEnable);
     connect(ui->action_Open, &QAction::triggered, this, &MainWindow::OpenDataFile);
@@ -88,6 +87,12 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->detailsSnrDbDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetCapDetSnr);
     connect(ui->captureDetailsEnabledCheckBox, &QCheckBox::stateChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetCapDetEnabled);
 
+    // ADSB Annotation Connections
+    connect(ui->adsbEnabledCheckBox, &QCheckBox::stateChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetAdsbEnabled);
+    //connect(ui->adsbBinaryPlainTextEdit, &QPlainTextEdit::textChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetBinary);
+    connect(ui->icaAddrDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetIcaAddr);
+    connect(ui->adsbMsgTypeComboBox, &QSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetAdsbMsgType);
+    connect(ui->downlinkFormatComboBox, &QComboBox::currentIndexChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetAdsbDownlinkFrmt);
 
     if(qobject_cast<QCheckBox*>(ui->globalSpatialEnabledCheckBox)) {
         qDebug() << "Is checkbox";
@@ -117,67 +122,6 @@ void MainWindow::ChangeHardwareOption(const QString &currentText)
 {
     bool lineEnable = QString::compare(currentText, "Other") ? false : true;
     ui->otherHardwareLineEdit->setEnabled(lineEnable);
-}
-
-void MainWindow::AddAnnotation()
-{
-    /*
-    qDebug() << "Add annotation button pressed";
-    int sampStart = ui->sampStartAnnotSpinBox->text().toInt();
-    int sampCnt = ui->sampCntAnnotSpinBox->text().toInt();
-    double freqLowerEdge = ui->freqLowerEdgeDoubleSpinBox->value();
-    double freqUpperEdge = ui->freqUpperEdgeDoubleSpinBox->value();
-    QString label = ui->labelAnnotLineEdit->text();
-    QString comment = ui->commentAnnotPlainTextEdit->toPlainText();
-    QString generator = ui->generatorLineEdit->text();
-    QString uuid = ui->uuidLineEdit->text();
-    QJsonObject jsonObj = {
-        {"core:sample_start", sampStart},
-        {"core:sample_count", sampCnt},
-        {"core:freq_lower_edge", freqLowerEdge},
-        {"core:freq_upper_edge", freqUpperEdge},
-        {"core:label", label},
-        {"core:comment", comment},
-        {"core:generator", generator},
-        {"core:uuid", uuid}
-    };
-    if(ui->adsbEnabledCheckBox->isChecked()) {
-        QJsonValue downlink =  QString::compare(ui->downlinkFormatComboBox->currentText(), "Mode S Short (11)") ? 17 : 11;
-        jsonObj.insert("adsb:downlink_format", downlink);
-        jsonObj.insert("adsb:message_type", ui->adsbMsgTypeComboBox->value());
-        jsonObj.insert("adsb:ICA_address", ui->icaAddrDoubleSpinBox->value());
-        jsonObj.insert("adsb:binary", ui->adsbBinaryPlainTextEdit->toPlainText());
-    }
-
-    m_annotationJsonArray.append(jsonObj);
-    */
-}
-
-void MainWindow::AddCapture()
-{
-    /*
-    qDebug() << "Add capture button pressed";
-    int sampStart = ui->sampStartSpinBox->text().toInt(); // Not working atm
-    double freq = ui->frequencyDoubleSpinBox->value();
-    int globalIdx = ui->globalIdxSpinBox->text().toInt();
-    int headerBytes = ui->headerBytesSpinBox->text().toInt();
-    QString datetime = "";
-    if (ui->dateTimeEdit->isEnabled()) {
-        datetime = ui->dateTimeEdit->dateTime().toString(Qt::ISODateWithMs);
-    }
-    qDebug() << "datetime: " << datetime;
-
-    QJsonObject jsonObj = {
-        {"core:sample_start", sampStart},
-        {"core:datetime", datetime},
-        {"core:frequency", freq},
-        {"core:global_index", globalIdx},
-        {"core:header_bytes", headerBytes}
-    };
-
-    //m_capturesVect.push_back(jsonObj);
-    m_captureJsonArray.append(jsonObj);
-    */
 }
 
 void MainWindow::ChangeDatetimeEnable()

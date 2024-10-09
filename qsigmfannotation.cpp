@@ -81,6 +81,31 @@ void QSigMFAnnotation::SetCapDetSigRefNum(QString str)
     m_capDets.SetSigRefNum(str);
 }
 
+void QSigMFAnnotation::SetAdsbEnabled(bool isEnabled)
+{
+    m_adsb.SetEnabled(isEnabled);
+}
+
+void QSigMFAnnotation::SetAdsbDownlinkFrmt(int num)
+{
+    m_adsb.SetDownlinkFrmt(num);
+}
+
+void QSigMFAnnotation::SetAdsbMsgType(int num)
+{
+    m_adsb.SetMessageType(num);
+}
+
+void QSigMFAnnotation::SetIcaAddr(double addr)
+{
+    m_adsb.SetIcaAddr(addr);
+}
+
+void QSigMFAnnotation::SetBinary(QString str)
+{
+    m_adsb.SetBinary(str);
+}
+
 void QSigMFAnnotation::AddAnnotation()
 {
     // Had to do this to get it all within the same array
@@ -92,6 +117,12 @@ void QSigMFAnnotation::AddAnnotation()
     if (m_capDets.GetIsEnabled()) {
         std::vector<sigmfJson_t> detVect = m_capDets.GetAnnotationValues();
         for (auto it = detVect.begin(); it != detVect.end(); it++) {
+            tmp.emplace_back(*it);
+        }
+    }
+    if (m_adsb.GetIsEnabled()) {
+        std::vector<sigmfJson_t> adsbVect = m_adsb.GetAnnotationValues();
+        for (auto it = adsbVect.begin(); it != adsbVect.end(); it++) {
             tmp.emplace_back(*it);
         }
     }

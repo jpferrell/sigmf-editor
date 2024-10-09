@@ -11,6 +11,7 @@ CONFIG += c++17
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
+    qadsb.cpp \
     qcapturedetails.cpp \
     qsigmfannotation.cpp \
     qsigmfcapture.cpp \
@@ -19,6 +20,7 @@ SOURCES += \
 
 HEADERS += \
     mainwindow.h \
+    qadsb.h \
     qcapturedetails.h \
     qsigmfannotation.h \
     qsigmfcapture.h \

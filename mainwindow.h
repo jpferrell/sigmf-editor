@@ -37,8 +37,6 @@ public slots:
 
     void Configure();
     void ChangeHardwareOption(const QString &);
-    void AddAnnotation();
-    void AddCapture();
     void ChangeDatetimeEnable();
     void OpenDataFile();
     void ExitApplication();
