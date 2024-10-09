@@ -33,7 +33,7 @@
          <enum>QTabWidget::Rounded</enum>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>2</number>
         </property>
         <widget class="QWidget" name="globalTab">
          <attribute name="title">
@@ -2068,7 +2068,7 @@
           <item>
            <widget class="QTabWidget" name="annotationSubtabs">
             <property name="currentIndex">
-             <number>0</number>
+             <number>6</number>
             </property>
             <widget class="QWidget" name="annotationCoreTab">
              <attribute name="title">
@@ -3078,7 +3078,7 @@
                    </widget>
                   </item>
                   <item>
-                   <widget class="QSpinBox" name="spinBox_2"/>
+                   <widget class="QSpinBox" name="wifiMcsSpinBox"/>
                   </item>
                   <item>
                    <widget class="QLabel" name="wifiMacFrameTypeLabel">

@@ -106,6 +106,91 @@ void QSigMFAnnotation::SetBinary(QString str)
     m_adsb.SetBinary(str);
 }
 
+void QSigMFAnnotation::SetWifiEnabled(bool en)
+{
+    m_wifi.SetEnabled(en);
+}
+
+void QSigMFAnnotation::SetWifiStandard(QString str)
+{
+    m_wifi.SetStandard(str);
+}
+
+void QSigMFAnnotation::SetWifiFrameTypePhy(QString str)
+{
+    m_wifi.SetFrameTypePhy(str);
+}
+
+void QSigMFAnnotation::SetWifiChannel(int c)
+{
+    m_wifi.SetChannel(c);
+}
+
+void QSigMFAnnotation::SetWifiStartTime(double t)
+{
+    m_wifi.SetStartTime(t);
+}
+
+void QSigMFAnnotation::SetWifiStopTime(double t)
+{
+    m_wifi.SetStopTime(t);
+}
+
+void QSigMFAnnotation::SetWifiFrameDuration(double t)
+{
+    m_wifi.SetFrameDuration(t);
+}
+
+void QSigMFAnnotation::SetWifiMcs(int m)
+{
+    m_wifi.SetMcs(m);
+}
+
+void QSigMFAnnotation::SetWifiMacFrameType(QString str)
+{
+    m_wifi.SetMacFrameType(str);
+}
+
+void QSigMFAnnotation::SetWifiMacTxAddr(QString str)
+{
+    m_wifi.SetMacTxAddr(str);
+}
+
+void QSigMFAnnotation::SetWifiMacRxAddr(QString str)
+{
+    m_wifi.SetMacRxAddr(str);
+}
+
+void QSigMFAnnotation::SetWifiTxManf(QString str)
+{
+    m_wifi.SetTxManf(str);
+}
+
+void QSigMFAnnotation::SetWifiMacFrame(QString str)
+{
+    m_wifi.SetMacFrame(str);
+}
+
+void QSigMFAnnotation::SetWifiCrc(QString str)
+{
+    m_wifi.SetCrc(str);
+}
+
+void QSigMFAnnotation::SetWifiStartPkt(double s)
+{
+    m_wifi.SetStartPkt(s);
+}
+
+void QSigMFAnnotation::SetWifiEndPkt(double s)
+{
+    m_wifi.SetEndPkt(s);
+}
+
+void QSigMFAnnotation::SetWifiNumSampsPkt(double s)
+{
+    m_wifi.SetNumSampsPkt(s);
+}
+
 void QSigMFAnnotation::AddAnnotation()
 {
     // Had to do this to get it all within the same array
@@ -126,11 +211,12 @@ void QSigMFAnnotation::AddAnnotation()
             tmp.emplace_back(*it);
         }
     }
-    m_annotVect.insert(m_annotVect.end(), tmp);
-    /*
-    m_annotVect.insert(m_annotVect.end(), m_sigmfCore.GetAnnotationValues());
-    if (m_capDets.GetIsEnabled()) {
-        m_annotVect.insert(m_annotVect.end(), m_capDets.GetAnnotationValues());
+    qDebug() << "wifi enabled: " << m_wifi.GetIsEnabled();
+    if (m_wifi.GetIsEnabled()) {
+        std::vector<sigmfJson_t> wifiVect = m_wifi.GetAnnotationValues();
+        for (auto it = wifiVect.begin(); it != wifiVect.end(); it++) {
+            tmp.emplace_back(*it);
+        }
     }
-    */
+    m_annotVect.insert(m_annotVect.end(), tmp);
 }

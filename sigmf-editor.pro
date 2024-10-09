@@ -16,7 +16,8 @@ SOURCES += \
     qsigmfannotation.cpp \
     qsigmfcapture.cpp \
     qsigmfcore.cpp \
-    qsigmfglobal.cpp
+    qsigmfglobal.cpp \
+    qwifi.cpp
 
 HEADERS += \
     mainwindow.h \
@@ -26,7 +27,8 @@ HEADERS += \
     qsigmfcapture.h \
     qsigmfcore.h \
     qsigmfglobal.h \
-    qsigmftypes.h
+    qsigmftypes.h \
+    qwifi.h
 
 FORMS += \
     mainwindow.ui

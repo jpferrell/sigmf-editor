@@ -8,6 +8,7 @@
 #include "qsigmftypes.h"
 #include "qcapturedetails.h"
 #include "qadsb.h"
+#include "qwifi.h"
 
 class QSigMFAnnotation : public QObject
 {
@@ -38,6 +39,24 @@ public slots:
     void SetIcaAddr(double);
     void SetBinary(QString);
 
+    void SetWifiEnabled(bool en);
+    void SetWifiStandard(QString str);
+    void SetWifiFrameTypePhy(QString str);
+    void SetWifiChannel(int c);
+    void SetWifiStartTime(double t);
+    void SetWifiStopTime(double t);
+    void SetWifiFrameDuration(double t);
+    void SetWifiMcs(int m);
+    void SetWifiMacFrameType(QString str);
+    void SetWifiMacTxAddr(QString str);
+    void SetWifiMacRxAddr(QString str);
+    void SetWifiTxManf(QString str);
+    void SetWifiMacFrame(QString str);
+    void SetWifiCrc(QString str);
+    void SetWifiStartPkt(double s);
+    void SetWifiEndPkt(double s);
+    void SetWifiNumSampsPkt(double s);
+
     void AddAnnotation();
 
 
@@ -48,6 +67,7 @@ private:
     QSigMfCore m_sigmfCore;
     QCaptureDetails m_capDets;
     QAdsb m_adsb;
+    QWifi m_wifi;
     std::vector< std::vector<sigmfJson_t> > m_annotVect;
 
 };

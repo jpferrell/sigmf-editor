@@ -23,7 +23,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->writeButton, &QPushButton::pressed, this, &MainWindow::Configure);
     connect(ui->hardwareComboBox, &QComboBox::currentTextChanged, this, &MainWindow::ChangeHardwareOption);
-    //connect(ui->addCapturePushButton, &QPushButton::pressed, this, &MainWindow::AddCapture);
     connect(ui->datetimeCheckBox, &QCheckBox::stateChanged, this, &MainWindow::ChangeDatetimeEnable);
     connect(ui->action_Open, &QAction::triggered, this, &MainWindow::OpenDataFile);
     connect(ui->action_Exit, &QAction::triggered, this, &MainWindow::ExitApplication);
@@ -41,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->sampleRateDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfGlobal, &QSigMFGlobal::SetSampleRate);
     connect(ui->metaDoiLineEdit, &QLineEdit::textChanged, &m_sigmfGlobal, &QSigMFGlobal::SetMetaDoi);
     connect(ui->dataDoiLineEdit, &QLineEdit::textChanged, &m_sigmfGlobal, &QSigMFGlobal::SetDataDoi);
-    //connect(ui->descriptionPlainTextEdit, &QPlainTextEdit::textChanged, &m_sigmfGlobal, &QSigMFGlobal::SetDescription);
+    connect(ui->descriptionPlainTextEdit, &QPlainTextEdit::textChanged, this, [=] () {m_sigmfGlobal.SetDescription(ui->descriptionPlainTextEdit->toPlainText());});
     connect(ui->licenseLineEdit, &QLineEdit::textChanged, &m_sigmfGlobal, &QSigMFGlobal::SetLicense);
     connect(ui->hardwareComboBox, &QComboBox::currentTextChanged, &m_sigmfGlobal, &QSigMFGlobal::SetHardware);
     connect(ui->otherHardwareLineEdit, &QLineEdit::textChanged, &m_sigmfGlobal, &QSigMFGlobal::SetHardware);
@@ -67,7 +66,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->freqLowerEdgeDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetFrequencyLower);
     connect(ui->freqUpperEdgeDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetFrequencyHigher);
     connect(ui->labelAnnotLineEdit, &QLineEdit::textChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetLabel);
-    //connect(ui->commentAnnotPlainTextEdit, &QPlainTextEdit::textChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetComment);
+    connect(ui->commentAnnotPlainTextEdit, &QPlainTextEdit::textChanged, this, [=] () {m_sigmfAnnotation.SetComment(ui->commentAnnotPlainTextEdit->toPlainText());});
     connect(ui->generatorLineEdit, &QLineEdit::textChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetGenerator);
     connect(ui->uuidLineEdit, &QLineEdit::textChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetUuid);
     connect(ui->addAnnotationPushButton, &QPushButton::clicked, &m_sigmfAnnotation, &QSigMFAnnotation::AddAnnotation);
@@ -89,10 +88,29 @@ MainWindow::MainWindow(QWidget *parent)
 
     // ADSB Annotation Connections
     connect(ui->adsbEnabledCheckBox, &QCheckBox::stateChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetAdsbEnabled);
-    //connect(ui->adsbBinaryPlainTextEdit, &QPlainTextEdit::textChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetBinary);
+    connect(ui->adsbBinaryPlainTextEdit, &QPlainTextEdit::textChanged, this, [=] () {m_sigmfAnnotation.SetBinary(ui->adsbBinaryPlainTextEdit->toPlainText());});
     connect(ui->icaAddrDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetIcaAddr);
     connect(ui->adsbMsgTypeComboBox, &QSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetAdsbMsgType);
     connect(ui->downlinkFormatComboBox, &QComboBox::currentIndexChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetAdsbDownlinkFrmt);
+
+    // Wifi Annotation Connections
+    connect(ui->wifiEnableCheckBox, &QCheckBox::stateChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetWifiEnabled);
+    connect(ui->wifiStandardTextEdit, &QTextEdit::textChanged, this, [=] () {m_sigmfAnnotation.SetWifiStandard(ui->wifiStandardTextEdit->toPlainText());});
+    connect(ui->frameTypePhyTextEdit, &QTextEdit::textChanged, this, [=] () {m_sigmfAnnotation.SetWifiFrameTypePhy(ui->frameTypePhyTextEdit->toPlainText());});
+    connect(ui->wifiChannelSpinBox, &QSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetWifiChannel);
+    connect(ui->wifiStartTimeDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetWifiStartTime);
+    connect(ui->wifiStopTimeDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetWifiStopTime);
+    connect(ui->wifiFrameDurationDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetWifiFrameDuration);
+    connect(ui->wifiMcsSpinBox, &QSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetWifiMcs);
+    connect(ui->wifiMacFrameTypeTextEdit, &QTextEdit::textChanged, this, [=] () {m_sigmfAnnotation.SetWifiMacFrameType(ui->wifiMacFrameTypeTextEdit->toPlainText());});
+    connect(ui->wifiMacTaTextEdit, &QTextEdit::textChanged, this, [=] () {m_sigmfAnnotation.SetWifiMacTxAddr(ui->wifiMacTaTextEdit->toPlainText());});
+    connect(ui->wifiMacRaTextEdit, &QTextEdit::textChanged, this, [=] () {m_sigmfAnnotation.SetWifiMacRxAddr(ui->wifiMacRaTextEdit->toPlainText());});
+    connect(ui->wifiManufacturerTextEdit, &QTextEdit::textChanged, this, [=] () {m_sigmfAnnotation.SetWifiTxManf(ui->wifiManufacturerTextEdit->toPlainText());});
+    connect(ui->wifiCrcTextEdit, &QTextEdit::textChanged, this, [=] () {m_sigmfAnnotation.SetWifiCrc(ui->wifiCrcTextEdit->toPlainText());});
+    connect(ui->wifiMacFrameTextEdit, &QTextEdit::textChanged, this, [=] () {m_sigmfAnnotation.SetWifiMacFrame(ui->wifiMacFrameTextEdit->toPlainText());});
+    connect(ui->wifiStartPktSpinBox, &QSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetWifiStartPkt);
+    connect(ui->wifiStopPktSpinBox, &QSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetWifiEndPkt);
+    connect(ui->wifiNumSampsSpinBox, &QSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetWifiNumSampsPkt);
 
     if(qobject_cast<QCheckBox*>(ui->globalSpatialEnabledCheckBox)) {
         qDebug() << "Is checkbox";

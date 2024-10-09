@@ -2,6 +2,7 @@
 
 QAdsb::QAdsb(QObject *parent)
     : QObject{parent}
+    , m_isEnabled(false)
 {
 }
 

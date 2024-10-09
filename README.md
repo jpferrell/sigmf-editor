@@ -11,12 +11,12 @@ Specification can be found at the [SigMF Website](https://sigmf.org)
 - [x] Need to actually handle files instead of just the test file
 - [ ] Recording, Collection, Archive handling
 - [ ] Extensions
-  - [ ] ADSB
-    - [ ] Binary
+  - [x] ADSB
+    - [x] Binary
   - [ ] Antenna
   - [x] Capture Details
   - [ ] Signal
   - [ ] Spatial
   - [ ] Traceability
-  - [ ] WiFi
-- [ ] Figure out getting text from plain text edit
+  - [x] WiFi
+- [x] Figure out getting text from plain text edit
