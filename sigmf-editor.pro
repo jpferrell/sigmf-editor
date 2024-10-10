@@ -16,6 +16,7 @@ SOURCES += \
     qcapturedetails.cpp \
     qextension.cpp \
     qsigmfannotation.cpp \
+    qsigmfbase.cpp \
     qsigmfcapture.cpp \
     qsigmfcore.cpp \
     qsigmfglobal.cpp \
@@ -28,6 +29,7 @@ HEADERS += \
     qcapturedetails.h \
     qextension.h \
     qsigmfannotation.h \
+    qsigmfbase.h \
     qsigmfcapture.h \
     qsigmfcore.h \
     qsigmfglobal.h \

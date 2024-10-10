@@ -68,7 +68,7 @@ void QSigMFAnnotation::SetUuid(QString str)
 
 void QSigMFAnnotation::SetCapDetEnabled(bool isEnabled)
 {
-    m_capDets.SetEnabled(isEnabled);
+    m_capDets.SetEnable(isEnabled);
 }
 
 void QSigMFAnnotation::SetCapDetSnr(double num)
@@ -83,7 +83,7 @@ void QSigMFAnnotation::SetCapDetSigRefNum(QString str)
 
 void QSigMFAnnotation::SetAdsbEnabled(bool isEnabled)
 {
-    m_adsb.SetEnabled(isEnabled);
+    m_adsb.SetEnable(isEnabled);
 }
 
 void QSigMFAnnotation::SetAdsbDownlinkFrmt(int num)
@@ -108,7 +108,7 @@ void QSigMFAnnotation::SetBinary(QString str)
 
 void QSigMFAnnotation::SetWifiEnabled(bool en)
 {
-    m_wifi.SetEnabled(en);
+    m_wifi.SetEnable(en);
 }
 
 void QSigMFAnnotation::SetWifiStandard(QString str)
@@ -220,19 +220,19 @@ void QSigMFAnnotation::AddAnnotation()
     for (auto it = sigVect.begin(); it != sigVect.end(); it++) {
         tmp.emplace_back(*it);
     }
-    if (m_capDets.GetIsEnabled()) {
+    if (m_capDets.GetEnabled()) {
         std::vector<sigmfJson_t> detVect = m_capDets.GetAnnotationValues();
         for (auto it = detVect.begin(); it != detVect.end(); it++) {
             tmp.emplace_back(*it);
         }
     }
-    if (m_adsb.GetIsEnabled()) {
+    if (m_adsb.GetEnabled()) {
         std::vector<sigmfJson_t> adsbVect = m_adsb.GetAnnotationValues();
         for (auto it = adsbVect.begin(); it != adsbVect.end(); it++) {
             tmp.emplace_back(*it);
         }
     }
-    if (m_wifi.GetIsEnabled()) {
+    if (m_wifi.GetEnabled()) {
         std::vector<sigmfJson_t> wifiVect = m_wifi.GetAnnotationValues();
         for (auto it = wifiVect.begin(); it != wifiVect.end(); it++) {
             tmp.emplace_back(*it);

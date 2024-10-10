@@ -9,14 +9,13 @@
 #include <QFile>
 #include <QFileDialog>
 #include <QCheckBox>
+#include <QCryptographicHash>
 
 #include <filesystem>
 
-#include "qsigmfcore.h"
 #include "qsigmfglobal.h"
 #include "qsigmfcapture.h"
 #include "qsigmfannotation.h"
-#include "qcapturedetails.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

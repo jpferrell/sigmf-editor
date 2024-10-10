@@ -91,7 +91,7 @@ void QSigMFCapture::SetGain(double num)
 
 void QSigMFCapture::SetDetsEnabled(bool isEnabled)
 {
-    m_capDets.SetEnabled(isEnabled);
+    m_capDets.SetEnable(isEnabled);
 }
 
 void QSigMFCapture::AddCapture()
@@ -102,7 +102,7 @@ void QSigMFCapture::AddCapture()
     for (auto it = sigVect.begin(); it != sigVect.end(); it++) {
         tmp.emplace_back(*it);
     }
-    if (m_capDets.GetIsEnabled()) {
+    if (m_capDets.GetEnabled()) {
         std::vector<sigmfJson_t> detVect = m_capDets.GetCaptureValues();
         for (auto it = detVect.begin(); it != detVect.end(); it++) {
             tmp.emplace_back(*it);

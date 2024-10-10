@@ -2,24 +2,17 @@
 #define QSIGMFCORE_H
 
 #include <QObject>
-#include <QJsonObject>
+#include <QDateTime>
+
+#include "qsigmfbase.h"
 #include "qsigmftypes.h"
 
 
-class QSigMfCore : public QObject
+class QSigMfCore : public QSigMfBase
 {
     Q_OBJECT
 public:
     explicit QSigMfCore(QObject *parent = nullptr);
-
-    //QJsonObject GenerateGlobalJson();
-    //QJsonObject GenerateCaptureJson();
-
-    std::vector<sigmfJson_t> GetGlobalValues();
-    std::vector<sigmfJson_t> GetCaptureValues();
-    std::vector< std::vector<sigmfJson_t> > GetCaptureArray();
-    std::vector<sigmfJson_t> GetAnnotationValues();
-    std::vector< std::vector<sigmfJson_t> > GetAnnotationArray();
 
     void SetSampleRate(double);
     void SetAuthor(QString);
@@ -64,9 +57,6 @@ public:
 
 public slots:
 
-    void AddCapture();
-    void AddAnnotation();
-
 signals:
 
 protected:
@@ -104,54 +94,8 @@ private:
     };
 
     GlobalCore m_globalVars;
-    std::vector<sigmfJson_t> m_globalJsonVect {
-        {"core:sample_rate", "", false},
-        {"core:author", "", false},
-        {"core:description", "", false},
-        {"core:license", "", false},
-        {"core:metadata_only", "", false},
-        {"core:number_channels", "", false},
-        {"core:offset", "", false},
-        {"core:datatype", "", true},
-        {"core:hw", "", false},
-        {"core:version", "", true},
-        {"core:collection", "", false},
-        {"core:dataset", "", false},
-        {"core:data_doi", "", false},
-        {"core:meta_doi", "", false},
-        {"core:recorder", "", false},
-        {"core:sha512", "", false},
-        {"core:trailing_bytes", "", false},
-        {"core:geolocation", "", false},
-        {"core:extensions", "", false}
-    };
 
-    std::vector<sigmfJson_t> m_coreCapJsonVect {
-        {"core:sample_start", "", true},
-        {"core:datetime", "", false},
-        {"core:frequency", "", false},
-        {"core:global_index", "", false},
-        {"core:header_bytes", "", false}
-    };
-    std::vector< std::vector<sigmfJson_t> > m_coreCapJsonArr;
-
-    std::vector<sigmfJson_t> m_coreAnnotJsonVect {
-        {"core:sample_start", "", true},
-        {"core:sample_count", "", false},
-        {"core:freq_lower_edge", "", false},
-        {"core:freq_upper_edge", "", false},
-        {"core:label", "", false},
-        {"core:comment", "", false},
-        {"core:generator", "", false},
-        {"core:uuid", "", false}
-    };
-    std::vector< std::vector<sigmfJson_t> > m_coreAnnotJsonArr;
-
-    bool _CheckRequiredData(std::vector<sigmfJson_t>);
     void _UpdateDataType();
-
-
-
 };
 
 #endif // QSIGMFCORE_H

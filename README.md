@@ -7,13 +7,13 @@ Specification can be found at the [SigMF Website](https://sigmf.org)
 
 - [x] Ensure that annotations and captures are ordered by start index. Currently on user to make sure they are entered in correct order
 - [ ] Do not currently handle geolocation
-- [ ] Need to calculate hash of file
+- [x] Need to calculate hash of file
 - [x] Need to actually handle files instead of just the test file
 - [ ] Recording, Collection, Archive handling
 - [ ] Extensions
   - [x] ADSB
     - [x] Binary
-  - [ ] Antenna
+  - [x] Antenna
   - [x] Capture Details
   - [ ] Signal
   - [ ] Spatial

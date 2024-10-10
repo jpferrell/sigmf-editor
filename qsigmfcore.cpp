@@ -1,112 +1,47 @@
 #include "qsigmfcore.h"
 
 QSigMfCore::QSigMfCore(QObject *parent)
-    : QObject{parent}
+    : QSigMfBase{parent}
     , m_globalVars()
 {
-}
-
-std::vector<sigmfJson_t> QSigMfCore::GetGlobalValues()
-{
-    std::vector<sigmfJson_t> retVect;
-    _UpdateDataType();
-    bool isValid = _CheckRequiredData(m_globalJsonVect);
-
-    if (isValid) {
-        for (auto it = m_globalJsonVect.begin(); it != m_globalJsonVect.end(); it++) {
-            if (it->isRequired) {
-                retVect.insert(retVect.end(), *it);
-            } else if (it->jsonVal.compare("")) {
-                // Not an empty value
-                retVect.insert(retVect.end(), *it);
-                qDebug() << "inserted " << it->jsonKey;
-            }
-        }
-    }
-
-    return retVect;
-}
-
-std::vector<sigmfJson_t> QSigMfCore::GetCaptureValues()
-{
-    std::vector<sigmfJson_t> retVect;
-    _UpdateDataType();
-    bool isValid = _CheckRequiredData(m_coreCapJsonVect);
-    qDebug() << "isValid: " << isValid;
-
-    if (isValid) {
-        for (auto it = m_coreCapJsonVect.begin(); it != m_coreCapJsonVect.end(); it++) {
-            if (it->jsonVal.compare("")) {
-                // Not an empty value
-                retVect.insert(retVect.end(), *it);
-                qDebug() << "inserted " << it->jsonKey;
-            }
-        }
-    }
-
-    return retVect;
-}
-
-std::vector<std::vector<sigmfJson_t> > QSigMfCore::GetCaptureArray()
-{
-    std::sort(m_coreCapJsonArr.begin(), m_coreCapJsonArr.end(), [](const std::vector<sigmfJson_t> &lhs, const std::vector<sigmfJson_t> &rhs) {
-        return lhs.at(0).jsonVal < rhs.at(0).jsonVal;
-    });
-
-    std::vector< std::vector<sigmfJson_t> > retArr(m_coreCapJsonArr.size());
-    int idx = 0;
-    for (auto outIt = m_coreCapJsonArr.begin(); outIt != m_coreCapJsonArr.end(); outIt++) {
-        for (auto inIt = outIt->begin(); inIt != outIt->end(); inIt++) {
-            if (inIt->jsonVal.compare("")) {
-                retArr.at(idx).insert(retArr.at(idx).end(), *inIt);
-                qDebug() << "inserted " << inIt->jsonKey;
-            }
-        }
-        idx++;
-    }
-
-    return retArr;
-}
-
-std::vector<sigmfJson_t> QSigMfCore::GetAnnotationValues()
-{
-    std::vector<sigmfJson_t> retVect;
-    _UpdateDataType();
-    bool isValid = _CheckRequiredData(m_coreAnnotJsonVect);
-    qDebug() << "isValid: " << isValid;
-
-    if (isValid) {
-        for (auto it = m_coreAnnotJsonVect.begin(); it != m_coreAnnotJsonVect.end(); it++) {
-            if (it->jsonVal.compare("")) {
-                // Not an empty value
-                retVect.insert(retVect.end(), *it);
-                qDebug() << "inserted " << it->jsonKey;
-            }
-        }
-    }
-
-    return retVect;
-}
-
-std::vector<std::vector<sigmfJson_t> > QSigMfCore::GetAnnotationArray()
-{
-    std::sort(m_coreAnnotJsonArr.begin(), m_coreAnnotJsonArr.end(), [](const std::vector<sigmfJson_t> &lhs, const std::vector<sigmfJson_t> &rhs) {
-        return lhs.at(0).jsonVal < rhs.at(0).jsonVal;
-    });
-
-    std::vector< std::vector<sigmfJson_t> > retArr(m_coreAnnotJsonArr.size());
-    int idx = 0;
-    for (auto outIt = m_coreAnnotJsonArr.begin(); outIt != m_coreAnnotJsonArr.end(); outIt++) {
-        for (auto inIt = outIt->begin(); inIt != outIt->end(); inIt++) {
-            if (inIt->jsonVal.compare("")) {
-                retArr.at(idx).insert(retArr.at(idx).end(), *inIt);
-                qDebug() << "inserted " << inIt->jsonKey;
-            }
-        }
-        idx++;
-    }
-
-    return retArr;
+    InitializeGlobalJsonVect({
+                                 {"core:sample_rate", "", false},
+                                 {"core:author", "", false},
+                                 {"core:description", "", false},
+                                 {"core:license", "", false},
+                                 {"core:metadata_only", "", false},
+                                 {"core:number_channels", "", false},
+                                 {"core:offset", "", false},
+                                 {"core:datatype", "", true},
+                                 {"core:hw", "", false},
+                                 {"core:version", "", true},
+                                 {"core:collection", "", false},
+                                 {"core:dataset", "", false},
+                                 {"core:data_doi", "", false},
+                                 {"core:meta_doi", "", false},
+                                 {"core:recorder", "", false},
+                                 {"core:sha512", "", false},
+                                 {"core:trailing_bytes", "", false},
+                                 {"core:geolocation", "", false},
+                                 {"core:extensions", "", false}
+                             });
+    InitializeCaptureJsonVect({
+                                  {"core:sample_start", "", true},
+                                  {"core:datetime", "", false},
+                                  {"core:frequency", "", false},
+                                  {"core:global_index", "", false},
+                                  {"core:header_bytes", "", false}
+                              });
+    InitializeAnnotationJsonVect({
+                                     {"core:sample_start", "", true},
+                                     {"core:sample_count", "", false},
+                                     {"core:freq_lower_edge", "", false},
+                                     {"core:freq_upper_edge", "", false},
+                                     {"core:label", "", false},
+                                     {"core:comment", "", false},
+                                     {"core:generator", "", false},
+                                     {"core:uuid", "", false}
+                                 });
 }
 
 void QSigMfCore::SetSampleRate(double sr)
@@ -142,8 +77,6 @@ void QSigMfCore::SetLicense(QString l)
 void QSigMfCore::SetHardware(QString hw)
 {
     m_globalJsonVect.at(8).jsonVal = hw;
-    qDebug() << "hardware set";
-    qDebug() << m_globalJsonVect.at(8).jsonKey << ": " << m_globalJsonVect.at(8).jsonVal;
 }
 
 void QSigMfCore::SetMetadataOnly(bool isMetaOnly)
@@ -181,9 +114,9 @@ void QSigMfCore::SetDataset(QString str)
     m_globalJsonVect.at(11).jsonVal = str;
 }
 
-void QSigMfCore::SetSha512(QString)
+void QSigMfCore::SetSha512(QString str)
 {
-
+    m_globalJsonVect.at(15).jsonVal = str;
 }
 
 void QSigMfCore::SetGeoType(QString gt)
@@ -208,46 +141,47 @@ void QSigMfCore::SetElevation(double elv)
 
 void QSigMfCore::SetComplex(const QString &str)
 {
-    qDebug() << "in SetComplex";
     bool isCplx = str.compare("Complex") ? false : true;
     m_globalVars.SetComplex(isCplx);
-    qDebug() << "complex? " << m_globalVars.GetComplexReal();
+    _UpdateDataType();
 }
 
 void QSigMfCore::SetDataFormat(QString str)
 {
     m_globalVars.SetDataFormat(str+"_");
+    _UpdateDataType();
 }
 
 void QSigMfCore::SetEndianness(QString str)
 {
     QString end = str.compare("Big Endian") ? "le" : "be";
     m_globalVars.SetEndianness(end);
+    _UpdateDataType();
 }
 
 void QSigMfCore::SetSampleStart(int val)
 {
-    m_coreCapJsonVect.at(0).jsonVal = QString::number(val);
+    m_captureJsonVect.at(0).jsonVal = QString::number(val);
 }
 
 void QSigMfCore::SetDatetime(QDateTime dt)
 {
-    m_coreCapJsonVect.at(1).jsonVal = dt.toString(Qt::ISODateWithMs);
+    m_captureJsonVect.at(1).jsonVal = dt.toString(Qt::ISODateWithMs);
 }
 
 void QSigMfCore::SetFrequency(double val)
 {
-    m_coreCapJsonVect.at(2).jsonVal = QString::number(val);
+    m_captureJsonVect.at(2).jsonVal = QString::number(val);
 }
 
 void QSigMfCore::SetGlobalIndex(int val)
 {
-    m_coreCapJsonVect.at(3).jsonVal = QString::number(val);
+    m_captureJsonVect.at(3).jsonVal = QString::number(val);
 }
 
 void QSigMfCore::SetHeaderBytes(int val)
 {
-    m_coreCapJsonVect.at(4).jsonVal = QString::number(val);
+    m_captureJsonVect.at(4).jsonVal = QString::number(val);
 }
 
 void QSigMfCore::SetDatetimeEnabled(bool)
@@ -256,79 +190,45 @@ void QSigMfCore::SetDatetimeEnabled(bool)
 
 void QSigMfCore::SetAnnotSampleStart(int sr)
 {
-    m_coreAnnotJsonVect.at(0).jsonVal = QString::number(sr);
+    m_annotJsonVect.at(0).jsonVal = QString::number(sr);
 }
 
 void QSigMfCore::SetSampleCount(int sc)
 {
-    m_coreAnnotJsonVect.at(1).jsonVal = QString::number(sc);
+    m_annotJsonVect.at(1).jsonVal = QString::number(sc);
 }
 
 void QSigMfCore::SetFrequencyLower(double freq)
 {
-    m_coreAnnotJsonVect.at(2).jsonVal = QString::number(freq);
+    m_annotJsonVect.at(2).jsonVal = QString::number(freq);
 }
 
 void QSigMfCore::SetFrequencyHigher(double freq)
 {
-    m_coreAnnotJsonVect.at(3).jsonVal = QString::number(freq);
+    m_annotJsonVect.at(3).jsonVal = QString::number(freq);
 }
 
 void QSigMfCore::SetLabel(QString str)
 {
-    m_coreAnnotJsonVect.at(4).jsonVal = str;
+    m_annotJsonVect.at(4).jsonVal = str;
 }
 
 void QSigMfCore::SetComment(QString str)
 {
-    m_coreAnnotJsonVect.at(5).jsonVal = str;
+    m_annotJsonVect.at(5).jsonVal = str;
 }
 
 void QSigMfCore::SetGenerator(QString str)
 {
-    m_coreAnnotJsonVect.at(6).jsonVal = str;
+    m_annotJsonVect.at(6).jsonVal = str;
 }
 
 void QSigMfCore::SetUuid(QString str)
 {
-    m_coreAnnotJsonVect.at(7).jsonVal = str;
-}
-
-void QSigMfCore::AddCapture()
-{
-    bool isValid = _CheckRequiredData(m_coreCapJsonVect);
-    if (isValid) {
-        m_coreCapJsonArr.insert(m_coreCapJsonArr.end(), m_coreCapJsonVect);
-    }
-}
-
-void QSigMfCore::AddAnnotation()
-{
-    bool isValid = _CheckRequiredData(m_coreAnnotJsonVect);
-    if (isValid) {
-        m_coreAnnotJsonArr.insert(m_coreAnnotJsonArr.end(), m_coreAnnotJsonVect);
-    }
-}
-
-bool QSigMfCore::_CheckRequiredData(std::vector<sigmfJson_t> vect)
-{
-    bool isCorrect = true;
-
-    for (auto it = vect.begin(); it != vect.end(); it++) {
-        if (it->isRequired && !it->jsonVal.compare("")) {
-            // If the element is required but is empty, the spec is not fulfilled
-            qDebug() << "value is not defined: " << it->jsonKey;
-            qDebug() << "Value of " << it->jsonVal;
-            isCorrect = false;
-        }
-    }
-    return isCorrect;
+    m_annotJsonVect.at(7).jsonVal = str;
 }
 
 void QSigMfCore::_UpdateDataType()
 {
-    qDebug() << "string: " << m_globalVars.GetComplexReal() + m_globalVars.GetDataFormat() + m_globalVars.GetEndianness();
     m_globalJsonVect.at(7).jsonVal = m_globalVars.GetComplexReal() + m_globalVars.GetDataFormat() + m_globalVars.GetEndianness();
-    qDebug() << m_globalJsonVect.at(7).jsonKey << ": " << m_globalJsonVect.at(7).jsonVal;
-    qDebug() << m_globalJsonVect.at(8).jsonKey << ": " << m_globalJsonVect.at(8).jsonVal;
 }

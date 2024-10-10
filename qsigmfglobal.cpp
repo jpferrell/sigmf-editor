@@ -16,11 +16,8 @@ QJsonObject QSigMFGlobal::GenerateGlobalJson()
         retObj.insert(it->jsonKey, it->jsonVal);
         qDebug() << "inserted " << it->jsonKey;
     }
-    qDebug() << "antenna: " << m_ant.GetEnabled();
     if (m_ant.GetEnabled()) {
-        qDebug() << "Antenna enabled";
         sigmfVector_t antVect = m_ant.GetGlobalValues();
-        qDebug() << "Antenna vect size: " << antVect.size();
         for (auto it = antVect.begin(); it != antVect.end(); it++) {
             retObj.insert(it->jsonKey, it->jsonVal);
             qDebug() << "inserted " << it->jsonKey;

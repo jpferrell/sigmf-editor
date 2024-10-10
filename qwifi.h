@@ -4,18 +4,13 @@
 #include <QObject>
 #include <QDebug>
 
-#include "qsigmftypes.h"
+#include "qextension.h"
 
-class QWifi : public QObject
+class QWifi : public QExtension
 {
     Q_OBJECT
 public:
     explicit QWifi(QObject *parent = nullptr);
-
-    std::vector<sigmfJson_t> GetAnnotationValues();
-
-    void SetEnabled(bool);
-    bool GetIsEnabled();
 
     void SetStandard(QString);
     void SetFrameTypePhy(QString);
@@ -41,30 +36,6 @@ public slots:
 protected:
 
 private:
-
-    bool m_isEnabled;
-
-    std::vector<sigmfJson_t> m_annotJsonVect {
-        {"wifi:standard", "", true},
-        {"wifi:frame_type_phy", "", true},
-        {"wifi:channel", "", true},
-        {"wifi:start_time_s", "", true},
-        {"wifi:stop_time_s", "", true},
-        {"wifi:frame_duration_s", "", true},
-        {"wifi:MCS", "", true},
-        {"wifi:MAC_Frame_type", "", true},
-        {"wifi:MAC_ta", "", true},
-        {"wifi:MAC_ra", "", true},
-        {"wifi:manufacturer_ta", "", true},
-        {"wifi:MAC_frame", "", true},
-        {"wifi:CRC", "", true},
-        {"wifi:start_of_packet", "", true},
-        {"wifi:stop_of_packet", "", true},
-        {"wifi:number_of_samples_in_packet", "", true},
-    };
-    std::vector< std::vector<sigmfJson_t> > m_annotJsonArr;
-
-    bool _CheckRequiredData(std::vector<sigmfJson_t>);
 
 };
 

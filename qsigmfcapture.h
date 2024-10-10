@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QJsonArray>
+#include <QJsonObject>
 
 #include "qsigmfcore.h"
 #include "qcapturedetails.h"

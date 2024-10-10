@@ -1,38 +1,26 @@
 #include "qwifi.h"
 
 QWifi::QWifi(QObject *parent)
-    : QObject{parent}
-    , m_isEnabled(false)
+    : QExtension{parent}
 {
-}
-
-std::vector<sigmfJson_t> QWifi::GetAnnotationValues()
-{
-    std::vector<sigmfJson_t> retVect;
-    bool isValid = _CheckRequiredData(m_annotJsonVect);
-    qDebug() << "isValid: " << isValid;
-
-    if (isValid) {
-        for (auto it = m_annotJsonVect.begin(); it != m_annotJsonVect.end(); it++) {
-            if (it->jsonVal.compare("")) {
-                // Not an empty value
-                retVect.insert(retVect.end(), *it);
-                qDebug() << "inserted " << it->jsonKey;
-            }
-        }
-    }
-
-    return retVect;
-}
-
-void QWifi::SetEnabled(bool en)
-{
-    m_isEnabled = en;
-}
-
-bool QWifi::GetIsEnabled()
-{
- return m_isEnabled;
+    InitializeAnnotationJsonVect({
+                                     {"wifi:standard", "", true},
+                                     {"wifi:frame_type_phy", "", true},
+                                     {"wifi:channel", "", true},
+                                     {"wifi:start_time_s", "", true},
+                                     {"wifi:stop_time_s", "", true},
+                                     {"wifi:frame_duration_s", "", true},
+                                     {"wifi:MCS", "", true},
+                                     {"wifi:MAC_Frame_type", "", true},
+                                     {"wifi:MAC_ta", "", true},
+                                     {"wifi:MAC_ra", "", true},
+                                     {"wifi:manufacturer_ta", "", true},
+                                     {"wifi:MAC_frame", "", true},
+                                     {"wifi:CRC", "", true},
+                                     {"wifi:start_of_packet", "", true},
+                                     {"wifi:stop_of_packet", "", true},
+                                     {"wifi:number_of_samples_in_packet", "", true}
+                                });
 }
 
 void QWifi::SetStandard(QString str)
@@ -113,19 +101,4 @@ void QWifi::SetEndPkt(double s)
 void QWifi::SetNumSampsPkt(double s)
 {
     m_annotJsonVect.at(15).jsonVal = QString::number(s);
-}
-
-bool QWifi::_CheckRequiredData(std::vector<sigmfJson_t> vect)
-{
-    bool isCorrect = true;
-
-    for (auto it = vect.begin(); it != vect.end(); it++) {
-        if (it->isRequired && !it->jsonVal.compare("")) {
-            // If the element is required but is empty, the spec is not fulfilled
-            qDebug() << "value is not defined: " << it->jsonKey;
-            qDebug() << "Value of " << it->jsonVal;
-            isCorrect = false;
-        }
-    }
-    return isCorrect;
 }

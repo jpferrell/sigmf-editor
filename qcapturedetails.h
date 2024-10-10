@@ -4,16 +4,13 @@
 #include <QObject>
 #include <QDateTime>
 
-#include "qsigmftypes.h"
+#include "qextension.h"
 
-class QCaptureDetails : public QObject
+class QCaptureDetails : public QExtension
 {
     Q_OBJECT
 public:
-    QCaptureDetails();
-
-    std::vector<sigmfJson_t> GetCaptureValues();
-    std::vector<sigmfJson_t> GetAnnotationValues();
+    explicit QCaptureDetails(QObject *parent = nullptr);
 
     // Capture
     void SetAcqScaleFactor(double);
@@ -24,43 +21,15 @@ public:
     void SetSourceFile(QString);
     void SetGain(double);
 
-    void SetEnabled(bool);
-
-    bool GetIsEnabled();
-
     // Annotations
     void SetSnr(double);
     void SetSigRefNum(QString);
 
 public slots:
 
-    void AddCapture();
-    void AddAnnotation();
-
 protected:
 
 private:
-
-    bool m_isEnabled;
-
-    std::vector<sigmfJson_t> m_capJsonVect {
-        {"capture_details:acq_scale_factor", "", true},
-        {"capture_details:attenuation", "", true},
-        {"capture_details:acquisition_bandwidth", "", true},
-        {"capture_details:start_capture", "", true},
-        {"capture_details:stop_capture", "", true},
-        {"capture_details:source_file", "", true},
-        {"capture_details:gain", "", false}
-    };
-    std::vector< std::vector<sigmfJson_t> > m_capJsonArr;
-
-    std::vector<sigmfJson_t> m_annotJsonVect {
-        {"capture_details:SNRdB", "", true},
-        {"capture_details:signal_reference_number", "", true}
-    };
-    std::vector< std::vector<sigmfJson_t> > m_annotJsonArr;
-
-    bool _CheckRequiredData(std::vector<sigmfJson_t>);
 };
 
 #endif // QCAPTUREDETAILS_H

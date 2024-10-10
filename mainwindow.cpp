@@ -74,6 +74,10 @@ void MainWindow::OpenDataFile()
     ui->outFilepathLineEdit->setText(m_dataFilepath);
     ui->inFilestubLineEdit->setText(m_dataFilestem);
     ui->outFilestubLineEdit->setText(m_dataFilestem);
+
+    QCryptographicHash hash(QCryptographicHash::Algorithm::Sha512);
+    hash.addData(&m_datafile);
+    m_sigmfGlobal.SetSha512(hash.result().toHex().toUpper());
 }
 
 void MainWindow::ExitApplication()
