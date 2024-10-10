@@ -33,7 +33,7 @@
          <enum>QTabWidget::Rounded</enum>
         </property>
         <property name="currentIndex">
-         <number>2</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="globalTab">
          <attribute name="title">
@@ -43,7 +43,7 @@
           <item>
            <widget class="QTabWidget" name="globalTabWidget">
             <property name="currentIndex">
-             <number>0</number>
+             <number>2</number>
             </property>
             <widget class="QWidget" name="globalCoreTab">
              <attribute name="title">
@@ -922,9 +922,12 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QSpinBox" name="antennaHorzGainPatternDoubleSpinBox">
+                 <widget class="QDoubleSpinBox" name="antennaHorzGainPatternDoubleSpinBox">
+                  <property name="minimum">
+                   <double>-300.000000000000000</double>
+                  </property>
                   <property name="maximum">
-                   <number>359</number>
+                   <double>300.000000000000000</double>
                   </property>
                  </widget>
                 </item>
@@ -963,7 +966,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QCheckBox" name="antennaMobileLabel">
+                 <widget class="QCheckBox" name="antennaMobileCheckBox">
                   <property name="text">
                    <string>Mobile?</string>
                   </property>

@@ -70,7 +70,15 @@ private:
     QJsonArray m_annotationJsonArray;
     std::vector<int> m_annotationStartIdxVect;
 
+    // Initializations
     void _InitializeComboBoxes();
+    void _InitializeGeneralConnections();
+    void _InitializeCoreConnections();
+    void _InitializeSignalExtConnections();
+    void _InitializeAdbsExtConnections();
+    void _InitializeWifiExtConnections();
+    void _InitializeAntennaExtConnections();
+
     void _UpdateVariables();
     QByteArray _CreateJson();
     void _WriteJsonFile(QByteArray);

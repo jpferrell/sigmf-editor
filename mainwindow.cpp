@@ -21,108 +21,12 @@ MainWindow::MainWindow(QWidget *parent)
 
     _InitializeComboBoxes();
 
-    connect(ui->writeButton, &QPushButton::pressed, this, &MainWindow::Configure);
-    connect(ui->hardwareComboBox, &QComboBox::currentTextChanged, this, &MainWindow::ChangeHardwareOption);
-    connect(ui->datetimeCheckBox, &QCheckBox::stateChanged, this, &MainWindow::ChangeDatetimeEnable);
-    connect(ui->action_Open, &QAction::triggered, this, &MainWindow::OpenDataFile);
-    connect(ui->action_Exit, &QAction::triggered, this, &MainWindow::ExitApplication);
-    // Have both of the connected checkboxes change state when one of them changes state from user
-    connect(ui->globalTracebilityEnabledCheckbox, &QCheckBox::stateChanged, this, [=] () {this->MatchCheckBox(ui->globalTracebilityEnabledCheckbox->checkState(), *ui->annotationTraceabilityEnabledCheckbox);});
-    connect(ui->annotationTraceabilityEnabledCheckbox, &QCheckBox::stateChanged, this, [=] () {this->MatchCheckBox(ui->annotationTraceabilityEnabledCheckbox->checkState(), *ui->globalTracebilityEnabledCheckbox);});
-    connect(ui->captureDetailsEnabledCheckBox, &QCheckBox::stateChanged, this, [=] () {this->MatchCheckBox(ui->captureDetailsEnabledCheckBox->checkState(), *ui->annotationCapDetsEnabledCheckbox);});
-    connect(ui->annotationCapDetsEnabledCheckbox, &QCheckBox::stateChanged, this, [=] () {this->MatchCheckBox(ui->annotationCapDetsEnabledCheckbox->checkState(), *ui->captureDetailsEnabledCheckBox);});
-    connect(ui->antennaEnableCheckBox, &QCheckBox::stateChanged, this, [=] () {this->MatchCheckBox(ui->antennaEnableCheckBox->checkState(), *ui->annotationAntennaEnabledCheckBox);});
-    connect(ui->annotationAntennaEnabledCheckBox, &QCheckBox::stateChanged, this, [=] () {this->MatchCheckBox(ui->annotationAntennaEnabledCheckBox->checkState(), *ui->antennaEnableCheckBox);});
-
-    // SigMF Core Global connections
-    connect(ui->realComplexComboBox, &QComboBox::currentTextChanged, &m_sigmfGlobal, &QSigMFGlobal::SetComplex);
-    connect(ui->dataFormatComboBox, &QComboBox::currentTextChanged, &m_sigmfGlobal, &QSigMFGlobal::SetDataFormat);
-    connect(ui->endianComboBox, &QComboBox::currentTextChanged, &m_sigmfGlobal, &QSigMFGlobal::SetEndianness);
-    connect(ui->authorLineEdit, &QLineEdit::textChanged, &m_sigmfGlobal, &QSigMFGlobal::SetAuthor);
-    connect(ui->sampleRateDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfGlobal, &QSigMFGlobal::SetSampleRate);
-    connect(ui->metaDoiLineEdit, &QLineEdit::textChanged, &m_sigmfGlobal, &QSigMFGlobal::SetMetaDoi);
-    connect(ui->dataDoiLineEdit, &QLineEdit::textChanged, &m_sigmfGlobal, &QSigMFGlobal::SetDataDoi);
-    connect(ui->descriptionPlainTextEdit, &QPlainTextEdit::textChanged, this, [=] () {m_sigmfGlobal.SetDescription(ui->descriptionPlainTextEdit->toPlainText());});
-    connect(ui->licenseLineEdit, &QLineEdit::textChanged, &m_sigmfGlobal, &QSigMFGlobal::SetLicense);
-    connect(ui->hardwareComboBox, &QComboBox::currentTextChanged, &m_sigmfGlobal, &QSigMFGlobal::SetHardware);
-    connect(ui->otherHardwareLineEdit, &QLineEdit::textChanged, &m_sigmfGlobal, &QSigMFGlobal::SetHardware);
-    connect(ui->metaOnlyCheckBox, &QCheckBox::stateChanged, &m_sigmfGlobal, &QSigMFGlobal::SetMetadataOnly);
-    connect(ui->numChannelsSpinBox, &QSpinBox::valueChanged, &m_sigmfGlobal, &QSigMFGlobal::SetNumberChannels);
-    connect(ui->offsetSpinBox, &QSpinBox::valueChanged, &m_sigmfGlobal, &QSigMFGlobal::SetOffset);
-    connect(ui->recorderLineEdit, &QLineEdit::textChanged, &m_sigmfGlobal, &QSigMFGlobal::SetRecorder);
-    connect(ui->trailingBytesSpinBox, &QSpinBox::valueChanged, &m_sigmfGlobal, &QSigMFGlobal::SetTrailingBytes);
-    connect(ui->versionLineEdit, &QLineEdit::textChanged, &m_sigmfGlobal, &QSigMFGlobal::SetVersion);
-
-    // SigMF Core Capture Connections
-    connect(ui->sampStartSpinBox, &QSpinBox::valueChanged, &m_sigmfCapture, &QSigMFCapture::SetSampleStart);
-    connect(ui->dateTimeEdit, &QDateTimeEdit::dateTimeChanged, &m_sigmfCapture, &QSigMFCapture::SetDatetime);
-    connect(ui->datetimeCheckBox, &QCheckBox::stateChanged, &m_sigmfCapture, &QSigMFCapture::SetDatetimeEnabled);
-    connect(ui->frequencyDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfCapture, &QSigMFCapture::SetFrequency);
-    connect(ui->globalIdxSpinBox, &QSpinBox::valueChanged, &m_sigmfCapture, &QSigMFCapture::SetGlobalIndex);
-    connect(ui->headerBytesSpinBox, &QSpinBox::valueChanged, &m_sigmfCapture, &QSigMFCapture::SetHeaderBytes);
-    connect(ui->addCapturePushButton, &QPushButton::clicked, &m_sigmfCapture, &QSigMFCapture::AddCapture);
-
-    // SigMF Core Annotation Connections
-    connect(ui->sampStartAnnotSpinBox, &QSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetSampleStart);
-    connect(ui->sampCntAnnotSpinBox, &QSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetSampleCount);
-    connect(ui->freqLowerEdgeDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetFrequencyLower);
-    connect(ui->freqUpperEdgeDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetFrequencyHigher);
-    connect(ui->labelAnnotLineEdit, &QLineEdit::textChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetLabel);
-    connect(ui->commentAnnotPlainTextEdit, &QPlainTextEdit::textChanged, this, [=] () {m_sigmfAnnotation.SetComment(ui->commentAnnotPlainTextEdit->toPlainText());});
-    connect(ui->generatorLineEdit, &QLineEdit::textChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetGenerator);
-    connect(ui->uuidLineEdit, &QLineEdit::textChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetUuid);
-    connect(ui->addAnnotationPushButton, &QPushButton::clicked, &m_sigmfAnnotation, &QSigMFAnnotation::AddAnnotation);
-
-    // SigMF Signal Details Capture Connections
-    connect(ui->captureDetailsEnabledCheckBox, &QCheckBox::stateChanged, &m_sigmfCapture, &QSigMFCapture::SetDetsEnabled);
-    connect(ui->detailAcqScaledoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfCapture, &QSigMFCapture::SetAcqScaleFactor);
-    connect(ui->detailsStopCapDateTimeEdit, &QDateTimeEdit::dateTimeChanged, &m_sigmfCapture, &QSigMFCapture::SetStopCapture);
-    connect(ui->detailsStartCapDateTimeEdit, &QDateTimeEdit::dateTimeChanged, &m_sigmfCapture, &QSigMFCapture::SetStartCapture);
-    connect(ui->detailsAttnDoubleComboBox, &QDoubleSpinBox::valueChanged, &m_sigmfCapture, &QSigMFCapture::SetAttenuation);
-    connect(ui->detailsSrcFileLineEdit, &QLineEdit::textChanged, &m_sigmfCapture, &QSigMFCapture::SetSourceFile);
-    connect(ui->detailsAcqBwDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfCapture, &QSigMFCapture::SetAcqBandwidth);
-    connect(ui->detailsGainDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfCapture, &QSigMFCapture::SetGain);
-
-    // SigMF Signal Details Annotation Connections
-    connect(ui->detailsSigRefNumLineEdit, &QLineEdit::textChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetCapDetSigRefNum);
-    connect(ui->detailsSnrDbDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetCapDetSnr);
-    connect(ui->captureDetailsEnabledCheckBox, &QCheckBox::stateChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetCapDetEnabled);
-
-    // ADSB Annotation Connections
-    connect(ui->adsbEnabledCheckBox, &QCheckBox::stateChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetAdsbEnabled);
-    connect(ui->adsbBinaryPlainTextEdit, &QPlainTextEdit::textChanged, this, [=] () {m_sigmfAnnotation.SetBinary(ui->adsbBinaryPlainTextEdit->toPlainText());});
-    connect(ui->icaAddrDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetIcaAddr);
-    connect(ui->adsbMsgTypeComboBox, &QSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetAdsbMsgType);
-    connect(ui->downlinkFormatComboBox, &QComboBox::currentIndexChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetAdsbDownlinkFrmt);
-
-    // Wifi Annotation Connections
-    connect(ui->wifiEnableCheckBox, &QCheckBox::stateChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetWifiEnabled);
-    connect(ui->wifiStandardTextEdit, &QTextEdit::textChanged, this, [=] () {m_sigmfAnnotation.SetWifiStandard(ui->wifiStandardTextEdit->toPlainText());});
-    connect(ui->frameTypePhyTextEdit, &QTextEdit::textChanged, this, [=] () {m_sigmfAnnotation.SetWifiFrameTypePhy(ui->frameTypePhyTextEdit->toPlainText());});
-    connect(ui->wifiChannelSpinBox, &QSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetWifiChannel);
-    connect(ui->wifiStartTimeDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetWifiStartTime);
-    connect(ui->wifiStopTimeDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetWifiStopTime);
-    connect(ui->wifiFrameDurationDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetWifiFrameDuration);
-    connect(ui->wifiMcsSpinBox, &QSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetWifiMcs);
-    connect(ui->wifiMacFrameTypeTextEdit, &QTextEdit::textChanged, this, [=] () {m_sigmfAnnotation.SetWifiMacFrameType(ui->wifiMacFrameTypeTextEdit->toPlainText());});
-    connect(ui->wifiMacTaTextEdit, &QTextEdit::textChanged, this, [=] () {m_sigmfAnnotation.SetWifiMacTxAddr(ui->wifiMacTaTextEdit->toPlainText());});
-    connect(ui->wifiMacRaTextEdit, &QTextEdit::textChanged, this, [=] () {m_sigmfAnnotation.SetWifiMacRxAddr(ui->wifiMacRaTextEdit->toPlainText());});
-    connect(ui->wifiManufacturerTextEdit, &QTextEdit::textChanged, this, [=] () {m_sigmfAnnotation.SetWifiTxManf(ui->wifiManufacturerTextEdit->toPlainText());});
-    connect(ui->wifiCrcTextEdit, &QTextEdit::textChanged, this, [=] () {m_sigmfAnnotation.SetWifiCrc(ui->wifiCrcTextEdit->toPlainText());});
-    connect(ui->wifiMacFrameTextEdit, &QTextEdit::textChanged, this, [=] () {m_sigmfAnnotation.SetWifiMacFrame(ui->wifiMacFrameTextEdit->toPlainText());});
-    connect(ui->wifiStartPktSpinBox, &QSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetWifiStartPkt);
-    connect(ui->wifiStopPktSpinBox, &QSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetWifiEndPkt);
-    connect(ui->wifiNumSampsSpinBox, &QSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetWifiNumSampsPkt);
-
-    // Antenna Annotation Connections
-    connect(ui->antennaEnableCheckBox, &QCheckBox::stateChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetAntennaEnabled);
-    connect(ui->antennaPolarizationLineEdit, &QLineEdit::textChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetAntennaPolarization);
-    connect(ui->antennaAzimuthDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetAntennaAzAng);
-    connect(ui->antennaElevationDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetAntennaElvAng);
-
-    if(qobject_cast<QCheckBox*>(ui->globalSpatialEnabledCheckBox)) {
-        qDebug() << "Is checkbox";
-    }
+    _InitializeGeneralConnections();
+    _InitializeCoreConnections();
+    _InitializeSignalExtConnections();
+    _InitializeAdbsExtConnections();
+    _InitializeWifiExtConnections();
+    _InitializeAntennaExtConnections();
 }
 
 MainWindow::~MainWindow()
@@ -273,6 +177,142 @@ void MainWindow::_InitializeComboBoxes()
     ui->sigDetaillMultAccComboBox->addItem("PDMA");
 }
 
+void MainWindow::_InitializeGeneralConnections()
+{
+    connect(ui->writeButton, &QPushButton::pressed, this, &MainWindow::Configure);
+    connect(ui->hardwareComboBox, &QComboBox::currentTextChanged, this, &MainWindow::ChangeHardwareOption);
+    connect(ui->datetimeCheckBox, &QCheckBox::stateChanged, this, &MainWindow::ChangeDatetimeEnable);
+    connect(ui->action_Open, &QAction::triggered, this, &MainWindow::OpenDataFile);
+    connect(ui->action_Exit, &QAction::triggered, this, &MainWindow::ExitApplication);
+    // Have both of the connected checkboxes change state when one of them changes state from user
+    connect(ui->globalTracebilityEnabledCheckbox, &QCheckBox::stateChanged, this, [=] () {this->MatchCheckBox(ui->globalTracebilityEnabledCheckbox->checkState(), *ui->annotationTraceabilityEnabledCheckbox);});
+    connect(ui->annotationTraceabilityEnabledCheckbox, &QCheckBox::stateChanged, this, [=] () {this->MatchCheckBox(ui->annotationTraceabilityEnabledCheckbox->checkState(), *ui->globalTracebilityEnabledCheckbox);});
+    connect(ui->captureDetailsEnabledCheckBox, &QCheckBox::stateChanged, this, [=] () {this->MatchCheckBox(ui->captureDetailsEnabledCheckBox->checkState(), *ui->annotationCapDetsEnabledCheckbox);});
+    connect(ui->annotationCapDetsEnabledCheckbox, &QCheckBox::stateChanged, this, [=] () {this->MatchCheckBox(ui->annotationCapDetsEnabledCheckbox->checkState(), *ui->captureDetailsEnabledCheckBox);});
+    connect(ui->antennaEnableCheckBox, &QCheckBox::stateChanged, this, [=] () {this->MatchCheckBox(ui->antennaEnableCheckBox->checkState(), *ui->annotationAntennaEnabledCheckBox);});
+    connect(ui->annotationAntennaEnabledCheckBox, &QCheckBox::stateChanged, this, [=] () {this->MatchCheckBox(ui->annotationAntennaEnabledCheckBox->checkState(), *ui->antennaEnableCheckBox);});
+}
+
+void MainWindow::_InitializeCoreConnections()
+{
+    // SigMF Core Global connections
+    connect(ui->realComplexComboBox, &QComboBox::currentTextChanged, &m_sigmfGlobal, &QSigMFGlobal::SetComplex);
+    connect(ui->dataFormatComboBox, &QComboBox::currentTextChanged, &m_sigmfGlobal, &QSigMFGlobal::SetDataFormat);
+    connect(ui->endianComboBox, &QComboBox::currentTextChanged, &m_sigmfGlobal, &QSigMFGlobal::SetEndianness);
+    connect(ui->authorLineEdit, &QLineEdit::textChanged, &m_sigmfGlobal, &QSigMFGlobal::SetAuthor);
+    connect(ui->sampleRateDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfGlobal, &QSigMFGlobal::SetSampleRate);
+    connect(ui->metaDoiLineEdit, &QLineEdit::textChanged, &m_sigmfGlobal, &QSigMFGlobal::SetMetaDoi);
+    connect(ui->dataDoiLineEdit, &QLineEdit::textChanged, &m_sigmfGlobal, &QSigMFGlobal::SetDataDoi);
+    connect(ui->descriptionPlainTextEdit, &QPlainTextEdit::textChanged, this, [=] () {m_sigmfGlobal.SetDescription(ui->descriptionPlainTextEdit->toPlainText());});
+    connect(ui->licenseLineEdit, &QLineEdit::textChanged, &m_sigmfGlobal, &QSigMFGlobal::SetLicense);
+    connect(ui->hardwareComboBox, &QComboBox::currentTextChanged, &m_sigmfGlobal, &QSigMFGlobal::SetHardware);
+    connect(ui->otherHardwareLineEdit, &QLineEdit::textChanged, &m_sigmfGlobal, &QSigMFGlobal::SetHardware);
+    connect(ui->metaOnlyCheckBox, &QCheckBox::stateChanged, &m_sigmfGlobal, &QSigMFGlobal::SetMetadataOnly);
+    connect(ui->numChannelsSpinBox, &QSpinBox::valueChanged, &m_sigmfGlobal, &QSigMFGlobal::SetNumberChannels);
+    connect(ui->offsetSpinBox, &QSpinBox::valueChanged, &m_sigmfGlobal, &QSigMFGlobal::SetOffset);
+    connect(ui->recorderLineEdit, &QLineEdit::textChanged, &m_sigmfGlobal, &QSigMFGlobal::SetRecorder);
+    connect(ui->trailingBytesSpinBox, &QSpinBox::valueChanged, &m_sigmfGlobal, &QSigMFGlobal::SetTrailingBytes);
+    connect(ui->versionLineEdit, &QLineEdit::textChanged, &m_sigmfGlobal, &QSigMFGlobal::SetVersion);
+
+    // SigMF Core Capture Connections
+    connect(ui->sampStartSpinBox, &QSpinBox::valueChanged, &m_sigmfCapture, &QSigMFCapture::SetSampleStart);
+    connect(ui->dateTimeEdit, &QDateTimeEdit::dateTimeChanged, &m_sigmfCapture, &QSigMFCapture::SetDatetime);
+    connect(ui->datetimeCheckBox, &QCheckBox::stateChanged, &m_sigmfCapture, &QSigMFCapture::SetDatetimeEnabled);
+    connect(ui->frequencyDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfCapture, &QSigMFCapture::SetFrequency);
+    connect(ui->globalIdxSpinBox, &QSpinBox::valueChanged, &m_sigmfCapture, &QSigMFCapture::SetGlobalIndex);
+    connect(ui->headerBytesSpinBox, &QSpinBox::valueChanged, &m_sigmfCapture, &QSigMFCapture::SetHeaderBytes);
+    connect(ui->addCapturePushButton, &QPushButton::clicked, &m_sigmfCapture, &QSigMFCapture::AddCapture);
+
+    // SigMF Core Annotation Connections
+    connect(ui->sampStartAnnotSpinBox, &QSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetSampleStart);
+    connect(ui->sampCntAnnotSpinBox, &QSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetSampleCount);
+    connect(ui->freqLowerEdgeDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetFrequencyLower);
+    connect(ui->freqUpperEdgeDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetFrequencyHigher);
+    connect(ui->labelAnnotLineEdit, &QLineEdit::textChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetLabel);
+    connect(ui->commentAnnotPlainTextEdit, &QPlainTextEdit::textChanged, this, [=] () {m_sigmfAnnotation.SetComment(ui->commentAnnotPlainTextEdit->toPlainText());});
+    connect(ui->generatorLineEdit, &QLineEdit::textChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetGenerator);
+    connect(ui->uuidLineEdit, &QLineEdit::textChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetUuid);
+    connect(ui->addAnnotationPushButton, &QPushButton::clicked, &m_sigmfAnnotation, &QSigMFAnnotation::AddAnnotation);
+}
+
+void MainWindow::_InitializeSignalExtConnections()
+{
+    // SigMF Signal Details Capture Connections
+    connect(ui->captureDetailsEnabledCheckBox, &QCheckBox::stateChanged, &m_sigmfCapture, &QSigMFCapture::SetDetsEnabled);
+    connect(ui->detailAcqScaledoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfCapture, &QSigMFCapture::SetAcqScaleFactor);
+    connect(ui->detailsStopCapDateTimeEdit, &QDateTimeEdit::dateTimeChanged, &m_sigmfCapture, &QSigMFCapture::SetStopCapture);
+    connect(ui->detailsStartCapDateTimeEdit, &QDateTimeEdit::dateTimeChanged, &m_sigmfCapture, &QSigMFCapture::SetStartCapture);
+    connect(ui->detailsAttnDoubleComboBox, &QDoubleSpinBox::valueChanged, &m_sigmfCapture, &QSigMFCapture::SetAttenuation);
+    connect(ui->detailsSrcFileLineEdit, &QLineEdit::textChanged, &m_sigmfCapture, &QSigMFCapture::SetSourceFile);
+    connect(ui->detailsAcqBwDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfCapture, &QSigMFCapture::SetAcqBandwidth);
+    connect(ui->detailsGainDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfCapture, &QSigMFCapture::SetGain);
+
+    // SigMF Signal Details Annotation Connections
+    connect(ui->detailsSigRefNumLineEdit, &QLineEdit::textChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetCapDetSigRefNum);
+    connect(ui->detailsSnrDbDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetCapDetSnr);
+    connect(ui->captureDetailsEnabledCheckBox, &QCheckBox::stateChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetCapDetEnabled);
+}
+
+void MainWindow::_InitializeAdbsExtConnections()
+{
+    // ADSB Annotation Connections
+    connect(ui->adsbEnabledCheckBox, &QCheckBox::stateChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetAdsbEnabled);
+    connect(ui->adsbBinaryPlainTextEdit, &QPlainTextEdit::textChanged, this, [=] () {m_sigmfAnnotation.SetBinary(ui->adsbBinaryPlainTextEdit->toPlainText());});
+    connect(ui->icaAddrDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetIcaAddr);
+    connect(ui->adsbMsgTypeComboBox, &QSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetAdsbMsgType);
+    connect(ui->downlinkFormatComboBox, &QComboBox::currentIndexChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetAdsbDownlinkFrmt);
+}
+
+void MainWindow::_InitializeWifiExtConnections()
+{
+    // Wifi Annotation Connections
+    connect(ui->wifiEnableCheckBox, &QCheckBox::stateChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetWifiEnabled);
+    connect(ui->wifiStandardTextEdit, &QTextEdit::textChanged, this, [=] () {m_sigmfAnnotation.SetWifiStandard(ui->wifiStandardTextEdit->toPlainText());});
+    connect(ui->frameTypePhyTextEdit, &QTextEdit::textChanged, this, [=] () {m_sigmfAnnotation.SetWifiFrameTypePhy(ui->frameTypePhyTextEdit->toPlainText());});
+    connect(ui->wifiChannelSpinBox, &QSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetWifiChannel);
+    connect(ui->wifiStartTimeDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetWifiStartTime);
+    connect(ui->wifiStopTimeDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetWifiStopTime);
+    connect(ui->wifiFrameDurationDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetWifiFrameDuration);
+    connect(ui->wifiMcsSpinBox, &QSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetWifiMcs);
+    connect(ui->wifiMacFrameTypeTextEdit, &QTextEdit::textChanged, this, [=] () {m_sigmfAnnotation.SetWifiMacFrameType(ui->wifiMacFrameTypeTextEdit->toPlainText());});
+    connect(ui->wifiMacTaTextEdit, &QTextEdit::textChanged, this, [=] () {m_sigmfAnnotation.SetWifiMacTxAddr(ui->wifiMacTaTextEdit->toPlainText());});
+    connect(ui->wifiMacRaTextEdit, &QTextEdit::textChanged, this, [=] () {m_sigmfAnnotation.SetWifiMacRxAddr(ui->wifiMacRaTextEdit->toPlainText());});
+    connect(ui->wifiManufacturerTextEdit, &QTextEdit::textChanged, this, [=] () {m_sigmfAnnotation.SetWifiTxManf(ui->wifiManufacturerTextEdit->toPlainText());});
+    connect(ui->wifiCrcTextEdit, &QTextEdit::textChanged, this, [=] () {m_sigmfAnnotation.SetWifiCrc(ui->wifiCrcTextEdit->toPlainText());});
+    connect(ui->wifiMacFrameTextEdit, &QTextEdit::textChanged, this, [=] () {m_sigmfAnnotation.SetWifiMacFrame(ui->wifiMacFrameTextEdit->toPlainText());});
+    connect(ui->wifiStartPktSpinBox, &QSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetWifiStartPkt);
+    connect(ui->wifiStopPktSpinBox, &QSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetWifiEndPkt);
+    connect(ui->wifiNumSampsSpinBox, &QSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetWifiNumSampsPkt);
+}
+
+void MainWindow::_InitializeAntennaExtConnections()
+{
+    // Antenna Global Connections
+    connect(ui->antennaEnableCheckBox, &QAbstractButton::toggled, &m_sigmfGlobal, &QSigMFGlobal::SetAntennaEnabled);
+    connect(ui->antennaVertGainPatternSpinBox, &QSpinBox::valueChanged, &m_sigmfGlobal, &QSigMFGlobal::SetAntennaVertGain);
+    connect(ui->antennaVertBeamWidthDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfGlobal, &QSigMFGlobal::SetAntennaVertBeamWidth);
+    connect(ui->antennaHorzBeamWidthDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfGlobal, &QSigMFGlobal::SetAntennaHorizBeamWidth);
+    connect(ui->antennaTypeLineEdit, &QLineEdit::textChanged, &m_sigmfGlobal, &QSigMFGlobal::SetAntennaType);
+    connect(ui->antennaHighFreqDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfGlobal, &QSigMFGlobal::SetAntennaHighFreq);
+    connect(ui->antennaModelLineEdit, &QLineEdit::textChanged, &m_sigmfGlobal, &QSigMFGlobal::SetAntennaModel);
+    connect(ui->antennaVwsrDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfGlobal, &QSigMFGlobal::SetAntennaVswr);
+    connect(ui->antennaLowFreqDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfGlobal, &QSigMFGlobal::SetAntennaLowFreq);
+    connect(ui->antennaGainDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfGlobal, &QSigMFGlobal::SetAntennaGain);
+    connect(ui->antennaCrossPolDiscSpinBox, &QSpinBox::valueChanged, &m_sigmfGlobal, &QSigMFGlobal::SetAntennaXPolarDisc);
+    connect(ui->antennaHorzGainPatternDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfGlobal, &QSigMFGlobal::SetAntennaHorizGain);
+    connect(ui->antennaCableLossDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfGlobal, &QSigMFGlobal::SetAntennaCableLoss);
+    connect(ui->antennaHaglDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfGlobal, &QSigMFGlobal::SetAntennaHagl);
+    connect(ui->antennaMobileCheckBox, &QCheckBox::stateChanged, &m_sigmfGlobal, &QSigMFGlobal::SetAntennaMobile);
+    connect(ui->antennaSteerableCheckBox, &QCheckBox::stateChanged, &m_sigmfGlobal, &QSigMFGlobal::SetAntennaSteerable);
+
+
+    // Antenna Annotation Connections
+    connect(ui->antennaEnableCheckBox, &QAbstractButton::toggled, &m_sigmfAnnotation, &QSigMFAnnotation::SetAntennaEnabled);
+    connect(ui->antennaPolarizationLineEdit, &QLineEdit::textChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetAntennaPolarization);
+    connect(ui->antennaAzimuthDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetAntennaAzAng);
+    connect(ui->antennaElevationDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetAntennaElvAng);
+}
+
 void MainWindow::_UpdateVariables()
 {
     m_metaFilepath = ui->outFilepathLineEdit->text();
@@ -281,23 +321,12 @@ void MainWindow::_UpdateVariables()
 
 QByteArray MainWindow::_CreateJson()
 {
-    //QJsonObject globalObj = m_sigmfCore.GenerateGlobalJson();
     QJsonObject globalObj = m_sigmfGlobal.GenerateGlobalJson();
-    //QJsonObject captureObj = m_sigmfCapture.GenerateCaptureJson();
     QJsonArray captureJsonArr = m_sigmfCapture.GenerateCaptureJsonArray();
     QJsonArray annotationJsonArr = m_sigmfAnnotation.GenerateAnnotationJsonArray();
 
     QJsonObject overallObj;
-    /*
-    if(m_annotationJsonArray.size()) {
-        overallObj.insert("annotations", m_annotationJsonArray);
-    }
-    if(m_captureJsonArray.size()) {
-        overallObj.insert("captures", m_captureJsonArray);
-    }
-    */
     overallObj.insert("global", globalObj);
-    //overallObj.insert("captures", captureObj);
     overallObj.insert("captures", captureJsonArr);
     overallObj.insert("annotations", annotationJsonArr);
     QJsonDocument jsonFileCore(overallObj);
