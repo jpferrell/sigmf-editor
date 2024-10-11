@@ -1,7 +1,7 @@
 #ifndef QANTENNA_H
 #define QANTENNA_H
 
-#include "qextension.h"
+#include "include/qextension.h"
 #include <QObject>
 
 class QAntenna : public QExtension

@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QDebug>
 
-#include "qextension.h"
+#include "include/qextension.h"
 
 class QWifi : public QExtension
 {

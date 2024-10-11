@@ -1,4 +1,4 @@
-#include "qsigmfglobal.h"
+#include "include/qsigmfglobal.h"
 
 /*!
  * \class QSigMFGlobal

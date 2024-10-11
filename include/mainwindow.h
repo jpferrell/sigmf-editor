@@ -13,9 +13,9 @@
 
 #include <filesystem>
 
-#include "qsigmfglobal.h"
-#include "qsigmfcapture.h"
-#include "qsigmfannotation.h"
+#include "include/qsigmfglobal.h"
+#include "include/qsigmfcapture.h"
+#include "include/qsigmfannotation.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

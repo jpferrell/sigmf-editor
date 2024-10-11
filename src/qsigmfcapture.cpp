@@ -1,4 +1,4 @@
-#include "qsigmfcapture.h"
+#include "include/qsigmfcapture.h"
 
 /*!
  * \class QSigMFCapture

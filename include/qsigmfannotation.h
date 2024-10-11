@@ -5,12 +5,12 @@
 #include <QJsonArray>
 #include <QJsonObject>
 
-#include "qsigmfcore.h"
-#include "qsigmftypes.h"
-#include "qcapturedetails.h"
-#include "qadsb.h"
-#include "qwifi.h"
-#include "qantenna.h"
+#include "include/qsigmfcore.h"
+#include "include/qsigmftypes.h"
+#include "include/qcapturedetails.h"
+#include "include/qadsb.h"
+#include "include/qwifi.h"
+#include "include/qantenna.h"
 
 class QSigMFAnnotation : public QObject
 {

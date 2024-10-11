@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QDebug>
 
-#include "qsigmftypes.h"
+#include "include/qsigmftypes.h"
 
 class QSigMfBase : public QObject
 {

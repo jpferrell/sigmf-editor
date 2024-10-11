@@ -5,9 +5,9 @@
 #include <QJsonObject>
 #include <QString>
 
-#include "qsigmfcore.h"
-#include "qantenna.h"
-#include "qsigmftypes.h"
+#include "include/qsigmfcore.h"
+#include "include/qantenna.h"
+#include "include/qsigmftypes.h"
 
 class QSigMFGlobal : public QObject
 {

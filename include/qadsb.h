@@ -3,7 +3,7 @@
 
 #include <QDebug>
 
-#include "qextension.h"
+#include "include/qextension.h"
 
 class QAdsb : public QExtension
 {

@@ -1,4 +1,4 @@
-#include "qwifi.h"
+#include "include/qwifi.h"
 
 /*!
  * \class QWifi

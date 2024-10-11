@@ -4,8 +4,8 @@
 #include <QObject>
 #include <QDateTime>
 
-#include "qsigmfbase.h"
-#include "qsigmftypes.h"
+#include "include/qsigmfbase.h"
+#include "include/qsigmftypes.h"
 
 
 class QSigMfCore : public QSigMfBase

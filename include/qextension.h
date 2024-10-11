@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-#include "qsigmfbase.h"
+#include "include/qsigmfbase.h"
 
 class QExtension : public QSigMfBase
 {

@@ -1,4 +1,4 @@
-#include "qantenna.h"
+#include "include/qantenna.h"
 
 QAntenna::QAntenna(QObject *parent)
     : QExtension{parent}

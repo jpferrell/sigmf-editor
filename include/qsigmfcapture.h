@@ -5,9 +5,9 @@
 #include <QJsonArray>
 #include <QJsonObject>
 
-#include "qsigmfcore.h"
-#include "qcapturedetails.h"
-#include "qsigmftypes.h"
+#include "include/qsigmfcore.h"
+#include "include/qcapturedetails.h"
+#include "include/qsigmftypes.h"
 
 class QSigMFCapture : public QObject
 {

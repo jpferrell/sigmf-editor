@@ -1,4 +1,4 @@
-#include "qcapturedetails.h"
+#include "include/qcapturedetails.h"
 
 /*!
  * \class QCaptureDetails

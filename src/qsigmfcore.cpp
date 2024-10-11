@@ -1,4 +1,4 @@
-#include "qsigmfcore.h"
+#include "include/qsigmfcore.h"
 
 /*!
  * \class QSigMFCore

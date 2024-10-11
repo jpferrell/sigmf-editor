@@ -1,4 +1,4 @@
-#include "qextension.h"
+#include "include/qextension.h"
 
 /*!
  * \class QExtension

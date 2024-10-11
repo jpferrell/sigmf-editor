@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QDateTime>
 
-#include "qextension.h"
+#include "include/qextension.h"
 
 class QCaptureDetails : public QExtension
 {

@@ -1,4 +1,4 @@
-#include "qsigmfannotation.h"
+#include "include/qsigmfannotation.h"
 
 QSigMFAnnotation::QSigMFAnnotation():
     m_sigmfCore()
