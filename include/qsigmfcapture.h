@@ -3,9 +3,11 @@
 
 #include <QObject>
 #include <QJsonArray>
+#include <QJsonObject>
 
-#include "qsigmfcore.h"
-#include "qsigmftypes.h"
+#include "include/qsigmfcore.h"
+#include "include/qcapturedetails.h"
+#include "include/qsigmftypes.h"
 
 class QSigMFCapture : public QObject
 {
@@ -13,7 +15,6 @@ class QSigMFCapture : public QObject
 public:
     QSigMFCapture();
 
-    QJsonObject GenerateCaptureJson();
     QJsonArray GenerateCaptureJsonArray();
 
 public slots:
@@ -24,6 +25,17 @@ public slots:
     void SetGlobalIndex(int);
     void SetHeaderBytes(int);
     void SetDatetimeEnabled(bool);
+
+    void SetAcqScaleFactor(double);
+    void SetAttenuation(double);
+    void SetAcqBandwidth(double);
+    void SetStartCapture(QDateTime);
+    void SetStopCapture(QDateTime);
+    void SetSourceFile(QString);
+    void SetGain(double);
+
+    void SetDetsEnabled(bool);
+
     void AddCapture();
 
 protected:
@@ -31,6 +43,7 @@ protected:
 private:
 
     QSigMfCore m_sigmfCore;
+    QCaptureDetails m_capDets;
     std::vector< std::vector <sigmfJson_t> > m_captureVect;
 
 };

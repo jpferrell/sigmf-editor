@@ -9,13 +9,13 @@
 #include <QFile>
 #include <QFileDialog>
 #include <QCheckBox>
+#include <QCryptographicHash>
 
 #include <filesystem>
 
-#include "qsigmfcore.h"
-#include "qsigmfglobal.h"
-#include "qsigmfcapture.h"
-#include "qsigmfannotation.h"
+#include "include/qsigmfglobal.h"
+#include "include/qsigmfcapture.h"
+#include "include/qsigmfannotation.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -36,8 +36,6 @@ public slots:
 
     void Configure();
     void ChangeHardwareOption(const QString &);
-    void AddAnnotation();
-    void AddCapture();
     void ChangeDatetimeEnable();
     void OpenDataFile();
     void ExitApplication();
@@ -71,7 +69,15 @@ private:
     QJsonArray m_annotationJsonArray;
     std::vector<int> m_annotationStartIdxVect;
 
+    // Initializations
     void _InitializeComboBoxes();
+    void _InitializeGeneralConnections();
+    void _InitializeCoreConnections();
+    void _InitializeSignalExtConnections();
+    void _InitializeAdbsExtConnections();
+    void _InitializeWifiExtConnections();
+    void _InitializeAntennaExtConnections();
+
     void _UpdateVariables();
     QByteArray _CreateJson();
     void _WriteJsonFile(QByteArray);

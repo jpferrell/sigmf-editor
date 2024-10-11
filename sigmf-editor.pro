@@ -9,23 +9,35 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    main.cpp \
-    mainwindow.cpp \
-    qsigmfannotation.cpp \
-    qsigmfcapture.cpp \
-    qsigmfcore.cpp \
-    qsigmfglobal.cpp
+    src/main.cpp \
+    src/mainwindow.cpp \
+    src/qadsb.cpp \
+    src/qantenna.cpp \
+    src/qcapturedetails.cpp \
+    src/qextension.cpp \
+    src/qsigmfannotation.cpp \
+    src/qsigmfbase.cpp \
+    src/qsigmfcapture.cpp \
+    src/qsigmfcore.cpp \
+    src/qsigmfglobal.cpp \
+    src/qwifi.cpp
 
 HEADERS += \
-    mainwindow.h \
-    qsigmfannotation.h \
-    qsigmfcapture.h \
-    qsigmfcore.h \
-    qsigmfglobal.h \
-    qsigmftypes.h
+    include/mainwindow.h \
+    include/qadsb.h \
+    include/qantenna.h \
+    include/qcapturedetails.h \
+    include/qextension.h \
+    include/qsigmfannotation.h \
+    include/qsigmfbase.h \
+    include/qsigmfcapture.h \
+    include/qsigmfcore.h \
+    include/qsigmfglobal.h \
+    include/qsigmftypes.h \
+    include/qwifi.h
 
 FORMS += \
-    mainwindow.ui
+    forms/mainwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

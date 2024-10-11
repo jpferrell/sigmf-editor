@@ -2,6 +2,7 @@
 #define QSIGMFTYPES_H
 
 #include <QString>
+#include <vector>
 
 class Geo {
 public:
@@ -36,5 +37,8 @@ typedef struct sigmfJson {
     QString jsonVal;
     bool isRequired;
 } sigmfJson_t;
+
+typedef std::vector<sigmfJson_t> sigmfVector_t;
+typedef std::vector< std::vector<sigmfJson_t> > sigmfArray_t;
 
 #endif // QSIGMFTYPES_H
