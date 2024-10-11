@@ -1,12 +1,28 @@
 #include "qsigmfglobal.h"
 
+/*!
+ * \class QSigMFGlobal
+ * \since v0.0.1
+ *
+ * \brief The QSigMFGlobal class provides methods for writing JSON objects of the
+ * global values in the SigMF standard.
+ */
+
+/*!
+ * \brief QSigMFGlobal::QSigMFGlobal constructs the QSigMFGlobal class and empty initializes
+ * the extension classes.
+ */
 QSigMFGlobal::QSigMFGlobal():
     m_sigmfCore()
   , m_ant()
 {
-
 }
 
+/*!
+ * \brief QSigMFGlobal::GenerateGlobalJson assembles the global JSON object from the extensions that
+ * have global values.
+ * \return (QJsonObject) that hold the JSON key/values for the global object.
+ */
 QJsonObject QSigMFGlobal::GenerateGlobalJson()
 {
     QJsonObject retObj;

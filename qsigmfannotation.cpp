@@ -2,6 +2,10 @@
 
 QSigMFAnnotation::QSigMFAnnotation():
     m_sigmfCore()
+  , m_capDets()
+  , m_adsb()
+  , m_wifi()
+  , m_ant()
   , m_annotVect()
 {
 

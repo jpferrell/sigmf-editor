@@ -1,15 +1,33 @@
 #include "qsigmfcapture.h"
 
+/*!
+ * \class QSigMFCapture
+ * \since v0.0.1
+ *
+ * \brief The QSigMFCapture class holds the values for any annotations made to the SigMF data.
+ */
+
+/*!
+ * \brief QSigMFCapture::QSigMFCapture constructs the QSigMFCapture class with empty initialized
+ * SigMF extensions.
+ */
 QSigMFCapture::QSigMFCapture():
     m_sigmfCore()
+  , m_capDets()
   , m_captureVect()
 {
 }
 
+/*!
+ * \brief QSigMFCapture::GenerateCaptureJsonArray generates the annotation JSON Array from any set
+ * annotations.
+ * \return
+ */
 QJsonArray QSigMFCapture::GenerateCaptureJsonArray()
 {
     QJsonArray retArr;
 
+    // The standard states the annotations must be sorted by the start sample
     std::sort(m_captureVect.begin(), m_captureVect.end(), [](const std::vector<sigmfJson_t> &lhs, const std::vector<sigmfJson_t> &rhs) {
         return lhs.at(0).jsonVal.toInt() < rhs.at(0).jsonVal.toInt();
     });
@@ -94,6 +112,10 @@ void QSigMFCapture::SetDetsEnabled(bool isEnabled)
     m_capDets.SetEnable(isEnabled);
 }
 
+/*!
+ * \brief QSigMFCapture::AddCapture adds the current annotation JSON key/values to a vector
+ * to later be assembled into a JSON Array.
+ */
 void QSigMFCapture::AddCapture()
 {
     // Had to do this to get it all within the same array
