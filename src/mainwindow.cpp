@@ -179,6 +179,9 @@ void MainWindow::_InitializeComboBoxes()
     ui->sigDetaillMultAccComboBox->addItem("CDMA");
     ui->sigDetaillMultAccComboBox->addItem("SDMA");
     ui->sigDetaillMultAccComboBox->addItem("PDMA");
+
+    ui->globalCoreGeoTypeComboBox->addItem("");
+    ui->globalCoreGeoTypeComboBox->addItem("Point");
 }
 
 void MainWindow::_InitializeGeneralConnections()
@@ -217,6 +220,10 @@ void MainWindow::_InitializeCoreConnections()
     connect(ui->recorderLineEdit, &QLineEdit::textChanged, &m_sigmfGlobal, &QSigMFGlobal::SetRecorder);
     connect(ui->trailingBytesSpinBox, &QSpinBox::valueChanged, &m_sigmfGlobal, &QSigMFGlobal::SetTrailingBytes);
     connect(ui->versionLineEdit, &QLineEdit::textChanged, &m_sigmfGlobal, &QSigMFGlobal::SetVersion);
+    connect(ui->globalCoreGeoTypeComboBox, &QComboBox::currentTextChanged, &m_sigmfGlobal, &QSigMFGlobal::SetGeoType);
+    connect(ui->globalCoreGeoLatDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfGlobal, &QSigMFGlobal::SetLat);
+    connect(ui->globalCoreGeoLongDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfGlobal, &QSigMFGlobal::SetLon);
+    connect(ui->globalCoreGeoAltDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfGlobal, &QSigMFGlobal::SetElevation);
 
     // SigMF Core Capture Connections
     connect(ui->sampStartSpinBox, &QSpinBox::valueChanged, &m_sigmfCapture, &QSigMFCapture::SetSampleStart);

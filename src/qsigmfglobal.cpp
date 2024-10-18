@@ -32,6 +32,10 @@ QJsonObject QSigMFGlobal::GenerateGlobalJson()
         retObj.insert(it->jsonKey, it->jsonVal);
         qDebug() << "inserted " << it->jsonKey;
     }
+    if (m_sigmfCore.IsGeoValid()) {
+        QJsonObject tmpObj = m_sigmfCore.GetGeoJson();
+        retObj.insert("core:geolocation", tmpObj);
+    }
     if (m_ant.GetEnabled()) {
         sigmfVector_t antVect = m_ant.GetGlobalValues();
         for (auto it = antVect.begin(); it != antVect.end(); it++) {

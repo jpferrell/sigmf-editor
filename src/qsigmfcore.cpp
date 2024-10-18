@@ -404,6 +404,26 @@ void QSigMfCore::SetUuid(QString str)
     m_annotJsonVect.at(7).jsonVal = str;
 }
 
+QJsonObject QSigMfCore::GetGeoJson()
+{
+    QJsonObject outObj;
+    outObj.insert("type", m_globalVars.GetGeoType());
+    QJsonArray coord;
+    coord.append(m_globalVars.GetGeoLat().toDouble());
+    coord.append(m_globalVars.GetGeoLon().toDouble());
+    if (QString::compare(m_globalVars.GetGeoElv(), "")) {
+        coord.append(m_globalVars.GetGeoElv().toDouble());
+    }
+    outObj.insert("coordinates", coord);
+
+    return outObj;
+}
+
+bool QSigMfCore::IsGeoValid()
+{
+    return QString::compare(m_globalVars.GetGeoType(), "") && QString::compare(m_globalVars.GetGeoLat(), "") && QString::compare(m_globalVars.GetGeoLon(), "") ? true : false;
+}
+
 /*!
  * \brief QSigMfCore::_UpdateDataType updates the datatype string when one of its
  * components is updated.
