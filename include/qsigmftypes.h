@@ -38,6 +38,17 @@ typedef struct sigmfJson {
     bool isRequired;
 } sigmfJson_t;
 
+typedef struct dataChange {
+    QString author;
+    QString datetime;
+} dataChange_t;
+
+typedef struct origin {
+    QString account;
+    QString container;
+    QString file_path;
+} origin_t;
+
 typedef std::vector<sigmfJson_t> sigmfVector_t;
 typedef std::vector< std::vector<sigmfJson_t> > sigmfArray_t;
 

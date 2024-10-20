@@ -38,10 +38,9 @@ protected:
     sigmfArray_t m_captureJsonArray;
     sigmfArray_t m_annotJsonArray;
 
-    bool _CheckRequiredData(sigmfVector_t vect);
-
 private:
 
+    bool _CheckRequiredData(sigmfVector_t vect);
 };
 
 #endif // QSIGMFBASE_H

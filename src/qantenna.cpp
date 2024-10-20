@@ -25,6 +25,7 @@ QAntenna::QAntenna(QObject *parent)
                                      {"antenna:elevation_angle", "", false},
                                      {"antenna:polarization", "", false}
                                  });
+    SetGlobalExtensionObject("antenna", "1.0.0", false);
 }
 
 void QAntenna::SetModel(QString str)

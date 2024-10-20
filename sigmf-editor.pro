@@ -9,6 +9,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    src/qtraceability.cpp \
     src/qsignal.cpp \
     src/main.cpp \
     src/mainwindow.cpp \
@@ -24,6 +25,7 @@ SOURCES += \
     src/qwifi.cpp
 
 HEADERS += \
+    include/qtraceability.h \
     include/mainwindow.h \
     include/qadsb.h \
     include/qantenna.h \

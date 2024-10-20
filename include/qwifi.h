@@ -12,6 +12,8 @@ class QWifi : public QExtension
 public:
     explicit QWifi(QObject *parent = nullptr);
 
+    sigmfVector_t GetAnnotationValues();
+
     void SetStandard(QString);
     void SetFrameTypePhy(QString);
     void SetChannel(int);
@@ -30,6 +32,7 @@ public:
     void SetNumSampsPkt(double);
 
 signals:
+
 
 public slots:
 

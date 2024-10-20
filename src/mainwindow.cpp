@@ -27,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent)
     _InitializeAdbsExtConnections();
     _InitializeWifiExtConnections();
     _InitializeAntennaExtConnections();
+    _InitializeTraceExtConnections();
 }
 
 MainWindow::~MainWindow()
@@ -225,6 +226,9 @@ void MainWindow::_InitializeCoreConnections()
     connect(ui->globalCoreGeoLongDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfGlobal, &QSigMFGlobal::SetLon);
     connect(ui->globalCoreGeoAltDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfGlobal, &QSigMFGlobal::SetElevation);
 
+    // SigMF Global Extensions Connections
+    connect(&this->m_sigmfAnnotation, &QSigMFAnnotation::extensionEnabled, &this->m_sigmfGlobal, &QSigMFGlobal::AddExtension);
+
     // SigMF Core Capture Connections
     connect(ui->sampStartSpinBox, &QSpinBox::valueChanged, &m_sigmfCapture, &QSigMFCapture::SetSampleStart);
     connect(ui->dateTimeEdit, &QDateTimeEdit::dateTimeChanged, &m_sigmfCapture, &QSigMFCapture::SetDatetime);
@@ -322,6 +326,23 @@ void MainWindow::_InitializeAntennaExtConnections()
     connect(ui->antennaPolarizationLineEdit, &QLineEdit::textChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetAntennaPolarization);
     connect(ui->antennaAzimuthDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetAntennaAzAng);
     connect(ui->antennaElevationDoubleSpinBox, &QDoubleSpinBox::valueChanged, &m_sigmfAnnotation, &QSigMFAnnotation::SetAntennaElvAng);
+}
+
+void MainWindow::_InitializeTraceExtConnections()
+{
+    // Traceability Global Connections
+    connect(ui->globalTracebilityEnabledCheckbox, &QAbstractButton::toggled, &m_sigmfGlobal, &QSigMFGlobal::SetTraceabilityEnabled);
+    connect(ui->traceLastModAuthLineEdit, &QLineEdit::textEdited, &m_sigmfGlobal, &QSigMFGlobal::SetTraceLastModAuthor);
+    connect(ui->traceLastModDateTimeEdit, &QDateTimeEdit::dateTimeChanged, &m_sigmfGlobal, &QSigMFGlobal::SetTraceLastModDatetime);
+    connect(ui->traceLastRevAuthLineEdit, &QLineEdit::textEdited, &m_sigmfGlobal, &QSigMFGlobal::SetTraceLastRevAuthor);
+    connect(ui->traceLastRevDateTimeEidt, &QDateTimeEdit::dateTimeChanged, &m_sigmfGlobal, &QSigMFGlobal::SetTraceLastRevDatetime);
+    connect(ui->traceRevSpinBox, &QSpinBox::valueChanged, &m_sigmfGlobal, &QSigMFGlobal::SetTraceRevision);
+    connect(ui->traceOriginAccountLineEdit, &QLineEdit::textChanged, &m_sigmfGlobal, &QSigMFGlobal::SetTraceAccount);
+    connect(ui->originContainterLineEdit, &QLineEdit::textChanged, &m_sigmfGlobal, &QSigMFGlobal::SetTraceContainer);
+    connect(ui->traceOriginFilepathLineEdit, &QLineEdit::textChanged, &m_sigmfGlobal, &QSigMFGlobal::SetTraceFilepath);
+
+    // Traceability Annotation Connections
+    //connect(ui->annotationTraceabilityEnabledCheckbox, &QAbstractButton::toggled, &m_sigmfAnnotation, &QSigMFAnnotation::SetTraceabilityEnabled);
 }
 
 void MainWindow::_UpdateVariables()

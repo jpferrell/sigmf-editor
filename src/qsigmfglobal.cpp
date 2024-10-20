@@ -15,7 +15,10 @@
 QSigMFGlobal::QSigMFGlobal():
     m_sigmfCore()
   , m_ant()
+  , m_trace()
+  , m_extJsonArr()
 {
+    connect(&this->m_ant, &QAntenna::extensionEnabled, this, &QSigMFGlobal::AddExtension);
 }
 
 /*!
@@ -43,6 +46,27 @@ QJsonObject QSigMFGlobal::GenerateGlobalJson()
             qDebug() << "inserted " << it->jsonKey;
         }
     }
+    if (m_trace.GetEnabled()) {
+        QJsonObject tmpObj;
+        tmpObj = m_trace.GetGlobalLastMod();
+        if (!tmpObj.isEmpty()) {
+            retObj.insert("traceability:last_modified", tmpObj);
+        }
+        tmpObj = m_trace.GetGlobalLastRev();
+        if (!tmpObj.isEmpty()) {
+            retObj.insert("traceability:last_reviewed", tmpObj);
+        }
+        tmpObj = m_trace.GetGlobalOrigin();
+        if (!tmpObj.isEmpty()) {
+            retObj.insert("traceability:origin", tmpObj);
+        }
+        QString rev = m_trace.GetGlobalRevision();
+        if (QString::compare(rev, "")) {
+            retObj.insert("traceability:revision", rev);
+        }
+    }
+    retObj.insert("core:extensions", m_extJsonArr);
+
     return retObj;
 }
 
@@ -239,4 +263,59 @@ void QSigMFGlobal::SetAntennaMobile(bool en)
 void QSigMFGlobal::SetAntennaHagl(double h)
 {
     m_ant.SetHagl(h);
+}
+
+void QSigMFGlobal::SetTraceabilityEnabled(bool en)
+{
+    m_trace.SetEnable(en);
+}
+
+void QSigMFGlobal::SetTraceLastModAuthor(QString author)
+{
+    m_trace.SetGlobalLastModAuthor(author);
+}
+
+void QSigMFGlobal::SetTraceLastModDatetime(QDateTime datetime)
+{
+    m_trace.SetGlobalLastModDatetime(datetime.toString(Qt::ISODateWithMs));
+}
+
+void QSigMFGlobal::SetTraceLastRevAuthor(QString author)
+{
+    m_trace.SetGlobalLastRevAuthor(author);
+}
+
+void QSigMFGlobal::SetTraceLastRevDatetime(QDateTime datetime)
+{
+    m_trace.SetGlobalLastRevDatetime(datetime.toString(Qt::ISODateWithMs));
+}
+
+void QSigMFGlobal::SetTraceRevision(int rev)
+{
+    m_trace.SetRevision(rev);
+}
+
+void QSigMFGlobal::SetTraceAccount(QString account)
+{
+    m_trace.SetOriginAccount(account);
+}
+
+void QSigMFGlobal::SetTraceContainer(QString container)
+{
+    m_trace.SetOriginContainer(container);
+}
+
+void QSigMFGlobal::SetTraceFilepath(QString filepath)
+{
+    m_trace.SetOriginFilepath(filepath);
+}
+
+void QSigMFGlobal::AddExtension(QString name, QString version, QString optional)
+{
+    qDebug() << "Add extension called for " << name;
+    QJsonObject tmp;
+    tmp.insert("name", name);
+    tmp.insert("version", version);
+    tmp.insert("optional", optional);
+    m_extJsonArr.append(tmp);
 }
