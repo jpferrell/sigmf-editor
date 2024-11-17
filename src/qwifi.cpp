@@ -33,6 +33,16 @@ QWifi::QWifi(QObject *parent)
                                      {"wifi:stop_of_packet", "", true},
                                      {"wifi:number_of_samples_in_packet", "", true}
                                 });
+    SetGlobalExtensionObject("wifi", "1.0.0", false);
+}
+
+sigmfVector_t QWifi::GetAnnotationValues()
+{
+    sigmfVector_t retVect = QSigMfBase::GetAnnotationValues();
+    QString opt = GetExtensionOptional() ? "true" : "false";
+    emit extensionEnabled(GetExtensionName(), GetExtensionVersion(), opt);
+
+    return retVect;
 }
 
 /*!

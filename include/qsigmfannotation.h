@@ -11,6 +11,7 @@
 #include "include/qadsb.h"
 #include "include/qwifi.h"
 #include "include/qantenna.h"
+#include "include/qtraceability.h"
 
 class QSigMFAnnotation : public QObject
 {
@@ -19,6 +20,10 @@ public:
     QSigMFAnnotation();
 
     QJsonArray GenerateAnnotationJsonArray();
+
+signals:
+
+    void extensionEnabled(QString name, QString version, QString optional);
 
 public slots:
 
@@ -65,6 +70,7 @@ public slots:
     void SetAntennaPolarization(QString str);
 
     void AddAnnotation();
+    void EnableExtension(QString name, QString version, QString optional);
 
 
 protected:
@@ -76,6 +82,7 @@ private:
     QAdsb m_adsb;
     QWifi m_wifi;
     QAntenna m_ant;
+    QTraceability m_trace;
     std::vector< std::vector<sigmfJson_t> > m_annotVect;
 
 };

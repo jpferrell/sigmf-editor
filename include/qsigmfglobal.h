@@ -8,6 +8,7 @@
 #include "include/qsigmfcore.h"
 #include "include/qantenna.h"
 #include "include/qsigmftypes.h"
+#include "include/qtraceability.h"
 
 class QSigMFGlobal : public QObject
 {
@@ -16,6 +17,10 @@ public:
     QSigMFGlobal();
 
     QJsonObject GenerateGlobalJson();
+    bool GetTraceabilityEnabled();
+    bool GetAntennaEnabled();
+
+signals:
 
 public slots:
 
@@ -42,7 +47,6 @@ public slots:
     void SetDataFormat(QString);
     void SetEndianness(QString);
 
-    bool GetAntennaEnabled();
     void SetAntennaEnabled(bool en);
     void SetAntennaModel(QString str);
     void SetAntennaType(QString str);
@@ -60,6 +64,18 @@ public slots:
     void SetAntennaMobile(bool en);
     void SetAntennaHagl(double h);
 
+    void SetTraceabilityEnabled(bool en);
+    void SetTraceLastModAuthor(QString author);
+    void SetTraceLastModDatetime(QDateTime datetime);
+    void SetTraceLastRevAuthor(QString author);
+    void SetTraceLastRevDatetime(QDateTime datetime);
+    void SetTraceRevision(int rev);
+    void SetTraceAccount(QString account);
+    void SetTraceContainer(QString container);
+    void SetTraceFilepath(QString filepath);
+
+    void AddExtension(QString name, QString version, QString optional);
+
 
 protected:
 
@@ -67,6 +83,9 @@ private:
 
     QSigMfCore m_sigmfCore;
     QAntenna m_ant;
+    QTraceability m_trace;
+
+    QJsonArray m_extJsonArr;
 
 };
 

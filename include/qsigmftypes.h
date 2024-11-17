@@ -6,19 +6,19 @@
 
 class Geo {
 public:
-    void SetLat(double lat){m_lat = lat;}
-    void SetLon(double lon){m_lon = lon;}
-    void SetElv(double elv){m_elv = elv;}
-    double GetLat(){return m_lat;}
-    double GetLon(){return m_lon;}
-    double GetElv(){return m_elv;}
+    void SetLat(double lat){m_lat = QString::number(lat);}
+    void SetLon(double lon){m_lon = QString::number(lon);}
+    void SetElv(double elv){m_elv = QString::number(elv);}
+    QString GetLat(){return m_lat;}
+    QString GetLon(){return m_lon;}
+    QString GetElv(){return m_elv;}
 protected:
 
 private:
 
-    double m_lat;
-    double m_lon;
-    double m_elv;
+    QString m_lat;
+    QString m_lon;
+    QString m_elv;
 };
 
 typedef struct bearing {
@@ -37,6 +37,17 @@ typedef struct sigmfJson {
     QString jsonVal;
     bool isRequired;
 } sigmfJson_t;
+
+typedef struct dataChange {
+    QString author;
+    QString datetime;
+} dataChange_t;
+
+typedef struct origin {
+    QString account;
+    QString container;
+    QString file_path;
+} origin_t;
 
 typedef std::vector<sigmfJson_t> sigmfVector_t;
 typedef std::vector< std::vector<sigmfJson_t> > sigmfArray_t;

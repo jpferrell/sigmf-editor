@@ -18,6 +18,15 @@ QExtension::QExtension(QObject *parent)
 {
 }
 
+sigmfVector_t QExtension::GetGlobalValues()
+{
+    sigmfVector_t retVect = QSigMfBase::GetGlobalValues();
+    QString opt = m_optional ? "true" : "false";
+    emit extensionEnabled(m_name, m_version, opt);
+
+    return retVect;
+}
+
 /*!
  * \brief QExtension::SetEnable sets the extension as enabled or not.
  *
@@ -35,4 +44,21 @@ void QExtension::SetEnable(bool en)
 bool QExtension::GetEnabled()
 {
     return m_isEnabled;
+}
+
+void QExtension::SetGlobalExtensionObject(QString name, QString version, bool optional)
+{
+    m_name = name;
+    m_version = version;
+    m_optional = optional;
+}
+
+QJsonObject QExtension::GetGlobalExtensionObject()
+{
+    QJsonObject retObj;
+    retObj.insert("name", m_name);
+    retObj.insert("version", m_version);
+    retObj.insert("optional", m_optional);
+
+    return retObj;
 }

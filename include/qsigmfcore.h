@@ -3,6 +3,8 @@
 
 #include <QObject>
 #include <QDateTime>
+#include <QJsonObject>
+#include <QJsonArray>
 
 #include "include/qsigmfbase.h"
 #include "include/qsigmftypes.h"
@@ -55,6 +57,9 @@ public:
     void SetGenerator(QString);
     void SetUuid(QString);
 
+    QJsonObject GetGeoJson();
+    bool IsGeoValid();
+
 public slots:
 
 signals:
@@ -79,6 +84,11 @@ private:
         QString GetComplexReal(){return m_complexReal;}
         QString GetDataFormat(){return m_dataFormat;}
         QString GetEndianness(){return m_endianness;}
+
+        QString GetGeoType(){return m_geoType;}
+        QString GetGeoLat(){return m_geo.GetLat();}
+        QString GetGeoLon(){return m_geo.GetLon();}
+        QString GetGeoElv(){return m_geo.GetElv();}
 
     protected:
 

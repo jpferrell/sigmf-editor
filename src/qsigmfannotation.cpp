@@ -6,9 +6,12 @@ QSigMFAnnotation::QSigMFAnnotation():
   , m_adsb()
   , m_wifi()
   , m_ant()
+  , m_trace()
   , m_annotVect()
 {
-
+    connect(&this->m_capDets, &QCaptureDetails::extensionEnabled, this, &QSigMFAnnotation::EnableExtension);
+    connect(&this->m_adsb, &QAdsb::extensionEnabled, this, &QSigMFAnnotation::EnableExtension);
+    connect(&this->m_wifi, &QWifi::extensionEnabled, this, &QSigMFAnnotation::EnableExtension);
 }
 
 QJsonArray QSigMFAnnotation::GenerateAnnotationJsonArray()
@@ -242,7 +245,6 @@ void QSigMFAnnotation::AddAnnotation()
             tmp.emplace_back(*it);
         }
     }
-    qDebug() << "m_ant enabled: " << m_ant.GetEnabled();
     if (m_ant.GetEnabled()) {
         sigmfVector_t antVect = m_ant.GetAnnotationValues();
         for (auto it = antVect.begin(); it != antVect.end(); it++) {
@@ -250,4 +252,10 @@ void QSigMFAnnotation::AddAnnotation()
         }
     }
     m_annotVect.insert(m_annotVect.end(), tmp);
+}
+
+void QSigMFAnnotation::EnableExtension(QString name, QString version, QString optional)
+{
+    qDebug() << "emitting extension enabled for " << name << "from annotation";
+    emit extensionEnabled(name, version, optional);
 }

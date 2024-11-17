@@ -77,6 +77,7 @@ private:
     void _InitializeAdbsExtConnections();
     void _InitializeWifiExtConnections();
     void _InitializeAntennaExtConnections();
+    void _InitializeTraceExtConnections();
 
     void _UpdateVariables();
     QByteArray _CreateJson();
