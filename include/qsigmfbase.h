@@ -10,11 +10,11 @@ class QSigMfBase : public QObject
 {
     Q_OBJECT
 public:
-    explicit QSigMfBase(QObject *parent = nullptr);
+    explicit QSigMfBase(qstringVect_t reqGlobeVect, qstringVect_t reqCapVect, qstringVect_t reqAnnotVect, QObject *parent = nullptr);
 
-    sigmfVector_t GetGlobalValues();
-    sigmfVector_t GetCaptureValues();
-    sigmfVector_t GetAnnotationValues();
+    sigmfMap_t GetGlobalMap();
+    sigmfMap_t GetCaptureMap();
+    sigmfMap_t GetAnnotationMap();
 
 signals:
 
@@ -22,25 +22,17 @@ public slots:
 
 protected:
 
-    void InitializeGlobalJsonVect(sigmfVector_t vect);
-    void InitializeCaptureJsonVect(sigmfVector_t vect);
-    void InitializeAnnotationJsonVect(sigmfVector_t vect);
+    sigmfMap_t m_globalJsonMap;
+    sigmfMap_t m_captureJsonMap;
+    sigmfMap_t m_annotJsonMap;
 
-    sigmfVector_t m_globalJsonVect;
-    sigmfVector_t m_captureJsonVect;
-    sigmfVector_t m_annotJsonVect;
-
-    void InitializeGlobalJsonArray(sigmfArray_t arr);
-    void InitializeCaptureJsonArray(sigmfArray_t arr);
-    void InitializeAnnotationJsonArray(sigmfArray_t arr);
-
-    sigmfArray_t m_globalJsonArray;
-    sigmfArray_t m_captureJsonArray;
-    sigmfArray_t m_annotJsonArray;
+    qstringVect_t m_requiredGlobalKeys;
+    qstringVect_t m_requiredCaptureKeys;
+    qstringVect_t m_requiredAnnotKeys;
 
 private:
 
-    bool _CheckRequiredData(sigmfVector_t vect);
+    bool _CheckRequiredData(sigmfMap_t map, qstringVect_t requiredKeys);
 };
 
 #endif // QSIGMFBASE_H

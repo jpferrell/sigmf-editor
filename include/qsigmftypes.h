@@ -3,6 +3,8 @@
 
 #include <QString>
 #include <vector>
+#include <unordered_map>
+#include <QJsonObject>
 
 class Geo {
 public:
@@ -51,5 +53,10 @@ typedef struct origin {
 
 typedef std::vector<sigmfJson_t> sigmfVector_t;
 typedef std::vector< std::vector<sigmfJson_t> > sigmfArray_t;
+
+typedef std::unordered_map<QString, QString> qstringMap_t;
+typedef std::vector<QString> qstringVect_t;
+typedef std::unordered_map<QString, QJsonObject> sigmfMap_t;
+typedef std::vector<sigmfMap_t> sigmfMapVector_t;
 
 #endif // QSIGMFTYPES_H
