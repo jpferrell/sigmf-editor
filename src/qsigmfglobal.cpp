@@ -30,6 +30,13 @@ QJsonObject QSigMFGlobal::GenerateGlobalJson()
 {
     QJsonObject retObj;
 
+    sigmfMap_t coreMap = m_sigmfCore.GetGlobalMap();
+    for (auto it = coreMap.cbegin(); it != coreMap.cend(); it++) {
+        QString key = it->second.keys().at(0);
+        retObj.insert(key, it->second.value(key));
+    }
+
+    /*
     std::vector<sigmfJson_t> coreVect = m_sigmfCore.GetGlobalValues();
     for (auto it = coreVect.begin(); it != coreVect.end(); it++) {
         retObj.insert(it->jsonKey, it->jsonVal);
@@ -66,6 +73,7 @@ QJsonObject QSigMFGlobal::GenerateGlobalJson()
         }
     }
     retObj.insert("core:extensions", m_extJsonArr);
+    */
 
     return retObj;
 }

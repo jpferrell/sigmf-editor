@@ -1,119 +1,99 @@
 #include "include/qantenna.h"
 
 QAntenna::QAntenna(QObject *parent)
-    : QExtension{parent}
+    : QExtension{{"model"},{},{},parent}
 {
-    InitializeGlobalJsonVect({
-                                 {"antenna:model", "", true},
-                                 {"antenna:type", "", false},
-                                 {"antenna:low_frequency", "", false},
-                                 {"antenna:high_frequency", "", false},
-                                 {"antenna:gain", "", false},
-                                 {"antenna:horizontal_gain_pattern", "", false},
-                                 {"antenna:vertical_gain_pattern", "", false},
-                                 {"antenna:horizontal_beam_width", "", false},
-                                 {"antenna:vertical_beam_width", "", false},
-                                 {"antenna:cross_polar_discrimination", "", false},
-                                 {"antenna:voltage_standing_wave_ratio", "", false},
-                                 {"antenna:cable_loss", "", false},
-                                 {"antenna:steerable", "false", false},
-                                 {"antenna:mobile", "false", false},
-                                 {"antenna:hagl", "", false}
-    });
-    InitializeAnnotationJsonVect({
-                                     {"antenna:azimuth_angle", "", false},
-                                     {"antenna:elevation_angle", "", false},
-                                     {"antenna:polarization", "", false}
-                                 });
     SetGlobalExtensionObject("antenna", "1.0.0", false);
 }
 
 void QAntenna::SetModel(QString str)
 {
-    m_globalJsonVect.at(0).jsonVal = str;
+    m_globalJsonMap.insert_or_assign("model", QJsonObject{{"antenna:model", str}});
 }
 
 void QAntenna::SetType(QString str)
 {
-    m_globalJsonVect.at(1).jsonVal = str;
+    m_globalJsonMap.insert_or_assign("type", QJsonObject{{"antenna:type", str}});
 }
 
 void QAntenna::SetLowFreq(double f)
 {
-    m_globalJsonVect.at(2).jsonVal = QString::number(f);
+    m_globalJsonMap.insert_or_assign("low_frequency", QJsonObject{{"antenna:low_frequency", f}});
 }
 
 void QAntenna::SetHighFreq(double f)
 {
-    m_globalJsonVect.at(3).jsonVal = QString::number(f);
+    m_globalJsonMap.insert_or_assign("high_frequency", QJsonObject{{"antenna:high_frequency", f}});
 }
 
 void QAntenna::SetGain(double g)
 {
-    m_globalJsonVect.at(4).jsonVal = QString::number(g);
+    m_globalJsonMap.insert_or_assign("gain", QJsonObject{{"antenna:gain", g}});
 }
 
 void QAntenna::SetHorizGain(double g)
 {
-    m_globalJsonVect.at(5).jsonVal = QString::number(g);
+    m_globalJsonMap.insert_or_assign("horizontal_gain_pattern", QJsonObject{{"antenna:horizontal_gain_pattern", g}});
 }
 
 void QAntenna::SetVertGain(double g)
 {
-    m_globalJsonVect.at(6).jsonVal = QString::number(g);
+    m_globalJsonMap.insert_or_assign("vertical_gain_pattern", QJsonObject{{"antenna:vertical_gain_pattern", g}});
 }
 
 void QAntenna::SetHorizBeamWidth(double w)
 {
-    m_globalJsonVect.at(7).jsonVal = QString::number(w);
+    m_globalJsonMap.insert_or_assign("horizontal_beam_width", QJsonObject{{"antenna:horizontal_beam_width", w}});
 }
 
 void QAntenna::SetVertBeamWidth(double w)
 {
-    m_globalJsonVect.at(8).jsonVal = QString::number(w);
+    m_globalJsonMap.insert_or_assign("vertical_beam_width", QJsonObject{{"antenna:vertical_beam_width", w}});
 }
 
 void QAntenna::SetXPolarDisc(double d)
 {
-    m_globalJsonVect.at(9).jsonVal = QString::number(d);
+    m_globalJsonMap.insert_or_assign("cross_polar_discrimination", QJsonObject{{"antenna:cross_polar_discrimination", d}});
 }
 
 void QAntenna::SetVswr(double v)
 {
-    m_globalJsonVect.at(10).jsonVal = QString::number(v);
+    m_globalJsonMap.insert_or_assign("voltage_standing_wave_ratio", QJsonObject{{"antenna:voltage_standing_wave_ratio", v}});
 }
 
 void QAntenna::SetCableLoss(double l)
 {
-    m_globalJsonVect.at(11).jsonVal = QString::number(l);
+    m_globalJsonMap.insert_or_assign("cable_loss", QJsonObject{{"antenna:cable_loss", l}});
 }
 
 void QAntenna::SetSteerable(bool en)
 {
-    m_globalJsonVect.at(12).jsonVal = en ? "true" : "false";
+    QString valStr = en ? "true" : "false";
+    m_globalJsonMap.insert_or_assign("steerable", QJsonObject{{"antenna:steerable", valStr}});
 }
 
 void QAntenna::SetMobile(bool en)
 {
-    m_globalJsonVect.at(13).jsonVal = en ? "true" : "false";
+    QString valStr = en ? "true" : "false";
+    m_globalJsonMap.insert_or_assign("mobile", QJsonObject{{"antenna:mobile", valStr}});
 }
 
 void QAntenna::SetHagl(double h)
 {
-    m_globalJsonVect.at(14).jsonVal = QString::number(h);
+    m_globalJsonMap.insert_or_assign("hagl", QJsonObject{{"antenna:hagl", h}});
 }
 
 void QAntenna::SetAzimuthAng(double a)
 {
-    m_annotJsonVect.at(0).jsonVal = QString::number(a);
+    m_annotJsonMap.insert_or_assign("azimuth_angle", QJsonObject{{"antenna:azimuth_angle", a}});
 }
 
 void QAntenna::SetElvAng(double a)
 {
-    m_annotJsonVect.at(1).jsonVal = QString::number(a);
+    m_annotJsonMap.insert_or_assign("elevation_angle", QJsonObject{{"antenna:elevation_angle", a}});
 }
 
 void QAntenna::SetPolarization(QString str)
 {
-    m_annotJsonVect.at(2).jsonVal = str;
+    m_annotJsonMap.insert_or_assign("polarization", QJsonObject{{"antenna:polarization", str}});
 }

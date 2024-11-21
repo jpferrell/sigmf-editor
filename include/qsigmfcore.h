@@ -57,9 +57,6 @@ public:
     void SetGenerator(QString);
     void SetUuid(QString);
 
-    QJsonObject GetGeoJson();
-    bool IsGeoValid();
-
 public slots:
 
 signals:
@@ -106,6 +103,8 @@ private:
     GlobalCore m_globalVars;
 
     void _UpdateDataType();
+    bool _CheckValidGeo();
+    void _UpdateGeo();
 };
 
 #endif // QSIGMFCORE_H

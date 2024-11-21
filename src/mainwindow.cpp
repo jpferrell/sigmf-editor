@@ -354,13 +354,13 @@ void MainWindow::_UpdateVariables()
 QByteArray MainWindow::_CreateJson()
 {
     QJsonObject globalObj = m_sigmfGlobal.GenerateGlobalJson();
-    QJsonArray captureJsonArr = m_sigmfCapture.GenerateCaptureJsonArray();
-    QJsonArray annotationJsonArr = m_sigmfAnnotation.GenerateAnnotationJsonArray();
+    //QJsonArray captureJsonArr = m_sigmfCapture.GenerateCaptureJsonArray();
+    //QJsonArray annotationJsonArr = m_sigmfAnnotation.GenerateAnnotationJsonArray();
 
     QJsonObject overallObj;
     overallObj.insert("global", globalObj);
-    overallObj.insert("captures", captureJsonArr);
-    overallObj.insert("annotations", annotationJsonArr);
+    //overallObj.insert("captures", captureJsonArr);
+    //overallObj.insert("annotations", annotationJsonArr);
     QJsonDocument jsonFileCore(overallObj);
     return jsonFileCore.toJson();
 }

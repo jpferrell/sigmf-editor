@@ -10,9 +10,10 @@ class QExtension : public QSigMfBase
 {
     Q_OBJECT
 public:
-    explicit QExtension(QObject *parent = nullptr);
+    explicit QExtension(qstringVect_t reqGlobeVect, qstringVect_t reqCapVect, qstringVect_t reqAnnotVect, QObject *parent = nullptr);
 
-    sigmfVector_t GetGlobalValues();
+    //sigmfVector_t GetGlobalValues();
+    sigmfMap_t GetGlobalMap();
 
     void SetEnable(bool en);
     bool GetEnabled();

@@ -15,9 +15,9 @@
  */
 QSigMfCore::QSigMfCore(QObject *parent)
     : QSigMfBase{
-          {"core:version"}, // Global keys
-          {"core:sample_start"}, // capture keys
-          {"core:sample_start"}, // annotation keys
+          {"version"}, // Global keys
+          {"sample_start"}, // capture keys
+          {"sample_start"}, // annotation keys
           parent}
     , m_globalVars()
 {
@@ -180,6 +180,9 @@ void QSigMfCore::SetGeoType(QString gt)
 {
     m_globalVars.SetGeoType(gt);
     // need to have an update geojson here if valid
+    if (_CheckValidGeo()) {
+        _UpdateGeo();
+    }
 }
 
 /*!
@@ -189,6 +192,9 @@ void QSigMfCore::SetGeoType(QString gt)
 void QSigMfCore::SetLat(double lat)
 {
     m_globalVars.SetLat(lat);
+    if (_CheckValidGeo()) {
+        _UpdateGeo();
+    }
 }
 
 /*!
@@ -198,6 +204,9 @@ void QSigMfCore::SetLat(double lat)
 void QSigMfCore::SetLon(double lon)
 {
     m_globalVars.SetLon(lon);
+    if (_CheckValidGeo()) {
+        _UpdateGeo();
+    }
 }
 
 /*!
@@ -207,6 +216,9 @@ void QSigMfCore::SetLon(double lon)
 void QSigMfCore::SetElevation(double elv)
 {
     m_globalVars.SetElevation(elv);
+    if (_CheckValidGeo()) {
+        _UpdateGeo();
+    }
 }
 
 /*!
@@ -372,26 +384,6 @@ void QSigMfCore::SetUuid(QString str)
     m_annotJsonMap.insert_or_assign("uuid", QJsonObject{{"core:uuid", str}});
 }
 
-QJsonObject QSigMfCore::GetGeoJson()
-{
-    QJsonObject outObj;
-    outObj.insert("type", m_globalVars.GetGeoType());
-    QJsonArray coord;
-    coord.append(m_globalVars.GetGeoLat().toDouble());
-    coord.append(m_globalVars.GetGeoLon().toDouble());
-    if (QString::compare(m_globalVars.GetGeoElv(), "")) {
-        coord.append(m_globalVars.GetGeoElv().toDouble());
-    }
-    outObj.insert("coordinates", coord);
-
-    return outObj;
-}
-
-bool QSigMfCore::IsGeoValid()
-{
-    return QString::compare(m_globalVars.GetGeoType(), "") && QString::compare(m_globalVars.GetGeoLat(), "") && QString::compare(m_globalVars.GetGeoLon(), "") ? true : false;
-}
-
 /*!
  * \brief QSigMfCore::_UpdateDataType updates the datatype string when one of its
  * components is updated.
@@ -400,4 +392,14 @@ bool QSigMfCore::IsGeoValid()
 void QSigMfCore::_UpdateDataType()
 {
     m_globalJsonMap.insert_or_assign("datatype", QJsonObject{{"core:datatype", m_globalVars.GetComplexReal() + m_globalVars.GetDataFormat() + m_globalVars.GetEndianness()}});
+}
+
+bool QSigMfCore::_CheckValidGeo()
+{
+    return ((m_globalJsonMap.find("longitude") != m_globalJsonMap.end()) && (m_globalJsonMap.find("latitude") != m_globalJsonMap.end())) ? true : false;
+}
+
+void QSigMfCore::_UpdateGeo()
+{
+    m_globalJsonMap.insert_or_assign("geolocation", QJsonObject{{"type", m_globalVars.GetGeoType()}, {"coordinates", QJsonArray{m_globalVars.GetGeoLat(), m_globalVars.GetGeoLon(), m_globalVars.GetGeoElv()}}});
 }

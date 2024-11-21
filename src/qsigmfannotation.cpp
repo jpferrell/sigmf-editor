@@ -222,6 +222,8 @@ void QSigMFAnnotation::SetAntennaPolarization(QString str)
 void QSigMFAnnotation::AddAnnotation()
 {
     // Had to do this to get it all within the same array
+    sigmfMapVector_t tmp;
+    /*
     std::vector<sigmfJson_t> tmp;
     std::vector<sigmfJson_t> sigVect = m_sigmfCore.GetAnnotationValues();
     for (auto it = sigVect.begin(); it != sigVect.end(); it++) {
@@ -252,6 +254,7 @@ void QSigMFAnnotation::AddAnnotation()
         }
     }
     m_annotVect.insert(m_annotVect.end(), tmp);
+    */
 }
 
 void QSigMFAnnotation::EnableExtension(QString name, QString version, QString optional)

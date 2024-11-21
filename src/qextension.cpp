@@ -12,19 +12,24 @@
  *
  * \param parent (QObject *)
  */
-QExtension::QExtension(QObject *parent)
-    : QSigMfBase{parent}
+QExtension::QExtension(qstringVect_t reqGlobeVect, qstringVect_t reqCapVect, qstringVect_t reqAnnotVect, QObject *parent)
+    : QSigMfBase{
+        {reqGlobeVect},
+        {reqCapVect},
+        {reqAnnotVect},
+        parent
+      }
     , m_isEnabled(false)
 {
 }
 
-sigmfVector_t QExtension::GetGlobalValues()
+sigmfMap_t QExtension::GetGlobalMap()
 {
-    sigmfVector_t retVect = QSigMfBase::GetGlobalValues();
+    sigmfMap_t retMap = QSigMfBase::GetGlobalMap();
     QString opt = m_optional ? "true" : "false";
     emit extensionEnabled(m_name, m_version, opt);
 
-    return retVect;
+    return retMap;
 }
 
 /*!

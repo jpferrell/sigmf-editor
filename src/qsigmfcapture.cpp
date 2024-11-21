@@ -118,6 +118,7 @@ void QSigMFCapture::SetDetsEnabled(bool isEnabled)
  */
 void QSigMFCapture::AddCapture()
 {
+    /*
     // Had to do this to get it all within the same array
     std::vector<sigmfJson_t> tmp;
     std::vector<sigmfJson_t> sigVect = m_sigmfCore.GetCaptureValues();
@@ -131,4 +132,12 @@ void QSigMFCapture::AddCapture()
         }
     }
     m_captureVect.insert(m_captureVect.end(), tmp);
+    */
+    sigmfMapVector_t tmp;
+    sigmfMap_t coreMap = m_sigmfCore.GetCaptureMap();
+    for (auto it = coreMap.cbegin(); it != coreMap.end(); it++) {
+        QString key = it->second.keys().at(0);
+        tmp.emplace_back(*it);
+    }
+    //m_captureVect.insert(m_captureVect.end(), tmp);
 }

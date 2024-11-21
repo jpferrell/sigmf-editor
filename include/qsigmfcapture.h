@@ -44,7 +44,8 @@ private:
 
     QSigMfCore m_sigmfCore;
     QCaptureDetails m_capDets;
-    std::vector< std::vector <sigmfJson_t> > m_captureVect;
+    //std::vector< std::vector <sigmfJson_t> > m_captureVect;
+    sigmfMapVector_t m_captureVect;
 
 };
 

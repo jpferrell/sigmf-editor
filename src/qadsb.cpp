@@ -14,14 +14,14 @@
  * \param parent (QObject *)
  */
 QAdsb::QAdsb(QObject *parent)
-    : QExtension{parent}
+    : QExtension{
+        {},
+        {},
+        {"downlink_format", "message_type", "ICA_address", "binary"},
+        parent}
 {
-    InitializeAnnotationJsonVect({
-                                     {"adsb:downlink_format", "", true},
-                                     {"adsb:message_type", "", true},
-                                     {"adsb:ICA_address", "", true},
-                                     {"adsb:binary", "", true}
-                                 });
+    // check these values
+    SetGlobalExtensionObject("adsb", "v1.0.0", true);
 }
 
 /*!
@@ -31,7 +31,8 @@ QAdsb::QAdsb(QObject *parent)
  */
 void QAdsb::SetDownlinkFrmt(int num)
 {
-    m_annotJsonVect.at(0).jsonVal = num == 0 ? "11" : "17";
+    QString numStr = num == 0 ? "11" : "17";
+    m_annotJsonMap.insert_or_assign("downlink_format", QJsonObject{{"adsb:downlink_format", numStr}});
 }
 
 /*!
@@ -46,7 +47,7 @@ void QAdsb::SetDownlinkFrmt(int num)
  */
 void QAdsb::SetMessageType(int num)
 {
-    m_annotJsonVect.at(1).jsonVal = QString::number(num);
+    m_annotJsonMap.insert_or_assign("message_type", QJsonObject{{"adsb:message_type", num}});
 }
 
 /*!
@@ -56,7 +57,7 @@ void QAdsb::SetMessageType(int num)
  */
 void QAdsb::SetIcaAddr(double d)
 {
-    m_annotJsonVect.at(2).jsonVal = QString::number(d);
+    m_annotJsonMap.insert_or_assign("ICA_address", QJsonObject{{"adsb:ICA_address", d}});
 }
 
 /*!
@@ -66,5 +67,5 @@ void QAdsb::SetIcaAddr(double d)
  */
 void QAdsb::SetBinary(QString str)
 {
-    m_annotJsonVect.at(3).jsonVal = str;
+    m_annotJsonMap.insert_or_assign("binary", QJsonObject{{"adsb:binary", str}});
 }
