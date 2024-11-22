@@ -396,13 +396,20 @@ void QSigMfCore::_UpdateDataType()
 
 bool QSigMfCore::_CheckValidGeo()
 {
-    qDebug() << "in _CheckValidGeo";
-    //return ((m_globalJsonMap.find("longitude") != m_globalJsonMap.end()) && (m_globalJsonMap.find("latitude") != m_globalJsonMap.end())) ? true : false;
-    return ((!m_globalVars.GetGeoLat().compare("")) && (!m_globalVars.GetGeoLon().compare(""))) ? true : false;
+    return ((!m_globalVars.GetGeoLat().compare("")) && (!m_globalVars.GetGeoLon().compare(""))) ? false : true;
 }
 
 void QSigMfCore::_UpdateGeo()
 {
     qDebug() << "in _UpdateGeo";
-    m_globalJsonMap.insert_or_assign("geolocation", QJsonObject{{"type", m_globalVars.GetGeoType()}, {"coordinates", QJsonArray{m_globalVars.GetGeoLat(), m_globalVars.GetGeoLon(), m_globalVars.GetGeoElv()}}});
+    QJsonArray arr;
+    arr.append(m_globalVars.GetGeoLat());
+    arr.append(m_globalVars.GetGeoLon());
+    arr.append(m_globalVars.GetGeoElv());
+    QJsonObject tmp, obj;
+    tmp.insert("coordinates", arr);
+    tmp.insert("type", m_globalVars.GetGeoType());
+    obj.insert("core:geolocation", tmp);
+    //m_globalJsonMap.insert_or_assign("geolocation", QJsonObject{{"type", m_globalVars.GetGeoType()}, {"coordinates", QJsonArray{m_globalVars.GetGeoLat(), m_globalVars.GetGeoLon(), m_globalVars.GetGeoElv()}}});
+    m_globalJsonMap.insert_or_assign("geolocation", obj);
 }
