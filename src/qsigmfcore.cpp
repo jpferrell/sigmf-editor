@@ -401,7 +401,6 @@ bool QSigMfCore::_CheckValidGeo()
 
 void QSigMfCore::_UpdateGeo()
 {
-    qDebug() << "in _UpdateGeo";
     QJsonArray arr;
     arr.append(m_globalVars.GetGeoLat());
     arr.append(m_globalVars.GetGeoLon());
@@ -410,6 +409,5 @@ void QSigMfCore::_UpdateGeo()
     tmp.insert("coordinates", arr);
     tmp.insert("type", m_globalVars.GetGeoType());
     obj.insert("core:geolocation", tmp);
-    //m_globalJsonMap.insert_or_assign("geolocation", QJsonObject{{"type", m_globalVars.GetGeoType()}, {"coordinates", QJsonArray{m_globalVars.GetGeoLat(), m_globalVars.GetGeoLon(), m_globalVars.GetGeoElv()}}});
     m_globalJsonMap.insert_or_assign("geolocation", obj);
 }

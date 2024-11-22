@@ -14,13 +14,6 @@ public:
 
     sigmfVector_t GetGlobalValues();
 
-    QJsonObject GetGlobalLastMod();
-    QJsonObject GetGlobalLastRev();
-    QString GetGlobalRevision();
-    QJsonObject GetGlobalOrigin();
-    QJsonObject GetAnnotLastMod();
-    QJsonObject GetAnnotLastRev();
-
 signals:
 
 public slots:
@@ -51,6 +44,10 @@ private:
 
     bool _CheckDataChangeStruct(dataChange_t);
     bool _CheckOriginStruct(origin_t);
+
+    void _UpdateLastModified();
+    void _UpdateLastReviewed();
+    void _UpdateOrigin();
 };
 
 #endif // QTRACEABILITY_H

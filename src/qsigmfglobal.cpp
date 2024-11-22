@@ -35,24 +35,21 @@ QJsonObject QSigMFGlobal::GenerateGlobalJson()
         QString key = it->second.keys().at(0);
         retObj.insert(key, it->second.value(key));
     }
-
-    /*
-    std::vector<sigmfJson_t> coreVect = m_sigmfCore.GetGlobalValues();
-    for (auto it = coreVect.begin(); it != coreVect.end(); it++) {
-        retObj.insert(it->jsonKey, it->jsonVal);
-        qDebug() << "inserted " << it->jsonKey;
-    }
-    if (m_sigmfCore.IsGeoValid()) {
-        QJsonObject tmpObj = m_sigmfCore.GetGeoJson();
-        retObj.insert("core:geolocation", tmpObj);
-    }
-    if (m_ant.GetEnabled()) {
-        sigmfVector_t antVect = m_ant.GetGlobalValues();
-        for (auto it = antVect.begin(); it != antVect.end(); it++) {
-            retObj.insert(it->jsonKey, it->jsonVal);
-            qDebug() << "inserted " << it->jsonKey;
+    if(m_ant.GetEnabled()) {
+        sigmfMap_t antMap = m_ant.GetGlobalMap();
+        for (auto it = antMap.cbegin(); it != antMap.cend(); it++) {
+            QString key = it->second.keys().at(0);
+            retObj.insert(key, it->second.value(key));
         }
     }
+    if(m_trace.GetEnabled()) {
+        sigmfMap_t traceMap = m_trace.GetGlobalMap();
+        for (auto it = traceMap.cbegin(); it != traceMap.cend(); it++) {
+            QString key = it->second.keys().at(0);
+            retObj.insert(key, it->second.value(key));
+        }
+    }
+    /*
     if (m_trace.GetEnabled()) {
         QJsonObject tmpObj;
         tmpObj = m_trace.GetGlobalLastMod();
@@ -72,8 +69,8 @@ QJsonObject QSigMFGlobal::GenerateGlobalJson()
             retObj.insert("traceability:revision", rev);
         }
     }
-    retObj.insert("core:extensions", m_extJsonArr);
     */
+    retObj.insert("core:extensions", m_extJsonArr);
 
     return retObj;
 }
