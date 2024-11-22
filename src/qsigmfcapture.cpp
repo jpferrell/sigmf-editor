@@ -27,6 +27,7 @@ QJsonArray QSigMFCapture::GenerateCaptureJsonArray()
 {
     QJsonArray retArr;
 
+    /*
     // The standard states the annotations must be sorted by the start sample
     std::sort(m_captureVect.begin(), m_captureVect.end(), [](const std::vector<sigmfJson_t> &lhs, const std::vector<sigmfJson_t> &rhs) {
         return lhs.at(0).jsonVal.toInt() < rhs.at(0).jsonVal.toInt();
@@ -38,7 +39,7 @@ QJsonArray QSigMFCapture::GenerateCaptureJsonArray()
         }
         retArr.append(obj);
     }
-
+    */
     return retArr;
 }
 
@@ -133,6 +134,7 @@ void QSigMFCapture::AddCapture()
     }
     m_captureVect.insert(m_captureVect.end(), tmp);
     */
+    /*
     sigmfMapVector_t tmp;
     sigmfMap_t coreMap = m_sigmfCore.GetCaptureMap();
     for (auto it = coreMap.cbegin(); it != coreMap.end(); it++) {
@@ -140,4 +142,5 @@ void QSigMFCapture::AddCapture()
         tmp.emplace_back(*it);
     }
     //m_captureVect.insert(m_captureVect.end(), tmp);
+    */
 }

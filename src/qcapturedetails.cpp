@@ -13,21 +13,13 @@
  * \param parent
  */
 QCaptureDetails::QCaptureDetails(QObject *parent):
-    QExtension{parent}
+    QExtension{
+        {},
+        {"acq_scale_factor", "attenuation", "acquisition_bandwidth", "start_capture", "stop_capture", "source_file"},
+        {"SNRdB, signal_reference_number"},
+        parent
+    }
 {
-    InitializeCaptureJsonVect({
-                                  {"capture_details:acq_scale_factor", "", true},
-                                  {"capture_details:attenuation", "", true},
-                                  {"capture_details:acquisition_bandwidth", "", true},
-                                  {"capture_details:start_capture", "", true},
-                                  {"capture_details:stop_capture", "", true},
-                                  {"capture_details:source_file", "", true},
-                                  {"capture_details:gain", "", false}
-                              });
-    InitializeAnnotationJsonVect({
-                                     {"capture_details:SNRdB", "", true},
-                                     {"capture_details:signal_reference_number", "", true}
-                                 });
 }
 
 /*!
@@ -37,7 +29,7 @@ QCaptureDetails::QCaptureDetails(QObject *parent):
  */
 void QCaptureDetails::SetAcqScaleFactor(double fact)
 {
-    m_captureJsonVect.at(0).jsonVal = QString::number(fact);
+    m_captureJsonMap.insert_or_assign("acq_scale_factor", QJsonObject{{"capture_details:acq_scale_factor", fact}});
 }
 
 /*!
@@ -46,7 +38,7 @@ void QCaptureDetails::SetAcqScaleFactor(double fact)
  */
 void QCaptureDetails::SetAttenuation(double att)
 {
-    m_captureJsonVect.at(1).jsonVal = QString::number(att);
+    m_captureJsonMap.insert_or_assign("attentuation", QJsonObject{{"capture_details:attentuation", att}});
 }
 
 /*!
@@ -55,7 +47,7 @@ void QCaptureDetails::SetAttenuation(double att)
  */
 void QCaptureDetails::SetAcqBandwidth(double bw)
 {
-    m_captureJsonVect.at(2).jsonVal = QString::number(bw);
+    m_captureJsonMap.insert_or_assign("acquisition_bandwidth", QJsonObject{{"capture_details:acquisition_bandwidth", bw}});
 }
 
 /*!
@@ -65,7 +57,7 @@ void QCaptureDetails::SetAcqBandwidth(double bw)
  */
 void QCaptureDetails::SetStartCapture(QDateTime dt)
 {
-    m_captureJsonVect.at(3).jsonVal = dt.toString(Qt::ISODateWithMs);
+    m_captureJsonMap.insert_or_assign("start_capture", QJsonObject{{"capture_details:start_capture", dt.toString(Qt::ISODateWithMs)}});
 }
 
 /*!
@@ -75,7 +67,7 @@ void QCaptureDetails::SetStartCapture(QDateTime dt)
  */
 void QCaptureDetails::SetStopCapture(QDateTime dt)
 {
-    m_captureJsonVect.at(4).jsonVal = dt.toString(Qt::ISODateWithMs);
+    m_captureJsonMap.insert_or_assign("stop_capture", QJsonObject{{"capture_details:stop_capture", dt.toString(Qt::ISODateWithMs)}});
 }
 
 /*!
@@ -85,7 +77,7 @@ void QCaptureDetails::SetStopCapture(QDateTime dt)
  */
 void QCaptureDetails::SetSourceFile(QString str)
 {
-    m_captureJsonVect.at(5).jsonVal = str;
+    m_captureJsonMap.insert_or_assign("source_file", QJsonObject{{"capture_details:source_file", str}});
 }
 
 /*!
@@ -95,7 +87,7 @@ void QCaptureDetails::SetSourceFile(QString str)
  */
 void QCaptureDetails::SetGain(double gain)
 {
-    m_captureJsonVect.at(6).jsonVal = QString::number(gain);
+    m_captureJsonMap.insert_or_assign("gain", QJsonObject{{"capture_details:gain", gain}});
 }
 
 /*!
@@ -105,7 +97,7 @@ void QCaptureDetails::SetGain(double gain)
  */
 void QCaptureDetails::SetSnr(double snr)
 {
-    m_annotJsonVect.at(0).jsonVal = QString::number(snr);
+    m_annotJsonMap.insert_or_assign("SNRdB", QJsonObject{{"capture_details:SNRdB", snr}});
 }
 
 /*!
@@ -117,5 +109,5 @@ void QCaptureDetails::SetSnr(double snr)
  */
 void QCaptureDetails::SetSigRefNum(QString str)
 {
-    m_annotJsonVect.at(1).jsonVal = str;
+    m_annotJsonMap.insert_or_assign("signal_reference_number", QJsonObject{{"capture_details:signal_reference_number", str}});
 }

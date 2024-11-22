@@ -13,29 +13,34 @@
  * \param parent (QObject *)
  */
 QWifi::QWifi(QObject *parent)
-    : QExtension{parent}
+    : QExtension{
+        {},
+        {},
+        {
+            "standard",
+            "frame_type_phy",
+            "channel",
+            "start_time_s",
+            "stop_time_s",
+            "frame_duration_s",
+            "MCS",
+            "MAC_Frame_type",
+            "MAC_ta",
+            "MAC_ra",
+            "manufacturer_ta",
+            "MAC_frame",
+            "CRC",
+            "start_of_packet",
+            "stop_of_packet",
+            "number_of_samples_in_packet"
+        },
+        parent
+    }
 {
-    InitializeAnnotationJsonVect({
-                                     {"wifi:standard", "", true},
-                                     {"wifi:frame_type_phy", "", true},
-                                     {"wifi:channel", "", true},
-                                     {"wifi:start_time_s", "", true},
-                                     {"wifi:stop_time_s", "", true},
-                                     {"wifi:frame_duration_s", "", true},
-                                     {"wifi:MCS", "", true},
-                                     {"wifi:MAC_Frame_type", "", true},
-                                     {"wifi:MAC_ta", "", true},
-                                     {"wifi:MAC_ra", "", true},
-                                     {"wifi:manufacturer_ta", "", true},
-                                     {"wifi:MAC_frame", "", true},
-                                     {"wifi:CRC", "", true},
-                                     {"wifi:start_of_packet", "", true},
-                                     {"wifi:stop_of_packet", "", true},
-                                     {"wifi:number_of_samples_in_packet", "", true}
-                                });
     SetGlobalExtensionObject("wifi", "1.0.0", false);
 }
 
+/*
 sigmfVector_t QWifi::GetAnnotationValues()
 {
     sigmfVector_t retVect = QSigMfBase::GetAnnotationValues();
@@ -44,6 +49,7 @@ sigmfVector_t QWifi::GetAnnotationValues()
 
     return retVect;
 }
+*/
 
 /*!
  * \brief QWifi::SetStandard sets the standard. REQUIRED
@@ -51,7 +57,7 @@ sigmfVector_t QWifi::GetAnnotationValues()
  */
 void QWifi::SetStandard(QString str)
 {
-    m_annotJsonVect.at(0).jsonVal = str;
+    m_annotJsonMap.insert_or_assign("standard", QJsonObject{{"wifi:standard", str}});
 }
 
 /*!
@@ -61,7 +67,7 @@ void QWifi::SetStandard(QString str)
  */
 void QWifi::SetFrameTypePhy(QString str)
 {
-    m_annotJsonVect.at(1).jsonVal = str;
+    m_annotJsonMap.insert_or_assign("standard", QJsonObject{{"wifi:frame_type_phy", str}});
 }
 
 /*!
@@ -70,7 +76,7 @@ void QWifi::SetFrameTypePhy(QString str)
  */
 void QWifi::SetChannel(int c)
 {
-    m_annotJsonVect.at(2).jsonVal = QString::number(c);
+    m_annotJsonMap.insert_or_assign("channel", QJsonObject{{"wifi:channel", c}});
 }
 
 /*!
@@ -80,7 +86,7 @@ void QWifi::SetChannel(int c)
  */
 void QWifi::SetStartTime(double t)
 {
-    m_annotJsonVect.at(3).jsonVal = QString::number(t);
+    m_annotJsonMap.insert_or_assign("start_time_s", QJsonObject{{"wifi:start_time_s", t}});
 }
 
 /*!
@@ -90,7 +96,7 @@ void QWifi::SetStartTime(double t)
  */
 void QWifi::SetStopTime(double t)
 {
-    m_annotJsonVect.at(4).jsonVal = QString::number(t);
+    m_annotJsonMap.insert_or_assign("stop_time_s", QJsonObject{{"wifi:stop_time_s", t}});
 }
 
 /*!
@@ -99,7 +105,7 @@ void QWifi::SetStopTime(double t)
  */
 void QWifi::SetFrameDuration(double d)
 {
-    m_annotJsonVect.at(5).jsonVal = QString::number(d);
+    m_annotJsonMap.insert_or_assign("frame_duration_s", QJsonObject{{"wifi:frame_duration_s", d}});
 }
 
 /*!
@@ -108,7 +114,7 @@ void QWifi::SetFrameDuration(double d)
  */
 void QWifi::SetMcs(int m)
 {
-    m_annotJsonVect.at(6).jsonVal = QString::number(m);
+    m_annotJsonMap.insert_or_assign("MCS", QJsonObject{{"wifi:MCS", m}});
 }
 
 /*!
@@ -117,7 +123,7 @@ void QWifi::SetMcs(int m)
  */
 void QWifi::SetMacFrameType(QString str)
 {
-    m_annotJsonVect.at(7).jsonVal = str;
+    m_annotJsonMap.insert_or_assign("MAC_frame_type", QJsonObject{{"wifi:MAC_frame_type", str}});
 }
 
 /*!
@@ -126,7 +132,7 @@ void QWifi::SetMacFrameType(QString str)
  */
 void QWifi::SetMacTxAddr(QString str)
 {
-    m_annotJsonVect.at(8).jsonVal = str;
+    m_annotJsonMap.insert_or_assign("MAC_ta", QJsonObject{{"wifi:MAC_ta", str}});
 }
 
 /*!
@@ -135,7 +141,7 @@ void QWifi::SetMacTxAddr(QString str)
  */
 void QWifi::SetMacRxAddr(QString str)
 {
-    m_annotJsonVect.at(9).jsonVal = str;
+    m_annotJsonMap.insert_or_assign("MAC_ra", QJsonObject{{"wifi:MAC_ra", str}});
 }
 
 /*!
@@ -144,7 +150,7 @@ void QWifi::SetMacRxAddr(QString str)
  */
 void QWifi::SetTxManf(QString str)
 {
-    m_annotJsonVect.at(10).jsonVal = str;
+    m_annotJsonMap.insert_or_assign("manufacturer_ta", QJsonObject{{"wifi:manufacturer_ta", str}});
 }
 
 /*!
@@ -153,7 +159,7 @@ void QWifi::SetTxManf(QString str)
  */
 void QWifi::SetMacFrame(QString str)
 {
-    m_annotJsonVect.at(11).jsonVal = str;
+    m_annotJsonMap.insert_or_assign("MAC_frame", QJsonObject{{"wifi:MAC_frame", str}});
 }
 
 /*!
@@ -162,7 +168,7 @@ void QWifi::SetMacFrame(QString str)
  */
 void QWifi::SetCrc(QString str)
 {
-    m_annotJsonVect.at(12).jsonVal = str;
+    m_annotJsonMap.insert_or_assign("CRC", QJsonObject{{"wifi:CRC", str}});
 }
 
 /*!
@@ -171,7 +177,7 @@ void QWifi::SetCrc(QString str)
  */
 void QWifi::SetStartPkt(double s)
 {
-    m_annotJsonVect.at(13).jsonVal = QString::number(s);
+    m_annotJsonMap.insert_or_assign("start_of_packet", QJsonObject{{"wifi:start_of_packet", s}});
 }
 
 /*!
@@ -180,7 +186,7 @@ void QWifi::SetStartPkt(double s)
  */
 void QWifi::SetEndPkt(double s)
 {
-    m_annotJsonVect.at(14).jsonVal = QString::number(s);
+    m_annotJsonMap.insert_or_assign("stop_of_packet", QJsonObject{{"wifi:stop_of_packet", s}});
 }
 
 /*!
@@ -189,5 +195,5 @@ void QWifi::SetEndPkt(double s)
  */
 void QWifi::SetNumSampsPkt(double s)
 {
-    m_annotJsonVect.at(15).jsonVal = QString::number(s);
+    m_annotJsonMap.insert_or_assign("number_of_samples_in_packet", QJsonObject{{"wifi:number_of_samples_in_packet", s}});
 }

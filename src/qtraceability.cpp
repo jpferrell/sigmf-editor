@@ -1,23 +1,13 @@
 #include "include/qtraceability.h"
 
 QTraceability::QTraceability(QObject *parent)
-    : QExtension{parent}
+    : QExtension{{},{},{},parent}
     , m_globalLastMod({})
     , m_globalLastRev({})
     , m_globalOrigin({})
     , m_annotLastMod({})
     , m_annotLastRev({})
 {
-    InitializeGlobalJsonVect({
-                                 {"traceability:last_modified", "", false},
-                                 {"traceability:last_reviewed", "", false},
-                                 {"traceability:revision", "", false},
-                                 {"traceability:origin", "", false}
-                             });
-    InitializeCaptureJsonVect({
-                                  {"traceability:last_modified", "", false},
-                                  {"traceability:last_reviewed", "", false}
-                              });
     SetGlobalExtensionObject("traceability", "1.0.0", false);
     m_globalLastMod.author = "";
 }
@@ -48,7 +38,7 @@ QJsonObject QTraceability::GetGlobalLastRev()
 
 QString QTraceability::GetGlobalRevision()
 {
-    return m_globalJsonVect.at(2).jsonVal;
+    return m_globalJsonMap.find("revision")->second.value("traceability:revision").toString();
 }
 
 QJsonObject QTraceability::GetGlobalOrigin()
@@ -113,7 +103,7 @@ void QTraceability::SetGlobalLastRevDatetime(QString datetime)
 
 void QTraceability::SetRevision(int rev)
 {
-    m_globalJsonVect.at(2).jsonVal = QString::number(rev);
+    m_globalJsonMap.insert_or_assign("revision", QJsonObject{{"traceability:revision", rev}});
 }
 
 void QTraceability::SetOriginAccount(QString account)
