@@ -396,10 +396,13 @@ void QSigMfCore::_UpdateDataType()
 
 bool QSigMfCore::_CheckValidGeo()
 {
-    return ((m_globalJsonMap.find("longitude") != m_globalJsonMap.end()) && (m_globalJsonMap.find("latitude") != m_globalJsonMap.end())) ? true : false;
+    qDebug() << "in _CheckValidGeo";
+    //return ((m_globalJsonMap.find("longitude") != m_globalJsonMap.end()) && (m_globalJsonMap.find("latitude") != m_globalJsonMap.end())) ? true : false;
+    return ((!m_globalVars.GetGeoLat().compare("")) && (!m_globalVars.GetGeoLon().compare(""))) ? true : false;
 }
 
 void QSigMfCore::_UpdateGeo()
 {
+    qDebug() << "in _UpdateGeo";
     m_globalJsonMap.insert_or_assign("geolocation", QJsonObject{{"type", m_globalVars.GetGeoType()}, {"coordinates", QJsonArray{m_globalVars.GetGeoLat(), m_globalVars.GetGeoLon(), m_globalVars.GetGeoElv()}}});
 }
